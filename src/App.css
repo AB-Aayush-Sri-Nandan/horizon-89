@@ -1,0 +1,1092 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+
+  background:
+    #030506;
+
+  color:
+    #d9dfe4;
+
+  font-family:
+    Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background:
+    #030506;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.topbar {
+  height: 84px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding:
+    0 28px;
+
+  border-bottom:
+    1px solid #1a2025;
+
+  background:
+    rgba(4, 6, 8, 0.96);
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.brandMark {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid #384149;
+
+  color:
+    #d9f6ff;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    10px;
+
+  letter-spacing:
+    0.1em;
+}
+
+.brand {
+  color:
+    #f4f6f8;
+
+  font-size:
+    17px;
+
+  font-weight:
+    650;
+
+  letter-spacing:
+    0.26em;
+}
+
+.subtitle {
+  margin-top:
+    6px;
+
+  color:
+    #626c75;
+
+  font-size:
+    8px;
+
+  letter-spacing:
+    0.2em;
+}
+
+.topTelemetry {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    34px;
+}
+
+.telemetryItem {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    5px;
+}
+
+.telemetryItem span {
+  color:
+    #58626a;
+
+  font-size:
+    7px;
+
+  letter-spacing:
+    0.18em;
+}
+
+.telemetryItem strong {
+  color:
+    #aeb7bf;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    9px;
+
+  font-weight:
+    400;
+}
+
+.systemStatus {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    9px;
+
+  color:
+    #737d85;
+
+  font-size:
+    8px;
+
+  letter-spacing:
+    0.18em;
+}
+
+.statusDot {
+  width:
+    6px;
+
+  height:
+    6px;
+
+  border-radius:
+    50%;
+
+  background:
+    #7ec39b;
+
+  box-shadow:
+    0 0 10px
+    rgba(
+      126,
+      195,
+      155,
+      0.45
+    );
+}
+
+/* =========================
+   WORKSPACE
+========================= */
+
+.workspace {
+  flex:
+    1;
+
+  min-height:
+    0;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    365px;
+}
+
+/* =========================
+   MOON VIEW
+========================= */
+
+.visualStage {
+  min-width:
+    0;
+
+  position:
+    relative;
+
+  border-right:
+    1px solid #1b2126;
+}
+
+.stageHeader {
+  height:
+    43px;
+
+  padding:
+    0 21px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  border-bottom:
+    1px solid #151a1e;
+
+  background:
+    #050708;
+}
+
+.stageLabel {
+  color:
+    #838c94;
+
+  font-size:
+    8px;
+
+  letter-spacing:
+    0.18em;
+}
+
+.stageCode {
+  margin-left:
+    8px;
+
+  color:
+    #414a52;
+
+  font-size:
+    8px;
+
+  letter-spacing:
+    0.12em;
+}
+
+.datasetTag {
+  padding:
+    5px 8px;
+
+  border:
+    1px solid #242b31;
+
+  color:
+    #657079;
+
+  font-size:
+    7px;
+
+  letter-spacing:
+    0.18em;
+}
+
+.moonViewport {
+  position:
+    absolute;
+
+  top:
+    43px;
+
+  left:
+    0;
+
+  right:
+    0;
+
+  bottom:
+    0;
+
+  overflow:
+    hidden;
+
+  background:
+    radial-gradient(
+      circle at 48% 45%,
+      #0a0e11 0%,
+      #050708 40%,
+      #020304 75%
+    );
+}
+
+.moonViewport canvas {
+  position:
+    absolute !important;
+
+  inset:
+    0;
+}
+
+.moonGradient {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  pointer-events:
+    none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 55%,
+      rgba(
+        3,
+        5,
+        6,
+        0.25
+      ) 80%,
+      rgba(
+        3,
+        5,
+        6,
+        0.75
+      ) 100%
+    );
+}
+
+.crosshair {
+  position:
+    absolute;
+
+  left:
+    50%;
+
+  top:
+    50%;
+
+  width:
+    70px;
+
+  height:
+    70px;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  pointer-events:
+    none;
+
+  opacity:
+    0.33;
+}
+
+.crosshair::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    14px;
+
+  border:
+    1px solid
+    #7e99a8;
+
+  border-radius:
+    50%;
+}
+
+.horizontal {
+  position:
+    absolute;
+
+  left:
+    0;
+
+  top:
+    50%;
+
+  width:
+    100%;
+
+  height:
+    1px;
+
+  background:
+    #6b7d88;
+}
+
+.vertical {
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    50%;
+
+  height:
+    100%;
+
+  width:
+    1px;
+
+  background:
+    #6b7d88;
+}
+
+.centerDot {
+  position:
+    absolute;
+
+  left:
+    50%;
+
+  top:
+    50%;
+
+  width:
+    5px;
+
+  height:
+    5px;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  border-radius:
+    50%;
+
+  background:
+    #d7edf7;
+}
+
+.siteOverlay {
+  position:
+    absolute;
+
+  left:
+    25px;
+
+  bottom:
+    24px;
+
+  pointer-events:
+    none;
+}
+
+.siteOverlay span {
+  display:
+    block;
+
+  margin-bottom:
+    8px;
+
+  color:
+    #515b63;
+
+  font-size:
+    7px;
+
+  letter-spacing:
+    0.2em;
+}
+
+.siteOverlay strong {
+  display:
+    block;
+
+  color:
+    #e3e7ea;
+
+  font-size:
+    12px;
+
+  font-weight:
+    500;
+
+  letter-spacing:
+    0.12em;
+}
+
+.siteOverlay small {
+  display:
+    block;
+
+  margin-top:
+    8px;
+
+  color:
+    #75818a;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    9px;
+}
+
+.viewHint {
+  position:
+    absolute;
+
+  right:
+    23px;
+
+  bottom:
+    23px;
+
+  color:
+    #3f484f;
+
+  font-size:
+    7px;
+
+  line-height:
+    1.7;
+
+  text-align:
+    right;
+
+  letter-spacing:
+    0.16em;
+
+  pointer-events:
+    none;
+}
+
+/* =========================
+   CONTROL RAIL
+========================= */
+
+.controlRail {
+  padding:
+    0 22px
+    20px;
+
+  overflow-y:
+    auto;
+
+  background:
+    #07090b;
+}
+
+.controlRail::-webkit-scrollbar {
+  width:
+    5px;
+}
+
+.controlRail::-webkit-scrollbar-thumb {
+  background:
+    #252c31;
+}
+
+.railSection {
+  padding:
+    21px 0;
+
+  border-bottom:
+    1px solid #1b2024;
+}
+
+.railHeading {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  margin-bottom:
+    16px;
+
+  color:
+    #c5cbd0;
+
+  font-size:
+    9px;
+
+  letter-spacing:
+    0.18em;
+}
+
+.railHeading span {
+  color:
+    #4e5961;
+
+  font-family:
+    "Courier New",
+    monospace;
+}
+
+.coordinateGrid {
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:
+    10px;
+}
+
+label {
+  display:
+    block;
+
+  margin-bottom:
+    14px;
+
+  color:
+    #59646d;
+
+  font-size:
+    7px;
+
+  letter-spacing:
+    0.18em;
+}
+
+input {
+  width:
+    100%;
+
+  height:
+    39px;
+
+  margin-top:
+    7px;
+
+  padding:
+    0 10px;
+
+  border:
+    1px solid #262d33;
+
+  outline:
+    none;
+
+  background:
+    #0a0d10;
+
+  color:
+    #e2e6e9;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    10px;
+}
+
+input:focus {
+  border-color:
+    #53616b;
+}
+
+.analyseButton {
+  width:
+    100%;
+
+  height:
+    42px;
+
+  margin-top:
+    1px;
+
+  border:
+    1px solid #d8dde1;
+
+  background:
+    #dfe3e6;
+
+  color:
+    #090b0d;
+
+  cursor:
+    pointer;
+
+  font-size:
+    8px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.19em;
+
+  transition:
+    0.18s ease;
+}
+
+.analyseButton:hover {
+  background:
+    #ffffff;
+
+  border-color:
+    #ffffff;
+}
+
+.metric {
+  height:
+    41px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  border-bottom:
+    1px solid #171c20;
+}
+
+.metric:last-child {
+  border-bottom:
+    none;
+}
+
+.metric span {
+  color:
+    #58636c;
+
+  font-size:
+    7px;
+
+  letter-spacing:
+    0.15em;
+}
+
+.metric strong {
+  color:
+    #abb5bd;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    8px;
+
+  font-weight:
+    400;
+}
+
+/* =========================
+   AI COPILOT
+========================= */
+
+.copilot {
+  margin-top:
+    22px;
+
+  padding:
+    16px;
+
+  border:
+    1px solid #252d33;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0b0f12,
+      #07090b
+    );
+}
+
+.copilotTop {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  margin-bottom:
+    14px;
+}
+
+.copilotTop > div {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    9px;
+}
+
+.aiBadge {
+  width:
+    26px;
+
+  height:
+    21px;
+
+  display:
+    inline-grid;
+
+  place-items:
+    center;
+
+  border:
+    1px solid
+    #344650;
+
+  color:
+    #a9d8e8;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    8px;
+}
+
+.copilotTop strong {
+  color:
+    #d9dee2;
+
+  font-size:
+    8px;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    0.16em;
+}
+
+.copilotState {
+  color:
+    #52606a;
+
+  font-size:
+    7px;
+
+  letter-spacing:
+    0.14em;
+}
+
+.copilotResponse {
+  min-height:
+    75px;
+
+  padding:
+    11px;
+
+  border:
+    1px solid #1d252a;
+
+  background:
+    #06090b;
+
+  color:
+    #85929b;
+
+  font-size:
+    9px;
+
+  line-height:
+    1.6;
+}
+
+.copilotInput {
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 60px;
+
+  gap:
+    7px;
+
+  margin-top:
+    9px;
+}
+
+.copilotInput input {
+  margin:
+    0;
+}
+
+.copilotInput button {
+  border:
+    1px solid #343d44;
+
+  background:
+    #11161a;
+
+  color:
+    #cbd2d7;
+
+  cursor:
+    pointer;
+
+  font-size:
+    7px;
+
+  letter-spacing:
+    0.12em;
+}
+
+.copilotInput button:hover {
+  background:
+    #182027;
+}
+
+/* =========================
+   BOTTOM TELEMETRY
+========================= */
+
+.missionBar {
+  height:
+    72px;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(4, 1fr)
+    1.25fr;
+
+  border-top:
+    1px solid #1d2328;
+
+  background:
+    #050708;
+}
+
+.missionCell,
+.missionClock {
+  padding:
+    14px 20px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  justify-content:
+    center;
+
+  border-right:
+    1px solid #1b2024;
+}
+
+.missionBar span {
+  margin-bottom:
+    7px;
+
+  color:
+    #505b63;
+
+  font-size:
+    6px;
+
+  letter-spacing:
+    0.18em;
+}
+
+.missionBar strong {
+  color:
+    #aeb8bf;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size:
+    8px;
+
+  font-weight:
+    400;
+}
+
+.missionClock {
+  border-right:
+    none;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (
+  max-width:
+    980px
+) {
+
+  body {
+    overflow:
+      auto;
+  }
+
+  .workspace {
+    grid-template-columns:
+      1fr;
+
+    grid-template-rows:
+      620px auto;
+  }
+
+  .controlRail {
+    border-top:
+      1px solid #1b2126;
+  }
+
+  .missionBar {
+    grid-template-columns:
+      1fr 1fr;
+
+    height:
+      auto;
+  }
+
+  .topTelemetry {
+    display:
+      none;
+  }
+}
