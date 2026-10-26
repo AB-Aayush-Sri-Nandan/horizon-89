@@ -12,5 +12,9 @@ export default defineConfig({
       args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'],
     },
   },
-  webServer: { command: 'npm run dev -- --host 127.0.0.1 --port 5174 --strictPort', url: 'http://127.0.0.1:5174', reuseExistingServer: false },
+  webServer: [
+    {command: 'node tests/support/fixture-api.ts', url: 'http://127.0.0.1:3002/api/health', reuseExistingServer: false},
+    {command: 'npm run dev -- --host 127.0.0.1 --port 5174 --strictPort', url: 'http://127.0.0.1:5174', reuseExistingServer: false,
+      env: {H89_API_PROXY_TARGET: 'http://127.0.0.1:3002'}},
+  ],
 });

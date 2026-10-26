@@ -2,16 +2,20 @@
 
 Existing React 19 / TypeScript / Vite / React Three Fiber frontend. Node 24 and
 npm 11 were used for the current baseline. See [repository audit and technical
-roadmap](docs/architecture.md) and [Phase One handoff](docs/phase-one-handoff.md).
+roadmap](docs/architecture.md), [Phase One handoff](docs/phase-one-handoff.md), and
+[current reconstructed API documentation](server/README.md).
 
 ```sh
 npm ci
 npm run typecheck
 npm run lint
 npm test
+npm run test:backend
 npm run test:science
 npm run check:secrets
 npm run build
+npm run dev:api
+# In a second terminal:
 npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
 ```
 
@@ -29,11 +33,12 @@ Vite instance on port 5174. CI also installs Chromium system dependencies.
 
 ## Current limitations
 
-The repository does **not** contain the previously reported Express backend or
-its approximately 30 tests. `/api` proxies to 127.0.0.1:3001, where a separately
-recovered backend must run. API health, real geometry, caching and AI cannot be
-claimed operational. Copilot remains UI-only standby. No credentials are needed
-for the frontend; never put credentials into `VITE_*` variables.
+Phase 1B reconstructs an Express backend (not recovered historical code). See
+[API setup, endpoints and scientific conventions](server/README.md). `/api`
+proxies to 127.0.0.1:3001; health is available, but live JPL geometry remains
+blocked by upstream LTKERNL/IP_ADDR errors. Copilot is deliberately unavailable;
+provider keys stay server-side and no AI calls are enabled. No credentials are
+needed for Horizons. Never put credentials into `VITE_*` variables.
 
 The genuine LROC source TIFF and generated texture are absent. The scene now
 shows an explicitly labelled neutral reference sphere, not fabricated lunar
@@ -63,5 +68,5 @@ tests. Do not treat kernel integrity tests as ephemeris verification.
 
 CI runs deterministic client, integrity and browser fixtures plus typecheck,
 lint, secret-pattern scan and build. A live JPL schedule is deliberately deferred
-until a real backend/parser is recovered. No release readiness is claimed while
+until live scientific validation succeeds. No release readiness is claimed while
 those required scientific checks remain unavailable.

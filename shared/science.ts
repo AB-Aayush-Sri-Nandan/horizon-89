@@ -67,12 +67,13 @@ export interface DisplayBodyState {
   bodySize: 'PHYSICAL' | 'ENHANCED';
   physicalEpochUTC: UTCString;
 }
-/** Existing wire schema retained until the missing backend is recovered. */
+/** Backward-compatible wire schema; reconstructed service adds optional provenance. */
 export type HorizonBodyGeometry = {
   azimuthDegrees: number;
   elevationDegrees: number;
   geometricallyAboveHorizon: boolean;
   terrainVisibilityEvaluated: boolean;
+  provenance?: ScienceProvenance;
 };
 export type SunGeometry = HorizonBodyGeometry & { surfaceIlluminationStatus: string };
 export type EarthGeometry = HorizonBodyGeometry & { communicationStatus: string };
@@ -80,7 +81,9 @@ export type HorizonsGeometryResponse = {
   source: string;
   dataType: string;
   status: string;
-  lunarSite: { latitude: number; longitude: number };
+  lunarSite: { latitude: number; longitude: number; altitudeKm?: number };
+  provenance?: ScienceProvenance;
+  requestId?: string;
   timeUTC: string;
   sun: SunGeometry;
   earth: EarthGeometry;

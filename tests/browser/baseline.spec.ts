@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.ts';
 import { readFileSync } from 'node:fs';
 const fixture = JSON.parse(readFileSync(new URL('../fixtures/horizons-legacy.json', import.meta.url), 'utf8'));
 

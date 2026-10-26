@@ -1,15 +1,7 @@
-import type { HorizonAnalysis, HorizonMeasurement, HorizonsGeometryResponse } from '../../shared/science.ts';
+import type { HorizonAnalysis, HorizonMeasurement, HorizonsGeometryResponse, ScienceProvenance } from '../../shared/science.ts';
 
-export function validateSiteTime(latitude: number, longitude: number, utc: string): void {
-  if (!Number.isFinite(latitude) || latitude < -90 || latitude > 90 ||
-      !Number.isFinite(longitude) || longitude < -180 || longitude > 180) {
-    throw new Error('Latitude must be −90…90° and longitude −180…180°.');
-  }
-  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(utc) ||
-      !Number.isFinite(Date.parse(utc)) || new Date(utc).toISOString() !== utc) {
-    throw new Error('UTC must be a valid ISO timestamp with milliseconds and Z.');
-  }
-}
+export { validateSiteTime } from '../../shared/validation.ts';
+import { validateSiteTime, validateAltitude } from '../../shared/validation.ts';
 
 export function parseLegacyHorizons(value: unknown): HorizonsGeometryResponse {
   if (typeof value !== 'object' || value === null) throw new Error('Invalid Horizons response.');
@@ -17,6 +9,7 @@ export function parseLegacyHorizons(value: unknown): HorizonsGeometryResponse {
   if (typeof d.source !== 'string' || typeof d.status !== 'string' ||
       typeof d.dataType !== 'string' || !d.lunarSite) throw new Error('Invalid Horizons metadata.');
   validateSiteTime(d.lunarSite.latitude, d.lunarSite.longitude, d.timeUTC);
+  if (d.lunarSite.altitudeKm !== undefined) validateAltitude(d.lunarSite.altitudeKm);
   for (const body of [d.sun, d.earth]) {
     if (!body || !Number.isFinite(body.azimuthDegrees) || body.azimuthDegrees < 0 ||
         body.azimuthDegrees >= 360 || !Number.isFinite(body.elevationDegrees) ||
@@ -24,6 +17,21 @@ export function parseLegacyHorizons(value: unknown): HorizonsGeometryResponse {
         body.geometricallyAboveHorizon !== (body.elevationDegrees > 0) ||
         body.terrainVisibilityEvaluated !== false) throw new Error('Invalid reference-horizon measurement.');
   }
+  const validProvenance = (p: ScienceProvenance) => {
+    if (!p || p.provider !== 'JPL_HORIZONS' || p.observationTimeUTC !== d.timeUTC ||
+        typeof p.producedAtUTC !== 'string' || p.frame !== 'HORIZONS_LUNAR_TOPOCENTRIC' ||
+        p.centre !== 'coord@301' || p.aberrationCorrection !== 'AIRLESS_APPARENT' ||
+        p.method !== 'HORIZONS_OBSERVER_QUANTITY_4' || !['MISS', 'HIT'].includes(p.cacheStatus) ||
+        !Array.isArray(p.limitations) || !p.limitations.every(v => typeof v === 'string')) {
+      throw new Error('Invalid Horizons provenance.');
+    }
+    validateSiteTime(0, 0, p.producedAtUTC);
+  };
+  if (d.provenance !== undefined) {
+    validProvenance(d.provenance);
+    if ((d.status === 'CACHED') !== (d.provenance.cacheStatus === 'HIT')) throw new Error('Inconsistent cache provenance.');
+  }
+  for (const body of [d.sun, d.earth]) if (body.provenance !== undefined) validProvenance(body.provenance);
   if (typeof d.sun.surfaceIlluminationStatus !== 'string' ||
       typeof d.earth.communicationStatus !== 'string') throw new Error('Invalid Horizons status fields.');
   return d;
@@ -39,14 +47,14 @@ export function adaptLegacyHorizons(value: HorizonsGeometryResponse): HorizonAna
   return {
     status: d.status === 'LIVE' || d.status === 'CACHED' ? d.status : 'UNAVAILABLE',
     site: { latitudeDegrees: d.lunarSite.latitude, longitudeDegreesEast: d.lunarSite.longitude,
-      altitudeKm: null, frame: null },
+      altitudeKm: d.lunarSite.altitudeKm ?? null, frame: d.provenance?.frame ?? null },
     time: { utc: d.timeUTC }, sun: measurement(d.sun), earth: measurement(d.earth),
-    provenance: {
+    provenance: d.provenance ?? {
       provider: d.source, observationTimeUTC: d.timeUTC, producedAtUTC: null,
       frame: null, centre: 'coord@301', aberrationCorrection: null,
       method: 'LEGACY_HORIZONS_RESPONSE_UNVERIFIED',
       cacheStatus: d.status === 'CACHED' ? 'HIT' : d.status === 'LIVE' ? 'MISS' : 'UNKNOWN',
-      limitations: ['Backend implementation absent: request conventions are not verified.',
+      limitations: ['Legacy request conventions are not verified by this response.',
         'Altitude is not supplied by the legacy API.',
         'Retrieval time and frame are not supplied by the legacy API.',
         'Reference horizon only; no terrain, finite disc, eclipses or link budget.'],

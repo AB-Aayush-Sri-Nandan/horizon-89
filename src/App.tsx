@@ -35,6 +35,7 @@ import {
 
 import * as THREE from "three";
 import { MoonModel, type TextureStatus } from "./components/MoonModel";
+import { validateAltitude, validateSiteTime } from "../shared/validation";
 import { formatAngle, adaptLegacyHorizons } from "./science/horizons";
 
 import {
@@ -54,6 +55,7 @@ type MissionSite = {
   status: string;
   lat: number | null;
   lon: number | null;
+  altitudeKm?: number;
   note: string;
 };
 
@@ -669,7 +671,7 @@ function CopilotDock() {
     setMessage,
   ] =
     useState(
-      "Mission Copilot is in UI-only standby. The secure backend will be connected later."
+      "Mission Copilot is in UI-only standby. AI providers are not enabled in this phase."
     );
 
   function sendToCopilot(
@@ -845,6 +847,7 @@ function CopilotDock() {
 ======================================== */
 
 export default function App() {
+  const [manualAlt, setManualAlt] = useState("0");
   const [textureStatus, setTextureStatus] = useState<TextureStatus>("LOADING");
   const [
     sites,
@@ -1062,57 +1065,6 @@ export default function App() {
     speed,
   ]);
 
-  function applyManualSite() {
-    const lat =
-      Number(
-        manualLat
-      );
-
-    const lon =
-      Number(
-        manualLon
-      );
-
-    if (
-      Number.isNaN(
-        lat
-      ) ||
-      Number.isNaN(
-        lon
-      )
-    ) {
-      return;
-    }
-
-    if (
-      lat < -90 ||
-      lat > 90 ||
-      lon < -180 ||
-      lon > 180
-    ) {
-      return;
-    }
-
-    setSites(
-      (current) =>
-        current.map(
-          (site) =>
-            site.id ===
-            "manual"
-              ? {
-                  ...site,
-                  lat,
-                  lon,
-                }
-              : site
-        )
-    );
-
-    setActiveId(
-      "manual"
-    );
-  }
-
   const missionTime =
     useMemo(() => {
       const base =
@@ -1127,12 +1079,54 @@ export default function App() {
       );
     }, [timeline]);
 
+  function applyManualSite() {
+    const lat =
+      Number(
+        manualLat
+      );
+
+    const lon =
+      Number(
+        manualLon
+      );
+
+    const altitudeKm = Number(manualAlt);
+    try {
+      if (![manualLat, manualLon, manualAlt].every(value => value.trim())) throw new Error("Site inputs must not be empty.");
+      validateSiteTime(lat, lon, missionTime.toISOString());
+      validateAltitude(altitudeKm);
+    } catch (error) {
+      setGeometryError(error instanceof Error ? error.message : "Invalid site.");
+      return;
+    }
+    setGeometryError(null);
+
+    setSites(
+      (current) =>
+        current.map(
+          (site) =>
+            site.id ===
+            "manual"
+              ? {
+                  ...site,
+                  lat,
+                  lon,
+                  altitudeKm,
+                }
+              : site
+        )
+    );
+
+    setActiveId(
+      "manual"
+    );
+  }
+
   useEffect(() => {
     if (
       activeSite.lat === null ||
       activeSite.lon === null
     ) {
-      setGeometry(null);
       setGeometryError(
         "Selected site has no verified coordinates."
       );
@@ -1141,7 +1135,6 @@ export default function App() {
     }
 
     if (playing) {
-      setGeometry(null);
       setGeometryError(null);
       setGeometryLoading(false);
       return;
@@ -1157,7 +1150,8 @@ export default function App() {
         getLunarGeometry(
           activeSite.lat as number,
           activeSite.lon as number,
-          missionTime.toISOString()
+          missionTime.toISOString(),
+          activeSite.altitudeKm ?? 0
         )
           .then((data) => {
             if (cancelled) {
@@ -1171,7 +1165,6 @@ export default function App() {
               return;
             }
 
-            setGeometry(null);
 
             setGeometryError(
               error instanceof Error
@@ -1196,41 +1189,48 @@ export default function App() {
   }, [
     activeSite.lat,
     activeSite.lon,
+    activeSite.altitudeKm,
     missionTime,
     playing,
   ]);
+
+  // Retain the last successful snapshot, but never label stale values as the requested analysis.
+  const displayGeometry = !geometryLoading && !geometryError && !playing &&
+    geometry?.lunarSite.latitude === activeSite.lat && geometry?.lunarSite.longitude === activeSite.lon &&
+    (geometry?.lunarSite.altitudeKm ?? 0) === (activeSite.altitudeKm ?? 0) &&
+    geometry?.timeUTC === missionTime.toISOString() ? geometry : null;
 
   const geometryBadgeLabel =
     playing
       ? "PAUSE TO QUERY"
       : geometryLoading
       ? "REQUESTING"
-      : geometry
-      ? adaptLegacyHorizons(geometry).status
+      : displayGeometry
+      ? adaptLegacyHorizons(displayGeometry).status
       : geometryError
       ? "UNAVAILABLE"
       : "WAITING";
 
   const geometryBadgeTone:
     "cached" | "demo" =
-    geometry && !geometryLoading
+    displayGeometry && !geometryLoading
       ? "cached"
       : "demo";
 
   const sunElevation =
-    geometry?.sun.elevationDegrees ??
+    displayGeometry?.sun.elevationDegrees ??
     null;
 
   const earthElevation =
-    geometry?.earth.elevationDegrees ??
+    displayGeometry?.earth.elevationDegrees ??
     null;
 
   const sunAzimuth =
-    geometry?.sun.azimuthDegrees ??
+    displayGeometry?.sun.azimuthDegrees ??
     null;
 
   const earthAzimuth =
-    geometry?.earth.azimuthDegrees ??
+    displayGeometry?.earth.azimuthDegrees ??
     null;
 
   const geometryDetail =
@@ -1238,8 +1238,8 @@ export default function App() {
       ? "Pause timeline to request JPL geometry"
       : geometryLoading
       ? "Requesting NASA/JPL Horizons"
-      : geometry
-      ? `Calculated for ${geometry.timeUTC.replace("T", " ")} UTC`
+      : displayGeometry
+      ? `Calculated for ${displayGeometry.timeUTC.replace("T", " ")} UTC${displayGeometry.provenance?.producedAtUTC ? ` · Retrieved ${displayGeometry.provenance.producedAtUTC}` : ""}`
       : geometryError
       ? "No fallback or demo geometry is being shown"
       : "Waiting for a valid lunar site and time";
@@ -1527,7 +1527,12 @@ export default function App() {
                 />
               </label>
 
+              <label>
+                ALT (km)
+                <input value={manualAlt} onChange={e => setManualAlt(e.target.value)} aria-label="Altitude above reference ellipsoid (km)" />
+              </label>
             </div>
+            {geometryError && <p role="alert">{geometryError}</p>}
 
             <button
               className="apply-btn"
@@ -1690,6 +1695,10 @@ export default function App() {
             note="Airless apparent direction · reference horizon · no link budget"
           />
 
+          {geometry && !displayGeometry && <p className="panel-label" role="status">
+            Last successful analysis retained: {geometry.lunarSite.latitude}° / {geometry.lunarSite.longitude}° · {geometry.timeUTC}. Current request unavailable or pending.
+          </p>}
+
           <section className="panel azimuths">
 
             <div>
@@ -1728,7 +1737,7 @@ export default function App() {
 
             <section
               className={`panel status-card ${
-                geometry?.sun
+                displayGeometry?.sun
                   .geometricallyAboveHorizon
                   ? "on"
                   : ""
@@ -1740,8 +1749,8 @@ export default function App() {
               </span>
 
               <strong>
-                {geometry
-                  ? geometry.sun
+                {displayGeometry
+                  ? displayGeometry.sun
                       .geometricallyAboveHorizon
                     ? "ABOVE"
                     : "BELOW"
@@ -1762,7 +1771,7 @@ export default function App() {
 
             <section
               className={`panel status-card ${
-                geometry?.earth
+                displayGeometry?.earth
                   .geometricallyAboveHorizon
                   ? "on"
                   : ""
@@ -1774,8 +1783,8 @@ export default function App() {
               </span>
 
               <strong>
-                {geometry
-                  ? geometry.earth
+                {displayGeometry
+                  ? displayGeometry.earth
                       .geometricallyAboveHorizon
                     ? "ABOVE"
                     : "BELOW"

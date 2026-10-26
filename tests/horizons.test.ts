@@ -81,3 +81,28 @@ test('invalid JSON and network timeout reject with safe errors', async (t) => {
   mock.mock.mockImplementation(async () => { throw new DOMException('aborted', 'TimeoutError'); });
   await assert.rejects(getLunarGeometry(-89, 0, fixture.timeUTC), /failed or timed out/);
 });
+
+test('nonzero altitude must be echoed by the backend, and invalid altitude is rejected', async (t) => {
+  let sent = '';
+  t.mock.method(globalThis, 'fetch', async (url: string) => {sent = url;return Response.json(fixture);});
+  await assert.rejects(getLunarGeometry(-89, 0, fixture.timeUTC, 1.25), /does not match/);
+  assert.equal(new URL(sent,'http://localhost').searchParams.get('alt'), '1.25');
+  for (const altitude of [NaN, Infinity, -20.001, 100.001]) {
+    await assert.rejects(getLunarGeometry(-89,0,fixture.timeUTC,altitude), /Altitude/);
+  }
+});
+test('client rejects unavailable payloads even if they contain plausible numbers', async (t) => {
+  t.mock.method(globalThis,'fetch', async () => Response.json({...fixture,status:'UNAVAILABLE'}));
+  await assert.rejects(getLunarGeometry(-89,0,fixture.timeUTC), /no valid scientific result/);
+});
+test('new provenance is validated while legacy metadata remains compatible', () => {
+  const provenance = {provider:'JPL_HORIZONS',observationTimeUTC:fixture.timeUTC,producedAtUTC:'2026-10-26T00:00:00.000Z',
+    frame:'HORIZONS_LUNAR_TOPOCENTRIC',centre:'coord@301',aberrationCorrection:'AIRLESS_APPARENT',
+    method:'HORIZONS_OBSERVER_QUANTITY_4',cacheStatus:'MISS',limitations:['Reference horizon only.']};
+  const valid = {...fixture,provenance,lunarSite:{...fixture.lunarSite,altitudeKm:1.25}};
+  assert.equal(adaptLegacyHorizons(valid).provenance.producedAtUTC, provenance.producedAtUTC);
+  assert.equal(adaptLegacyHorizons(valid).site.altitudeKm, 1.25);
+  for (const patch of [{producedAtUTC:'bad'}, {centre:'399'}, {cacheStatus:'HIT'}, {aberrationCorrection:'NONE'}, {observationTimeUTC:'2026-10-11T00:00:00.000Z'}]) {
+    assert.throws(() => parseLegacyHorizons({...valid,provenance:{...provenance,...patch}}));
+  }
+});

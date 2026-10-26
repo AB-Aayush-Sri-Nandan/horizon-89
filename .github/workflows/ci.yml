@@ -21,6 +21,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test
+      - run: npm run test:backend
       - run: npm run test:science
       - run: npm run check:secrets
       - run: npm run build

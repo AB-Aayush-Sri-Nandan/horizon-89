@@ -1,5 +1,9 @@
 # Horizon 89: repository truth and implementation design
 
+Historical Phase One audit. Phase 1B reconstructs the missing API; see
+[the current backend documentation](../server/README.md). Statements about the
+absent backend below describe the audited original baseline, not the Phase 1B tree.
+
 Scope: Phase One only. Later phases below are proposals, not implementations.
 Audit/research date: 2026-10-26. The second supplied specification supersedes the
 first document's instruction to proceed into a Solar System UI.
