@@ -1,4 +1,8 @@
-# Kernel bootstrap (not a celestial-state engine)
+# Kernel bootstrap and integrity
+
+Phase2A adds a separate [local SPICE engine](../README.md). This document
+describes the original download/integrity layer; actual measured coverage and
+computations are exported under `science/evidence/phase-2a-results.json`.
 
 The six pinned entries in [manifest.json](manifest.json) were downloaded from
 NAIF over certificate-verified HTTPS on 2026-10-26. Sizes and SHA-256 hashes were
@@ -23,10 +27,11 @@ runs verify existing files. Corrupt existing files cause a failure and are not
 silently overwritten. Remove a corrupt file only after investigating it.
 
 Integrity verification does **not** verify scientific state, actual SPICE segment
-coverage, frame transforms, or correctness of subsequent algorithms. No SPICE
-runtime or science service was added in this phase. Coverage in the manifest is
-from official comments/embedded documentation; future runtime activation must
-inspect segment coverage, load the set, and verify transforms at multiple epochs.
+coverage, frame transforms, or correctness of subsequent algorithms. Phase2A
+subsequently added actual segment inspection and multi-epoch transform tests in
+the separate local engine. Manifest coverage comments remain historical source
+annotations; measured runtime intervals are in capabilities/evidence. Integrity
+success alone still does not establish scientific model accuracy.
 
 The official `moon_de440_250416.tf` explicitly states compatibility with
 `moon_pa_de440_200625.bpc`. It defines:

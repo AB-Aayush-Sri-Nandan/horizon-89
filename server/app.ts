@@ -2,6 +2,8 @@ import express from 'express';
 import type { ErrorRequestHandler } from 'express';
 import { randomUUID } from 'node:crypto';
 import { HorizonsService, parseObserverQuery } from './horizons.ts';
+import {SpiceClient,parseScienceQuery} from './spice.ts';
+import type {SciencePort} from './spice.ts';
 import { ApiError } from './errors.ts';
 
 export interface AppOptions {
@@ -9,9 +11,12 @@ export interface AppOptions {
   logger?: (entry: Record<string, unknown>) => void;
   now?: () => number;
   rateLimit?: number;
+  science?: SciencePort;
 }
 export function createApp(options: AppOptions = {}) {
   const app = express(); const service = options.service ?? new HorizonsService();
+  const science=options.science??new SpiceClient();
+  app.locals.closeScience=()=>science.close?.();
   const now = options.now ?? Date.now;
   const logger = options.logger ?? (entry => console.error(JSON.stringify(entry)));
   const requests = new Map<string, {count: number; until: number}>();
@@ -42,6 +47,11 @@ export function createApp(options: AppOptions = {}) {
     const result = await service.geometry(parseObserverQuery(req.query));
     res.json({...result, requestId: res.locals.requestId});
   });
+  app.get('/api/science/capabilities',async(req,res)=>{
+    if(Object.keys(req.query).length)throw new ApiError('VALIDATION_ERROR','Capabilities accepts no query parameters.',400);
+    res.json(await science.request({operation:'capabilities'}));
+  });
+  app.get('/api/celestial-state',async(req,res)=>res.json(await science.request(parseScienceQuery(req.query))));
   app.post('/api/copilot', (req, _res, next) => {
     if (typeof req.body?.message !== 'string' || !req.body.message.trim() || req.body.message.length > 2000 ||
         Object.keys(req.body).some(k => k !== 'message')) {

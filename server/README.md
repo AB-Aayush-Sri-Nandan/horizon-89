@@ -1,7 +1,8 @@
 # Phase 1B reconstructed API
 
 This is a controlled reconstruction, **not recovered historical source**.
-No SPICE service, modeled ephemeris, terrain engine or AI provider is introduced.
+The original Horizons reconstruction remains unchanged. Phase2A adds an
+independent private SPICE computation layer; no terrain engine or AI provider.
 
 From the repository root (Node >=24.5 <25):
 
@@ -155,3 +156,11 @@ this upstream failure returns a controlled API 502 / UNAVAILABLE. The old missin
 local-backend connection failure is fixed; **502 remains an intentional status
 for upstream failure**, not proof that live geometry works. No valid live angles
 were received, and live scientific validation remains blocked.
+
+## Phase2A local states
+
+`GET /api/science/capabilities` inspects pinned kernels on demand.
+`GET /api/celestial-state?utc=2026-10-10T06%3A00%3A00.123Z&targets=399,301&frames=MOON_ME,ITRF93`
+returns geometric local COMPUTED states, independently of JPL connectivity.
+See `science/README.md` for setup, exact reference conventions and unavailable
+body/frame handling. Python startup failure leaves health/Horizons operational.

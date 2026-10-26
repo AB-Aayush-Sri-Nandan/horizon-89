@@ -34,3 +34,4 @@ __pycache__/
 
 # Original scientific imagery retained locally; runtime derivative is versioned.
 /assets/source/
+/science/.venv/

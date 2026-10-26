@@ -18,6 +18,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: npm ci --no-audit --no-fund
+      - run: npm run science:setup
+      - run: npm run test:celestial
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test

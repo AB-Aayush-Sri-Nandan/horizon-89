@@ -7,11 +7,13 @@ roadmap](docs/architecture.md), [Phase One handoff](docs/phase-one-handoff.md), 
 
 ```sh
 npm ci
+npm run science:setup
 npm run typecheck
 npm run lint
 npm test
 npm run test:backend
 npm run test:science
+npm run test:celestial
 npm run check:secrets
 npm run build
 npm run dev:api
@@ -66,11 +68,19 @@ original TIFF. Source retrieval is needed only for regeneration.
 
 See [kernel setup](science/kernels/README.md). Six official NAIF kernels are
 pinned with exact sizes/hashes; large data remain ignored. Python's standard
-library is sufficient for fetching/verifying. This does not install or implement
-SPICE computation. Scientific coverage and transforms require the later engine's
-tests. Do not treat kernel integrity tests as ephemeris verification.
+library is sufficient for fetching/verifying. The separate [local celestial engine](science/README.md) now inspects actual
+coverage and computes SPICE states/orientations. Its real-computation tests are
+separate from content-integrity checks.
 
 CI runs deterministic client, integrity and browser fixtures plus typecheck,
 lint, secret-pattern scan and build. A live JPL schedule is deliberately deferred
 until live scientific validation succeeds. No release readiness is claimed while
 those required scientific checks remain unavailable.
+
+## Scientific Celestial Engine (Phase2A)
+
+See [science setup, supported bodies/frames and limitations](science/README.md).
+The new `/api/science/capabilities` and `/api/celestial-state` routes use a private
+local SPICE worker. They do not replace `/api/horizons`, change dashboard state,
+or start Solar System graphics. Body centres absent from DE440s remain explicitly
+UNAVAILABLE. Run `npm run science:setup` before backend/science-computation tests.
