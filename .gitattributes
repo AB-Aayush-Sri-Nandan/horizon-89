@@ -1,0 +1,2 @@
+# Preserve the existing CSS CRLF style while checking actual trailing whitespace.
+*.css whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local secrets and reproducible scientific/test outputs
+.env
+.env.*
+!.env.example
+science/kernels/data/
+playwright-report/
+test-results/
+__pycache__/

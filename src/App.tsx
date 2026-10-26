@@ -14,7 +14,6 @@ import {
 import {
   OrbitControls,
   Stars,
-  useTexture,
 } from "@react-three/drei";
 
 import {
@@ -35,6 +34,8 @@ import {
 } from "lucide-react";
 
 import * as THREE from "three";
+import { MoonModel, type TextureStatus } from "./components/MoonModel";
+import { formatAngle, adaptLegacyHorizons } from "./science/horizons";
 
 import {
   getLunarGeometry,
@@ -56,8 +57,6 @@ type MissionSite = {
   note: string;
 };
 
-const MOON_TEXTURE =
-  "/textures/moon-lro.png";
 
 const initialSites: MissionSite[] = [
   {
@@ -130,38 +129,6 @@ function latLonToVec3(
 /* ========================================
    MOON MODEL
 ======================================== */
-
-function MoonModel() {
-  const texture =
-    useTexture(
-      MOON_TEXTURE
-    );
-
-  texture.colorSpace =
-    THREE.SRGBColorSpace;
-
-  texture.anisotropy = 4;
-
-  return (
-    <mesh>
-      <sphereGeometry
-        args={[
-          1,
-          128,
-          128,
-        ]}
-      />
-
-      <meshStandardMaterial
-        map={texture}
-        bumpMap={texture}
-        bumpScale={0.035}
-        roughness={1}
-        metalness={0}
-      />
-    </mesh>
-  );
-}
 
 /* ========================================
    TARGET MARKER
@@ -359,10 +326,12 @@ function MoonScene({
   site,
   quality,
   onInteract,
+  onTextureStatus,
 }: {
   site: MissionSite;
   quality: Quality;
   onInteract: () => void;
+  onTextureStatus: (status: TextureStatus) => void;
 }) {
   const target =
     site.lat !== null &&
@@ -472,7 +441,7 @@ function MoonScene({
         speed={0.1}
       />
 
-      <MoonModel />
+      <MoonModel onStatus={onTextureStatus} />
 
       {site.lat !== null &&
         site.lon !== null && (
@@ -617,14 +586,8 @@ function ArcGauge({
       <div className="gauge-number num">
         {value === null
           ? "N/A"
-          : value.toFixed(
-              2
-            )}
+          : formatAngle(value, true)}
 
-        {value !==
-          null && (
-          <small>°</small>
-        )}
       </div>
 
       <p>
@@ -882,6 +845,7 @@ function CopilotDock() {
 ======================================== */
 
 export default function App() {
+  const [textureStatus, setTextureStatus] = useState<TextureStatus>("LOADING");
   const [
     sites,
     setSites,
@@ -1242,7 +1206,7 @@ export default function App() {
       : geometryLoading
       ? "REQUESTING"
       : geometry
-      ? "JPL EPHEMERIS"
+      ? adaptLegacyHorizons(geometry).status
       : geometryError
       ? "UNAVAILABLE"
       : "WAITING";
@@ -1275,9 +1239,7 @@ export default function App() {
       : geometryLoading
       ? "Requesting NASA/JPL Horizons"
       : geometry
-      ? `Calculated for ${geometry.timeUTC
-          .slice(0, 16)
-          .replace("T", " ")} UTC`
+      ? `Calculated for ${geometry.timeUTC.replace("T", " ")} UTC`
       : geometryError
       ? "No fallback or demo geometry is being shown"
       : "Waiting for a valid lunar site and time";
@@ -1298,7 +1260,7 @@ export default function App() {
         </p>
 
         <p>
-          LOADING LRO MOSAIC...
+          CHECKING LROC IMAGERY...
         </p>
 
         <button
@@ -1591,6 +1553,7 @@ export default function App() {
             quality={
               quality
             }
+            onTextureStatus={setTextureStatus}
             onInteract={() =>
               setMoonUsed(
                 true
@@ -1602,16 +1565,16 @@ export default function App() {
 
             <div>
               <span className="panel-label">
-                Lunar surface model
+                Illustrative lighting · not a science-derived terminator
               </span>
 
               <strong>
-                LRO GLOBAL MOSAIC
+                {textureStatus === "AVAILABLE" ? "LROC MORPHOLOGY IMAGERY" : "REFERENCE SPHERE · IMAGERY UNAVAILABLE"}
               </strong>
             </div>
 
-            <span className="badge cached">
-              CACHED
+            <span className="badge demo">
+              {textureStatus}
             </span>
 
           </div>
@@ -1707,7 +1670,7 @@ export default function App() {
             detail={
               geometryDetail
             }
-            note="Geometric elevation only · terrain visibility not evaluated"
+            note="Airless apparent direction · reference horizon · terrain not evaluated"
           />
 
           <ArcGauge
@@ -1724,7 +1687,7 @@ export default function App() {
             detail={
               geometryDetail
             }
-            note="Geometric elevation only · communication link not confirmed"
+            note="Airless apparent direction · reference horizon · no link budget"
           />
 
           <section className="panel azimuths">
@@ -1737,9 +1700,7 @@ export default function App() {
               <strong className="num">
                 {sunAzimuth === null
                   ? "N/A"
-                  : `${sunAzimuth.toFixed(
-                      2
-                    )}°`}
+                  : formatAngle(sunAzimuth)}
               </strong>
             </div>
 
@@ -1751,9 +1712,7 @@ export default function App() {
               <strong className="num">
                 {earthAzimuth === null
                   ? "N/A"
-                  : `${earthAzimuth.toFixed(
-                      2
-                    )}°`}
+                  : formatAngle(earthAzimuth)}
               </strong>
             </div>
 
@@ -1796,7 +1755,7 @@ export default function App() {
               </span>
 
               <small>
-                Geometric horizon only · terrain not evaluated
+                Reference horizon only · terrain not evaluated
               </small>
 
             </section>
@@ -1830,7 +1789,7 @@ export default function App() {
               </span>
 
               <small>
-                Geometric horizon only · communications not confirmed
+                Reference horizon only · communications not confirmed
               </small>
 
             </section>
