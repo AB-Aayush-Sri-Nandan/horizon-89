@@ -40,23 +40,27 @@ blocked by upstream LTKERNL/IP_ADDR errors. Copilot is deliberately unavailable;
 provider keys stay server-side and no AI calls are enabled. No credentials are
 needed for Horizons. Never put credentials into `VITE_*` variables.
 
-The genuine LROC source TIFF and generated texture are absent. The scene now
-shows an explicitly labelled neutral reference sphere, not fabricated lunar
-imagery. Lighting is illustrative, not a science-derived terminator. Current
-reference-horizon telemetry is not terrain-corrected visibility or an RF link
-budget. Demo charts/timeline remain labelled demonstration UI.
+The supplied LROC TIFF has been converted to a full-resolution, lossless visual
+texture. The original is locally retained outside the production asset folder;
+only the 3.41 MB runtime PNG and provenance are committed. Source metadata matches
+the intended LROC product; independent upstream-byte authentication was blocked
+by the source-download host's proxy policy. See [imagery provenance, reproduction
+and mapping](assets/README.md).
+
+Missing or corrupt imagery still uses a labelled neutral sphere. Lighting is
+illustrative, not a science-derived terminator; morphology is never used as
+height, a bump map or terrain shadow data. No current illumination, terrain-aware
+visibility or RF-link claim follows from loading this image.
 
 ## Genuine Moon asset pipeline
 
-Supply the original `WAC_GLOBAL_E000N0000_008P.TIF` at
-`public/textures/source/WAC_GLOBAL_E000N0000_008P.TIF`, verify its product identity,
-then run `npm run assets:moon` from the repository root. An explicit source path
-may be passed after `--`. The compatibility command `node src/convert-moon.cjs`
-also calls the same converter. It emits low/medium/high WebP at 1024×512,
-2048×1024 and 2880×1440, the existing `moon-lro.png` runtime path, and provenance
-with source/derivative hashes and tool versions. No crop, AI enhancement or fake
-elevation is applied. No source means the command exits nonzero. Genuine-image
-conversion, UV orientation and landmark checks remain unrun until it is supplied.
+The reviewed source is retained locally at the ignored path
+`assets/source/lroc/WAC_GLOBAL_E000N0000_008P.TIF`. Run `npm run assets:moon` from
+the repository root to reproduce the PNG and provenance at `public/textures/`.
+An explicit reviewed source path may be passed after `--`; its size/hash must
+match `assets/lroc-source.json`. Source pixels are verified unchanged before
+writing. A fresh Git checkout can serve/test the committed image without the
+original TIFF. Source retrieval is needed only for regeneration.
 
 ## Kernel bootstrap
 

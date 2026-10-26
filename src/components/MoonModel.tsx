@@ -14,6 +14,10 @@ export function MoonModel({ onStatus }: { onStatus: (status: TextureStatus) => v
     new THREE.TextureLoader().load(MOON_TEXTURE, (image) => {
       loaded = image;
       if (!active) { image.dispose(); return; }
+      // Source raster is north-up; Three's uploaded image flip maps top row to v=1.
+      image.flipY = true;
+      image.wrapS = THREE.RepeatWrapping;
+      image.wrapT = THREE.ClampToEdgeWrapping;
       image.colorSpace = THREE.SRGBColorSpace;
       image.anisotropy = 4;
       setTexture(image);
@@ -25,7 +29,7 @@ export function MoonModel({ onStatus }: { onStatus: (status: TextureStatus) => v
     <mesh>
       <sphereGeometry args={[1, 128, 128]} />
       {/* Morphology imagery is colour only; never use it as elevation/bump data. */}
-      <meshStandardMaterial map={texture} color={texture ? '#ffffff' : '#93999f'} roughness={1} metalness={0} />
+      <meshStandardMaterial key={texture ? "lroc-texture" : "reference-sphere"} map={texture} color={texture ? '#ffffff' : '#93999f'} roughness={1} metalness={0} />
     </mesh>
   );
 }

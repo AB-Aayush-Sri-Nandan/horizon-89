@@ -31,3 +31,6 @@ science/kernels/data/
 playwright-report/
 test-results/
 __pycache__/
+
+# Original scientific imagery retained locally; runtime derivative is versioned.
+/assets/source/

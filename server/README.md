@@ -119,8 +119,9 @@ adapter still accepts legacy payloads without inventing missing metadata.
 The frontend retains the last successful analysis snapshot. While a new request
 is pending/failed, it does not display that snapshot's angles as current values;
 it labels the retained snapshot's site and epoch. Altitude is editable and
-included in query/result matching. Real imagery remains missing and the neutral
-reference-sphere fallback remains in place.
+included in query/result matching. The reviewed supplied LROC visual texture is
+restored (see assets/README.md); the neutral reference-sphere fallback remains
+in place if loading fails.
 
 ## Tests and live limitation
 

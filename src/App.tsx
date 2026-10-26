@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 
 import * as THREE from "three";
+import { lunarSiteToPosition } from "./science/lunar-map";
 import { MoonModel, type TextureStatus } from "./components/MoonModel";
 import { validateAltitude, validateSiteTime } from "../shared/validation";
 import { formatAngle, adaptLegacyHorizons } from "./science/horizons";
@@ -104,28 +105,7 @@ function latLonToVec3(
   lon: number,
   radius = 1
 ) {
-  const phi =
-    THREE.MathUtils.degToRad(
-      90 - lat
-    );
-
-  const theta =
-    THREE.MathUtils.degToRad(
-      lon + 180
-    );
-
-  return new THREE.Vector3(
-    -radius *
-      Math.sin(phi) *
-      Math.cos(theta),
-
-    radius *
-      Math.cos(phi),
-
-    radius *
-      Math.sin(phi) *
-      Math.sin(theta)
-  );
+  return new THREE.Vector3(...lunarSiteToPosition(lat, lon, radius));
 }
 
 /* ========================================
@@ -1574,7 +1554,7 @@ export default function App() {
               </span>
 
               <strong>
-                {textureStatus === "AVAILABLE" ? "LROC MORPHOLOGY IMAGERY" : "REFERENCE SPHERE · IMAGERY UNAVAILABLE"}
+                {textureStatus === "AVAILABLE" ? "LROC MORPHOLOGY IMAGERY" : textureStatus === "LOADING" ? "LROC IMAGERY · LOADING" : "REFERENCE SPHERE · IMAGERY UNAVAILABLE"}
               </strong>
             </div>
 
