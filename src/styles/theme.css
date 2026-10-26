@@ -2804,18 +2804,21 @@ input:focus-visible {
       56px
       62vh
       auto
+      auto
       auto;
 
     grid-template-areas:
       "top"
       "stage"
+      "left"
       "right"
       "bottom";
   }
 
   .left-rail {
-    display:
-      none;
+    display: block;
+    max-height: none;
+    overflow: visible;
   }
 
   .quality,

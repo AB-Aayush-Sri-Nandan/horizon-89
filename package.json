@@ -7,7 +7,18 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc -b --pretty false && tsc -p tsconfig.tests.json",
+    "test": "node --test tests/*.test.ts",
+    "test:science": "python3 -m unittest discover -s science/tests -p test_kernels.py -v",
+    "test:browser": "playwright test",
+    "check:secrets": "python3 scripts/check_secrets.py",
+    "assets:moon": "node scripts/convert-moon.cjs",
+    "dev:api": "node --use-env-proxy --use-system-ca --env-file-if-exists=.env server/index.ts",
+    "test:backend": "node --test tests/backend/*.test.ts",
+    "test:live": "node --use-env-proxy --use-system-ca scripts/live-horizons-smoke.ts",
+    "test:celestial": "science/.venv/bin/python -m unittest discover -s science/tests -p test_engine.py -v",
+    "science:setup": "bash science/scripts/setup_science.sh"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",
@@ -15,6 +26,7 @@
     "@fontsource-variable/space-grotesk": "^5.3.0",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.1",
+    "express": "5.3.0",
     "lucide-react": "^1.55.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -22,6 +34,8 @@
     "three": "^0.186.1"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/express": "5.0.6",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
@@ -29,5 +43,8 @@
     "oxlint": "^1.81.0",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
+  },
+  "engines": {
+    "node": ">=24.5 <25"
   }
 }

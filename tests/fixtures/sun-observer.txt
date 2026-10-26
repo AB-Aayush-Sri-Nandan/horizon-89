@@ -1,0 +1,8 @@
+CONTROLLED TEST FIXTURE — NOT A RECORDED NASA RESPONSE.
+Target body name: Sun (10) {source: FIXTURE}
+Center body name: Moon (301) {source: FIXTURE}
+Atmos refraction: NO (AIRLESS)
+ Date__(UT)__HR:MN:SS.fff, , , Azi____(a-app), Elev_(a-app),
+$$SOE
+ 2026-Oct-10 06:00:00.123, , , 189.965237693, 0.208258608,
+$$EOE

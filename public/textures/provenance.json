@@ -1,0 +1,89 @@
+{
+  "sourceProduct": "WAC_GLOBAL_E000N0000_008P",
+  "filename": "WAC_GLOBAL_E000N0000_008P.TIF",
+  "sourcePath": "assets/source/lroc/WAC_GLOBAL_E000N0000_008P.TIF",
+  "sourceBytes": 4153799,
+  "sourceSha256": "8a9077d46618ae617234d38794bcaef3a79be9df63e7dbcf1362ec2fb5fe6164",
+  "sourceUrl": "https://data.lroc.im-ldi.com/lroc/view_rdr_product/WAC_GLOBAL_E000N0000_008P",
+  "officialDownloadUrl": "https://pds.lroc.im-ldi.com/data/LRO-L-LROC-5-RDR-V1.0/LROLRC_2001/EXTRAS/BROWSE/WAC_GLOBAL/WAC_GLOBAL_E000N0000_008P.TIF",
+  "sourceIdentity": "User-supplied attachment; dimensions, resolution, projection and georeferencing consistent with official LROC product page. Official byte-for-byte comparison blocked by proxy403 on pds.lroc.im-ldi.com; no independent upstream checksum verification.",
+  "attribution": "NASA / GSFC / Arizona State University (LROC)",
+  "kind": "MORPHOLOGY_IMAGERY",
+  "scientificUse": "VISUAL_TEXTURE_ONLY",
+  "notFor": [
+    "ELEVATION",
+    "SLOPE",
+    "TERRAIN_HORIZON",
+    "SCIENTIFIC_DISPLACEMENT",
+    "SOLAR_SHADOW_ANALYSIS"
+  ],
+  "sourceMetadata": {
+    "format": "tiff",
+    "width": 2880,
+    "height": 1440,
+    "channels": 1,
+    "bitsPerSample": 8,
+    "depth": "uchar",
+    "orientation": 1,
+    "hasAlpha": false,
+    "hasProfile": false,
+    "compression": "UNCOMPRESSED",
+    "photometric": "BLACK_IS_ZERO",
+    "projection": "EQUIRECTANGULAR / SIMPLE_CYLINDRICAL",
+    "extentDegrees": {
+      "west": -180,
+      "east": 180,
+      "south": -90,
+      "north": 90
+    },
+    "pixelsPerDegree": 8,
+    "geotiff": {
+      "pixelScaleMeters": [
+        3790.4188030187,
+        3790.4188030187,
+        0
+      ],
+      "tiePoint": [
+        0,
+        0,
+        0,
+        -5458203.0763469,
+        2729101.5381735,
+        0
+      ],
+      "rasterType": "PixelIsArea",
+      "lunarRadiusMeters": 1737400,
+      "citation": "Equirectangular Moon|GCS Name = GCS_Moon|Datum = D_Moon|Ellipsoid = Moon_localRadius|Primem = Reference_Meridian||",
+      "nodata": 0,
+      "gdalOffset": -0.0039525691699605,
+      "gdalScale": 1.00395256917
+    }
+  },
+  "limitations": [
+    "Source display pixels retained unchanged; no GDAL scale/offset applied as radiometry or height.",
+    "Generic lunar GeoTIFF citation does not establish a precise NAIF MOON_ME frame realization.",
+    "No surveyed landmark registration, terrain heights or science-derived lighting validation.",
+    "The supplied image has unequal first/last-column brightness; RepeatWrapping does not make the source mosaic radiometrically seamless. No seam painting or blending is applied."
+  ],
+  "sourcePixelSha256": "5c4b53c8b9a81d4fee9704e481c11783ffb2b1b82f5d90bf46bed53d7da72616",
+  "conversion": {
+    "sharp": "0.35.5",
+    "libvips": "8.18.7",
+    "outputColourspace": "b-w",
+    "compressionLevel": 9,
+    "resize": false,
+    "crop": false,
+    "enhancement": false,
+    "pixelValuesPreserved": true
+  },
+  "runtimeAsset": {
+    "filename": "moon-lro.png",
+    "format": "png",
+    "width": 2880,
+    "height": 1440,
+    "channels": 1,
+    "bitsPerSample": 8,
+    "bytes": 3411388,
+    "sha256": "c3bddf96dbf9c4c3b644b0fd91e5fba80f7725362c25c1523b33cd0b8e91dbf6"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "kernelSetId": "h89-de440-earth-261025-v1",
+  "status": "PINNED",
+  "kernels": [
+    {
+      "filename": "naif0012.tls",
+      "type": "LSK",
+      "sourceUrl": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls",
+      "expectedBytes": 5257,
+      "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b",
+      "coverage": {
+        "kind": "SUPPORT_KERNEL",
+        "note": "No independent ephemeris interval; usable dates depend on companion binary kernels and model applicability."
+      },
+      "purpose": "UTC/ET and leap seconds",
+      "compatibilityNotes": "Leap-second applicability must be reviewed; no SPK coverage.",
+      "verificationStatus": "PINNED"
+    },
+    {
+      "filename": "de440s.bsp",
+      "type": "SPK",
+      "sourceUrl": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp",
+      "expectedBytes": 32726016,
+      "sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2",
+      "coverage": {
+        "kind": "DOCUMENTED",
+        "start": "1849 DEC 26",
+        "end": "2150 JAN 22",
+        "timeScale": "TDB",
+        "note": "Short DE440 SPK; inspect actual segment coverage/available body centres before engine activation."
+      },
+      "purpose": "Baseline DE440 planetary/lunar ephemerides",
+      "compatibilityNotes": "Confirm actual segment coverage and target-centre IDs from file; do not assume all planet centres are included.",
+      "verificationStatus": "PINNED"
+    },
+    {
+      "filename": "pck00011.tpc",
+      "type": "TEXT_PCK",
+      "sourceUrl": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/pck00011.tpc",
+      "expectedBytes": 131226,
+      "sha256": "3dff7b1dbeceaa01f25467767d3fa25816051c85d162d1edf04acb310ee28bb1",
+      "coverage": {
+        "kind": "SUPPORT_KERNEL",
+        "note": "No independent ephemeris interval; usable dates depend on companion binary kernels and model applicability."
+      },
+      "purpose": "Body constants and generic orientation",
+      "compatibilityNotes": "Not a substitute for high-precision lunar or terrestrial binary PCK.",
+      "verificationStatus": "PINNED"
+    },
+    {
+      "filename": "moon_pa_de440_200625.bpc",
+      "type": "BINARY_PCK",
+      "sourceUrl": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.bpc",
+      "expectedBytes": 12863488,
+      "sha256": "60cd55aa401ea2ea97360636f567554bfe4e37bb829f901b4460a455dfaf783f",
+      "coverage": {
+        "kind": "OFFICIAL_COMMENT",
+        "start": "1549 DEC 31 00:00:00.000",
+        "end": "2650 JAN 25 00:00:00.000",
+        "timeScale": "ET",
+        "sourceUrl": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.cmt"
+      },
+      "purpose": "DE440 lunar principal-axis orientation",
+      "compatibilityNotes": "The official moon_de440_250416.tf explicitly declares compatibility with moon_pa_de440_200625.bpc. MOON_PA aliases MOON_PA_DE440 (31008); MOON_ME aliases MOON_ME_DE440_ME421 (31009), closely aligned with DE421 ME, not assumed identical.",
+      "verificationStatus": "PINNED"
+    },
+    {
+      "filename": "moon_de440_250416.tf",
+      "type": "FK",
+      "sourceUrl": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf",
+      "expectedBytes": 19478,
+      "sha256": "a47c71e9c9f33796bdafb2c9d69a7ee447b6016ecad80f71cd6f3e479f9cf768",
+      "coverage": {
+        "kind": "SUPPORT_KERNEL",
+        "note": "No independent ephemeris interval; usable dates depend on companion binary kernels and model applicability."
+      },
+      "purpose": "Lunar MOON_ME / MOON_PA frame definitions",
+      "compatibilityNotes": "The official moon_de440_250416.tf explicitly declares compatibility with moon_pa_de440_200625.bpc. MOON_PA aliases MOON_PA_DE440 (31008); MOON_ME aliases MOON_ME_DE440_ME421 (31009), closely aligned with DE421 ME, not assumed identical.",
+      "verificationStatus": "PINNED"
+    },
+    {
+      "filename": "earth_000101_270121_261025.bpc",
+      "type": "BINARY_PCK",
+      "sourceUrl": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_000101_270121_261025.bpc",
+      "expectedBytes": 5153792,
+      "sha256": "1ff7c46144b1a2cd10cb44642a71ed58c99870782ef5fe6b05aef5a8f2c0585d",
+      "coverage": {
+        "kind": "OFFICIAL_COMMENT",
+        "start": "2000 JAN 01 00:01:04.183",
+        "end": "2027 JAN 21 00:01:09.184",
+        "timeScale": "TDB",
+        "sourceUrl": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_000101_270121_261025.cmt",
+        "note": "Mixed reconstructed/predicted Earth orientation; inspect comment and accuracy before scientific use."
+      },
+      "purpose": "Pinned dated high-precision Earth orientation (ITRF93)",
+      "compatibilityNotes": "Dated immutable-name snapshot pinned from official directory; ITRF93. No mutable latest alias. Outside coverage must fail; do not silently extrapolate.",
+      "verificationStatus": "PINNED"
+    }
+  ],
+  "pinningMethod": "SHA-256 and size measured from official NAIF HTTPS downloads on 2026-10-26; no publisher-signed SHA-256 assertion. Independent second downloads validated against these pins."
+}

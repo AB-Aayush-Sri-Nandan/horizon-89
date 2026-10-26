@@ -1,0 +1,4980 @@
+{
+  "capabilities": {
+    "status": "COMPUTED",
+    "kernelSetId": "h89-de440-earth-261025-v1",
+    "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+    "toolkitVersion": "CSPICE_N0067",
+    "spiceypyVersion": "8.3.0",
+    "numpyVersion": "2.5.4",
+    "kernels": [
+      {
+        "filename": "naif0012.tls",
+        "type": "LSK",
+        "expectedBytes": 5257,
+        "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b"
+      },
+      {
+        "filename": "de440s.bsp",
+        "type": "SPK",
+        "expectedBytes": 32726016,
+        "sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"
+      },
+      {
+        "filename": "pck00011.tpc",
+        "type": "TEXT_PCK",
+        "expectedBytes": 131226,
+        "sha256": "3dff7b1dbeceaa01f25467767d3fa25816051c85d162d1edf04acb310ee28bb1"
+      },
+      {
+        "filename": "moon_pa_de440_200625.bpc",
+        "type": "BINARY_PCK",
+        "expectedBytes": 12863488,
+        "sha256": "60cd55aa401ea2ea97360636f567554bfe4e37bb829f901b4460a455dfaf783f"
+      },
+      {
+        "filename": "moon_de440_250416.tf",
+        "type": "FK",
+        "expectedBytes": 19478,
+        "sha256": "a47c71e9c9f33796bdafb2c9d69a7ee447b6016ecad80f71cd6f3e479f9cf768"
+      },
+      {
+        "filename": "earth_000101_270121_261025.bpc",
+        "type": "BINARY_PCK",
+        "expectedBytes": 5153792,
+        "sha256": "1ff7c46144b1a2cd10cb44642a71ed58c99870782ef5fe6b05aef5a8f2c0585d"
+      }
+    ],
+    "bodies": [
+      {
+        "naifId": 1,
+        "name": "MERCURY BARYCENTER",
+        "identity": "SYSTEM_BARYCENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 2,
+        "name": "VENUS BARYCENTER",
+        "identity": "SYSTEM_BARYCENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 3,
+        "name": "EARTH BARYCENTER",
+        "identity": "SYSTEM_BARYCENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 4,
+        "name": "MARS BARYCENTER",
+        "identity": "SYSTEM_BARYCENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 5,
+        "name": "JUPITER BARYCENTER",
+        "identity": "SYSTEM_BARYCENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 6,
+        "name": "SATURN BARYCENTER",
+        "identity": "SYSTEM_BARYCENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 7,
+        "name": "URANUS BARYCENTER",
+        "identity": "SYSTEM_BARYCENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 8,
+        "name": "NEPTUNE BARYCENTER",
+        "identity": "SYSTEM_BARYCENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 9,
+        "name": "PLUTO BARYCENTER",
+        "identity": "SYSTEM_BARYCENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 10,
+        "name": "SUN",
+        "identity": "BODY_CENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 199,
+        "name": "MERCURY",
+        "identity": "BODY_CENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 299,
+        "name": "VENUS",
+        "identity": "BODY_CENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 301,
+        "name": "MOON",
+        "identity": "BODY_CENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "naifId": 399,
+        "name": "EARTH",
+        "identity": "BODY_CENTRE",
+        "coverageET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageCalendarTDB": [
+          [
+            "1849 DEC 26 00:00:00.000",
+            "2150 JAN 22 00:00:00.000"
+          ]
+        ]
+      }
+    ],
+    "lunarFrameDefinitions": {
+      "MOON_PA": {
+        "frameId": 31000,
+        "frameInfo": [
+          301,
+          4,
+          31000
+        ]
+      },
+      "MOON_ME": {
+        "frameId": 31001,
+        "frameInfo": [
+          301,
+          4,
+          31001
+        ]
+      },
+      "MOON_PA_DE440": {
+        "frameId": 31008,
+        "frameInfo": [
+          301,
+          2,
+          31008
+        ]
+      },
+      "MOON_ME_DE440_ME421": {
+        "frameId": 31009,
+        "frameInfo": [
+          301,
+          4,
+          31009
+        ]
+      }
+    },
+    "frames": [
+      {
+        "name": "MOON_PA",
+        "frameId": 31000,
+        "bodyNaifId": 301,
+        "frameClass": 4,
+        "classId": 31000,
+        "apiEvaluationDomainET": null,
+        "coverageET": [
+          [
+            -14200747200.0,
+            20514081600.0
+          ]
+        ],
+        "coverageNote": "Actual binary segment union",
+        "coverageCalendarTDB": [
+          [
+            "1549 DEC 31 00:00:00.000",
+            "2650 JAN 25 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "name": "MOON_ME",
+        "frameId": 31001,
+        "bodyNaifId": 301,
+        "frameClass": 4,
+        "classId": 31001,
+        "apiEvaluationDomainET": null,
+        "coverageET": [
+          [
+            -14200747200.0,
+            20514081600.0
+          ]
+        ],
+        "coverageNote": "Actual binary segment union",
+        "coverageCalendarTDB": [
+          [
+            "1549 DEC 31 00:00:00.000",
+            "2650 JAN 25 00:00:00.000"
+          ]
+        ]
+      },
+      {
+        "name": "ITRF93",
+        "frameId": 13000,
+        "bodyNaifId": 399,
+        "frameClass": 2,
+        "classId": 3000,
+        "apiEvaluationDomainET": null,
+        "coverageET": [
+          [
+            -43135.816087188054,
+            853761669.1844847
+          ]
+        ],
+        "coverageNote": "Actual binary segment union",
+        "coverageCalendarTDB": [
+          [
+            "2000 JAN 01 00:01:04.183",
+            "2027 JAN 21 00:01:09.184"
+          ]
+        ]
+      },
+      {
+        "name": "IAU_SUN",
+        "frameId": 10010,
+        "bodyNaifId": 10,
+        "frameClass": 2,
+        "classId": 10,
+        "apiEvaluationDomainET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageET": null,
+        "coverageNote": "Text PCK has no segment-defined validity interval; computable is not certified accuracy."
+      },
+      {
+        "name": "IAU_MERCURY",
+        "frameId": 10011,
+        "bodyNaifId": 199,
+        "frameClass": 2,
+        "classId": 199,
+        "apiEvaluationDomainET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageET": null,
+        "coverageNote": "Text PCK has no segment-defined validity interval; computable is not certified accuracy."
+      },
+      {
+        "name": "IAU_VENUS",
+        "frameId": 10012,
+        "bodyNaifId": 299,
+        "frameClass": 2,
+        "classId": 299,
+        "apiEvaluationDomainET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageET": null,
+        "coverageNote": "Text PCK has no segment-defined validity interval; computable is not certified accuracy."
+      },
+      {
+        "name": "IAU_EARTH",
+        "frameId": 10013,
+        "bodyNaifId": 399,
+        "frameClass": 2,
+        "classId": 399,
+        "apiEvaluationDomainET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageET": null,
+        "coverageNote": "Text PCK has no segment-defined validity interval; computable is not certified accuracy."
+      },
+      {
+        "name": "IAU_MARS",
+        "frameId": 10014,
+        "bodyNaifId": 499,
+        "frameClass": 2,
+        "classId": 499,
+        "apiEvaluationDomainET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageET": null,
+        "coverageNote": "Text PCK has no segment-defined validity interval; computable is not certified accuracy."
+      },
+      {
+        "name": "IAU_JUPITER",
+        "frameId": 10015,
+        "bodyNaifId": 599,
+        "frameClass": 2,
+        "classId": 599,
+        "apiEvaluationDomainET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageET": null,
+        "coverageNote": "Text PCK has no segment-defined validity interval; computable is not certified accuracy."
+      },
+      {
+        "name": "IAU_SATURN",
+        "frameId": 10016,
+        "bodyNaifId": 699,
+        "frameClass": 2,
+        "classId": 699,
+        "apiEvaluationDomainET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageET": null,
+        "coverageNote": "Text PCK has no segment-defined validity interval; computable is not certified accuracy."
+      },
+      {
+        "name": "IAU_URANUS",
+        "frameId": 10017,
+        "bodyNaifId": 799,
+        "frameClass": 2,
+        "classId": 799,
+        "apiEvaluationDomainET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageET": null,
+        "coverageNote": "Text PCK has no segment-defined validity interval; computable is not certified accuracy."
+      },
+      {
+        "name": "IAU_NEPTUNE",
+        "frameId": 10018,
+        "bodyNaifId": 899,
+        "frameClass": 2,
+        "classId": 899,
+        "apiEvaluationDomainET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageET": null,
+        "coverageNote": "Text PCK has no segment-defined validity interval; computable is not certified accuracy."
+      },
+      {
+        "name": "IAU_PLUTO",
+        "frameId": 10019,
+        "bodyNaifId": 999,
+        "frameClass": 2,
+        "classId": 999,
+        "apiEvaluationDomainET": [
+          [
+            -4734072000.0,
+            4735368000.0
+          ]
+        ],
+        "coverageET": null,
+        "coverageNote": "Text PCK has no segment-defined validity interval; computable is not certified accuracy."
+      }
+    ],
+    "centres": {
+      "SUN": 10,
+      "SSB": 0,
+      "EARTH": 399,
+      "MOON": 301
+    },
+    "stateFrame": "J2000",
+    "aberrationCorrection": "NONE",
+    "timePolicy": "Canonical UTC >=1972, str2et with pinned LSK; ET=TDB seconds past J2000, no leap-second-labelled :60 input.",
+    "earthLastDataUTC": "2026-10-25T00:00:00.000Z",
+    "lastLSKLeapEntryUTC": "2017-01-01T00:00:00.000Z",
+    "limitations": [
+      "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+      "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+      "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+    ]
+  },
+  "statesAndOrientations": [
+    {
+      "schemaVersion": "2A.1",
+      "status": "COMPUTED",
+      "complete": true,
+      "timeUTC": "2000-01-01T12:00:00.000Z",
+      "ephemerisTime": {
+        "secondsPastJ2000TDB": 64.18392728473108,
+        "method": "STR2ET_PINNED_LSK"
+      },
+      "reference": {
+        "frame": "J2000",
+        "centre": "SUN",
+        "aberrationCorrection": "NONE"
+      },
+      "bodies": [
+        {
+          "status": "COMPUTED",
+          "naifId": 10,
+          "name": "SUN",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 199,
+          "name": "MERCURY",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              -19459351.856331754,
+              -59928515.19333118,
+              -29993311.35918167
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              36.99547965473248,
+              -8.528173118698211,
+              -8.392369335949423
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 299,
+          "name": "VENUS",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              -107456405.33254853,
+              -6924583.802699613,
+              3685256.901900786
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              1.3826378617110928,
+              -32.017771281284354,
+              -14.491860576073814
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 399,
+          "name": "EARTH",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              -26500945.987816315,
+              132757095.24859312,
+              57556578.84026608
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -29.7941905618471,
+              -5.018408841840122,
+              -2.175548186346022
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 301,
+          "name": "MOON",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              -26792513.064324625,
+              132490335.66644871,
+              57480457.01385405
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -29.150542221650916,
+              -5.684391410033453,
+              -2.4768441314261613
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 4,
+          "name": "MARS BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              208048215.26040688,
+              211154.3508216188,
+              -5528460.194057782
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              1.1624758571784173,
+              23.918409509361886,
+              10.93917712689281
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 5,
+          "name": "JUPITER BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              598567075.9130824,
+              409387003.73316467,
+              160894639.65520793
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -7.9098501361647156,
+              10.183489301910976,
+              4.557715707266112
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 6,
+          "name": "SATURN BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              958384647.2032623,
+              923716050.1926179,
+              340301048.04350656
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -7.432025167204988,
+              6.109173262522833,
+              2.8429324275286523
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 7,
+          "name": "URANUS BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              2158975317.381629,
+              -1870910529.1480207,
+              -849968619.2245163
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              4.637023530091544,
+              4.262854775074414,
+              1.801424321896079
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 8,
+          "name": "NEPTUNE BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              2515046715.1682262,
+              -3437773918.7171125,
+              -1469713389.0566826
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              4.465901804648286,
+              2.8888066726998582,
+              1.0714519475101079
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 9,
+          "name": "PLUTO BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              -1477331329.4188309,
+              -4185579220.534319,
+              -860740125.9564984
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              5.244151484863902,
+              -1.952378715518096,
+              -2.190516812411281
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2000-01-01T12:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.165Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        }
+      ],
+      "orientations": {
+        "MOON_PA": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "MOON_PA",
+          "frameId": 31000,
+          "bodyNaifId": 301,
+          "matrixJ2000ToBody": [
+            [
+              0.7839389338097648,
+              0.5583591567871218,
+              0.2714310227096077
+            ],
+            [
+              -0.6204370257995645,
+              0.720300507007507,
+              0.3102016708880189
+            ],
+            [
+              -0.02230795988430608,
+              -0.4115850235816442,
+              0.9110983060510526
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.1952819248875873,
+            0.07947211326416591,
+            -0.3189274467781744,
+            0.9240316210590855
+          ],
+          "angularVelocityJ2000RadS": [
+            -5.8888801161494685e-08,
+            -1.096159255978512e-06,
+            2.4250780136885684e-06
+          ],
+          "model": "DE440_BINARY_LUNAR_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9929952824246148,
+            "orbitTargetNaifId": 301,
+            "orbitCentreNaifId": 399,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.166Z",
+            "frame": "J2000",
+            "centre": "301",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone."
+            ]
+          }
+        },
+        "MOON_ME": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "MOON_ME",
+          "frameId": 31001,
+          "bodyNaifId": 301,
+          "matrixJ2000ToBody": [
+            [
+              0.7841344215103119,
+              0.5579651084355342,
+              0.27167654806996344
+            ],
+            [
+              -0.6201790781864698,
+              0.7204847011379119,
+              0.3102897136644955
+            ],
+            [
+              -0.022607962811126057,
+              -0.41179695627182156,
+              0.9109951409435696
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.19535517617203702,
+            0.07961648491994346,
+            -0.3187381442090615,
+            0.924069026587272
+          ],
+          "angularVelocityJ2000RadS": [
+            -5.8888801161494685e-08,
+            -1.096159255978512e-06,
+            2.4250780136885684e-06
+          ],
+          "model": "DE440_BINARY_LUNAR_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9929952824246148,
+            "orbitTargetNaifId": 301,
+            "orbitCentreNaifId": 399,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.166Z",
+            "frame": "J2000",
+            "centre": "301",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone."
+            ]
+          }
+        },
+        "ITRF93": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "ITRF93",
+          "frameId": 13000,
+          "bodyNaifId": 399,
+          "matrixJ2000ToBody": [
+            [
+              0.18158512167911797,
+              -0.9833752300526954,
+              -2.2440774715581924e-05
+            ],
+            [
+              0.9833752299861341,
+              0.1815851209877247,
+              2.9758887722275418e-05
+            ],
+            [
+              -2.5189242268199814e-05,
+              -2.747147324505539e-05,
+              0.9999999993054102
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -1.8614397546406952e-05,
+            8.939497637807001e-07,
+            0.6396932383257165,
+            0.7686303145811146
+          ],
+          "angularVelocityJ2000RadS": [
+            -1.9637554581828367e-09,
+            -2.038938893964355e-09,
+            7.292115064340776e-05
+          ],
+          "model": "DATED_EARTH_BINARY_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9174952391195901,
+            "orbitTargetNaifId": 399,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.167Z",
+            "frame": "J2000",
+            "centre": "399",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Dated Earth PCK last data epoch 2026-10-25; later values include prediction."
+            ]
+          }
+        },
+        "IAU_SUN": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_SUN",
+          "frameId": 10010,
+          "bodyNaifId": 10,
+          "matrixJ2000ToBody": [
+            [
+              -0.15083844321429893,
+              0.8861587721008681,
+              0.43814426240379817
+            ],
+            [
+              -0.9809573827051835,
+              -0.18903079819628119,
+              0.04460908707284942
+            ],
+            [
+              0.12235349347232778,
+              -0.42307208364764326,
+              0.8977971010607901
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.18734677333836852,
+            0.1265015256402345,
+            -0.7479415656438961,
+            0.624084902006572
+          ],
+          "angularVelocityJ2000RadS": [
+            3.5058309356182224e-07,
+            -1.2122409885941034e-06,
+            2.572484660210492e-06
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "UNAVAILABLE",
+            "reason": "No planetary orbital-plane rotation classification for this frame."
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.167Z",
+            "frame": "J2000",
+            "centre": "10",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_MERCURY": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_MERCURY",
+          "frameId": 10011,
+          "bodyNaifId": 199,
+          "matrixJ2000ToBody": [
+            [
+              0.9315302201856056,
+              -0.27138158011961894,
+              -0.24208157065901575
+            ],
+            [
+              0.3519965102403721,
+              0.8401091621124015,
+              0.4126924430049551
+            ],
+            [
+              0.09137781820308936,
+              -0.4696473503668229,
+              0.8781124419081339
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.23092672872854617,
+            -0.0872732777238574,
+            0.16315104934548136,
+            0.955216182888217
+          ],
+          "angularVelocityJ2000RadS": [
+            1.1329322006284357e-07,
+            -5.822840673725254e-07,
+            1.0887122076472788e-06
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9999998242030191,
+            "orbitTargetNaifId": 199,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.167Z",
+            "frame": "J2000",
+            "centre": "199",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_VENUS": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_VENUS",
+          "frameId": 10012,
+          "bodyNaifId": 299,
+          "matrixJ2000ToBody": [
+            [
+              -0.9548158007035146,
+              0.2665273868157075,
+              0.13149121188922283
+            ],
+            [
+              -0.2966099124989079,
+              -0.882408653627028,
+              -0.365208882437881
+            ],
+            [
+              0.018690814168902045,
+              -0.38770880836179883,
+              0.9215923900425705
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.038731327375080914,
+            0.1941743784809907,
+            -0.9693834179999564,
+            0.14523079538447412
+          ],
+          "angularVelocityJ2000RadS": [
+            -5.5931316035320924e-09,
+            1.1601989990484886e-07,
+            -2.757818613861151e-07
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "RETROGRADE",
+            "spinOrbitCosine": -0.9989406312386107,
+            "orbitTargetNaifId": 299,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.167Z",
+            "frame": "J2000",
+            "centre": "299",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_EARTH": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_EARTH",
+          "frameId": 10013,
+          "bodyNaifId": 399,
+          "matrixJ2000ToBody": [
+            [
+              0.18077947336877168,
+              -0.9835236560492633,
+              -3.574409009548129e-11
+            ],
+            [
+              0.9835236560492633,
+              0.18077947336877168,
+              -1.9446432425521782e-10
+            ],
+            [
+              1.977220609461483e-10,
+              -4.498968725508483e-20,
+              1.0
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            6.327185216954707e-11,
+            -7.596167500281365e-11,
+            0.6400080181650963,
+            0.7683682298770467
+          ],
+          "angularVelocityJ2000RadS": [
+            1.4418121503399038e-14,
+            3.08055236570527e-12,
+            7.2921150186816e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.917484101082765,
+            "orbitTargetNaifId": 399,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.167Z",
+            "frame": "J2000",
+            "centre": "399",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_MARS": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_MARS",
+          "frameId": 10014,
+          "bodyNaifId": 499,
+          "matrixJ2000ToBody": [
+            [
+              -0.7042311853862575,
+              -0.7092169338841575,
+              0.03270746430741709
+            ],
+            [
+              0.5522715925054236,
+              -0.5761755266158399,
+              -0.602509627010625
+            ],
+            [
+              0.44615527077575784,
+              -0.4062426654364528,
+              0.7974411396072417
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            0.13647637306722799,
+            -0.28749544307831026,
+            0.8771898100766645,
+            0.3595255302496417
+          ],
+          "angularVelocityJ2000RadS": [
+            3.1624459354455495e-05,
+            -2.8795365481491047e-05,
+            5.6524365856997756e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9048905604156895,
+            "orbitTargetNaifId": 4,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "499",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_JUPITER": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_JUPITER",
+          "frameId": 10015,
+          "bodyNaifId": 599,
+          "matrixJ2000ToBody": [
+            [
+              0.23923828855006157,
+              -0.8779352771577202,
+              -0.41472242574236845
+            ],
+            [
+              0.9708511525408251,
+              0.20987160221080228,
+              0.11576679228354879
+            ],
+            [
+              -0.014597290905816294,
+              -0.4303295942733519,
+              0.9025537986129931
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.1780539860030282,
+            -0.13046025740407266,
+            0.6027943073412625,
+            0.7667567556555759
+          ],
+          "angularVelocityJ2000RadS": [
+            -2.5669808231098743e-06,
+            -7.567485103571727e-05,
+            0.00015871700462547142
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9985179350284535,
+            "orbitTargetNaifId": 5,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "599",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_SATURN": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_SATURN",
+          "frameId": 10016,
+          "bodyNaifId": 699,
+          "matrixJ2000ToBody": [
+            [
+              -0.9820132905381251,
+              0.17470869068845934,
+              0.07160147068607024
+            ],
+            [
+              -0.16835458565126,
+              -0.9818927625591574,
+              0.08685238237457162
+            ],
+            [
+              0.08547883186307886,
+              0.07323575787735434,
+              0.9936447519468178
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.03948012181533419,
+            -0.04023610329091881,
+            -0.9946796978228848,
+            0.08622455979814472
+          ],
+          "angularVelocityJ2000RadS": [
+            1.4000149623315804e-05,
+            1.1994917901924373e-05,
+            0.00016274409574576406
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.8931268436841908,
+            "orbitTargetNaifId": 6,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "699",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_URANUS": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_URANUS",
+          "frameId": 10017,
+          "bodyNaifId": 799,
+          "matrixJ2000ToBody": [
+            [
+              -0.8722143036073967,
+              0.30311132240163063,
+              -0.3838824492140776
+            ],
+            [
+              0.4407929060346394,
+              0.1469349500840349,
+              -0.8855008381889539
+            ],
+            [
+              -0.2119995815377986,
+              -0.9415591572895124,
+              -0.2617680858165513
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.24628176552737305,
+            -0.7551353089857444,
+            0.6048783488658712,
+            0.056904658552896455
+          ],
+          "angularVelocityJ2000RadS": [
+            2.1462243101101816e-05,
+            9.532080856590316e-05,
+            2.650066690298263e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "RETROGRADE",
+            "spinOrbitCosine": -0.13520326795545487,
+            "orbitTargetNaifId": 7,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "799",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_NEPTUNE": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_NEPTUNE",
+          "frameId": 10018,
+          "bodyNaifId": 899,
+          "matrixJ2000ToBody": [
+            [
+              0.021983762094368142,
+              -0.7239281301462405,
+              -0.68952503695453
+            ],
+            [
+              0.9332414485853966,
+              0.26222643485466957,
+              -0.24555589079808338
+            ],
+            [
+              0.35857650905547167,
+              -0.6380951020391691,
+              0.6813644604080944
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.13999363095477255,
+            -0.3737907878587322,
+            0.5910064008661532,
+            0.700994767697508
+          ],
+          "angularVelocityJ2000RadS": [
+            3.919718769311556e-05,
+            -6.975229212825246e-05,
+            7.448221279651123e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.880324070207211,
+            "orbitTargetNaifId": 8,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "899",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_PLUTO": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_PLUTO",
+          "frameId": 10019,
+          "bodyNaifId": 999,
+          "matrixJ2000ToBody": [
+            [
+              -0.33396796698665077,
+              -0.43481635808478925,
+              -0.8363014598628198
+            ],
+            [
+              -0.6548472418432335,
+              -0.5311316407066694,
+              0.5376562750406163
+            ],
+            [
+              -0.6779679099169169,
+              0.7272096774535675,
+              -0.10735733855105338
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            0.57107814970262,
+            -0.4770203519848589,
+            -0.6628993643725772,
+            0.08298050035343595
+          ],
+          "angularVelocityJ2000RadS": [
+            -7.719038104508623e-06,
+            8.279682752122315e-06,
+            -1.222322435844741e-06
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "RETROGRADE",
+            "spinOrbitCosine": -0.4941970258124647,
+            "orbitTargetNaifId": 9,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "999",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        }
+      },
+      "provenance": {
+        "provider": "NAIF_SPICE",
+        "sourceVersion": "8.3.0",
+        "model": "DE440 / pinned PCK models",
+        "observationTimeUTC": "2000-01-01T12:00:00.000Z",
+        "producedAtUTC": "2026-10-26T15:11:19.165Z",
+        "frame": "J2000",
+        "centre": "SUN",
+        "aberrationCorrection": "NONE",
+        "kernelSetId": "h89-de440-earth-261025-v1",
+        "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+        "toolkitVersion": "CSPICE_N0067",
+        "cacheStatus": "NOT_APPLICABLE",
+        "method": "SPICE_SPKEZR_GEOMETRIC",
+        "limitations": [
+          "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+          "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+          "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+        ]
+      }
+    },
+    {
+      "schemaVersion": "2A.1",
+      "status": "COMPUTED",
+      "complete": true,
+      "timeUTC": "2010-06-01T00:00:00.000Z",
+      "ephemerisTime": {
+        "secondsPastJ2000TDB": 328622466.1849076,
+        "method": "STR2ET_PINNED_LSK"
+      },
+      "reference": {
+        "frame": "J2000",
+        "centre": "SUN",
+        "aberrationCorrection": "NONE"
+      },
+      "bodies": [
+        {
+          "status": "COMPUTED",
+          "naifId": 10,
+          "name": "SUN",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 199,
+          "name": "MERCURY",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              44214649.2355453,
+              -36488303.19391332,
+              -24075607.014004856
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              24.33289664802722,
+              33.8160031512273,
+              15.540849902074722
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 299,
+          "name": "VENUS",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              -98064505.80065574,
+              37591090.02183087,
+              23118290.95181344
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -14.40800356968485,
+              -29.65845000640679,
+              -12.432206989106891
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 399,
+          "name": "EARTH",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              -51198030.29442822,
+              -131000731.34036285,
+              -56792045.52916451
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              27.54543724800103,
+              -9.331510616277358,
+              -4.046693135924511
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 301,
+          "name": "MOON",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              -51014789.880003154,
+              -131330719.60896276,
+              -56924652.85616841
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              28.428897934940753,
+              -8.980790192492789,
+              -3.7998928196383037
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 4,
+          "name": "MARS BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              -245901160.43483442,
+              -15669936.881577019,
+              -545834.1451782502
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              2.338960012935092,
+              -20.086959393289426,
+              -9.276538813822286
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 5,
+          "name": "JUPITER BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              727438459.2771312,
+              -135910831.21659943,
+              -75966311.35472515
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              2.5617329355739638,
+              12.350409594296554,
+              5.2313818106302685
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 6,
+          "name": "SATURN BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              -1420399755.8832998,
+              -103288664.25471704,
+              18501314.679569423
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              0.0763902337127389,
+              -8.92105420790998,
+              -3.6878180094948476
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 7,
+          "name": "URANUS BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              3002355225.4502535,
+              -117013755.170433,
+              -93705939.46577957
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              0.2800408234211668,
+              5.950953999228592,
+              2.6023315534192686
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 8,
+          "name": "NEPTUNE BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              3751618368.160594,
+              -2250510111.455578,
+              -1014542142.665189
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              2.9542322803684935,
+              4.269433207504113,
+              1.674178354818321
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 9,
+          "name": "PLUTO BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              315648658.1971344,
+              -4509380390.637784,
+              -1502194177.9305673
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              5.5257335566997785,
+              -0.01944502166740124,
+              -1.6690481275717008
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2010-06-01T00:00:00.000Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.168Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        }
+      ],
+      "orientations": {
+        "MOON_PA": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "MOON_PA",
+          "frameId": 31000,
+          "bodyNaifId": 301,
+          "matrixJ2000ToBody": [
+            [
+              -0.41674284278097995,
+              0.8319491230295127,
+              0.36631415435559145
+            ],
+            [
+              -0.9086435070407282,
+              -0.39291253120562697,
+              -0.14137439631812182
+            ],
+            [
+              0.02631311656861595,
+              -0.39176574571038225,
+              0.9196886540478981
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.11882869432164611,
+            0.16135493293315736,
+            -0.826036323056454,
+            0.5267905845925143
+          ],
+          "angularVelocityJ2000RadS": [
+            6.994967208816278e-08,
+            -1.0427483007578646e-06,
+            2.4480042408123684e-06
+          ],
+          "model": "DE440_BINARY_LUNAR_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9930299610899678,
+            "orbitTargetNaifId": 301,
+            "orbitCentreNaifId": 399,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.169Z",
+            "frame": "J2000",
+            "centre": "301",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone."
+            ]
+          }
+        },
+        "MOON_ME": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "MOON_ME",
+          "frameId": 31001,
+          "bodyNaifId": 301,
+          "matrixJ2000ToBody": [
+            [
+              -0.4164338447414725,
+              0.8319288025050173,
+              0.36671149493355537
+            ],
+            [
+              -0.9087805847948943,
+              -0.3926383036660117,
+              -0.14125512802771764
+            ],
+            [
+              0.02647076979774637,
+              -0.3920837028707578,
+              0.9195486220366328
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.11901243305628455,
+            0.16143645734377043,
+            -0.8259268688031824,
+            0.5268957377008162
+          ],
+          "angularVelocityJ2000RadS": [
+            6.99496720881628e-08,
+            -1.0427483007578648e-06,
+            2.4480042408123684e-06
+          ],
+          "model": "DE440_BINARY_LUNAR_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.993029961089968,
+            "orbitTargetNaifId": 301,
+            "orbitCentreNaifId": 399,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.169Z",
+            "frame": "J2000",
+            "centre": "301",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone."
+            ]
+          }
+        },
+        "ITRF93": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "ITRF93",
+          "frameId": 13000,
+          "bodyNaifId": 399,
+          "matrixJ2000ToBody": [
+            [
+              -0.354507258212177,
+              -0.9350531868459638,
+              0.00037635633609633956
+            ],
+            [
+              0.9350526788706017,
+              -0.35450745793071214,
+              -0.0009746837516383111
+            ],
+            [
+              0.0010448022761220157,
+              6.3805358595514505e-06,
+              0.9999994541735973
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            0.000431724720681645,
+            -0.00029415466491434524,
+            0.8229541558186105,
+            0.5681075466033497
+          ],
+          "angularVelocityJ2000RadS": [
+            7.604195078208559e-08,
+            5.351288331440064e-10,
+            7.29211113998995e-05
+          ],
+          "model": "DATED_EARTH_BINARY_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9174829385719114,
+            "orbitTargetNaifId": 399,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.169Z",
+            "frame": "J2000",
+            "centre": "399",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Dated Earth PCK last data epoch 2026-10-25; later values include prediction."
+            ]
+          }
+        },
+        "IAU_SUN": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_SUN",
+          "frameId": 10010,
+          "bodyNaifId": 10,
+          "matrixJ2000ToBody": [
+            [
+              0.6497241119167713,
+              0.7179608253754695,
+              0.24978156781503652
+            ],
+            [
+              -0.7502587560495912,
+              0.5527587767410086,
+              0.36272514898570746
+            ],
+            [
+              0.12235349347232778,
+              -0.42307208364764326,
+              0.8977971010607901
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.22314134204298205,
+            0.036185507331828834,
+            -0.41692751540376016,
+            0.8803805980538433
+          ],
+          "angularVelocityJ2000RadS": [
+            3.505830935618223e-07,
+            -1.2122409885941032e-06,
+            2.5724846602104917e-06
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "UNAVAILABLE",
+            "reason": "No planetary orbital-plane rotation classification for this frame."
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.169Z",
+            "frame": "J2000",
+            "centre": "10",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_MERCURY": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_MERCURY",
+          "frameId": 10011,
+          "bodyNaifId": 199,
+          "matrixJ2000ToBody": [
+            [
+              0.2929894391925507,
+              -0.8300888038508951,
+              -0.4744573386965627
+            ],
+            [
+              0.9517416277470176,
+              0.3006187247145763,
+              0.06177585583736755
+            ],
+            [
+              0.09135131381152671,
+              -0.4696604731850148,
+              0.8781081809165292
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.16901370769958665,
+            -0.1799452031907883,
+            0.5666789251881091,
+            0.786084655877415
+          ],
+          "angularVelocityJ2000RadS": [
+            1.132769951026402e-07,
+            -5.823858676440827e-07,
+            1.0888668375804723e-06
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9999998237716782,
+            "orbitTargetNaifId": 199,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.169Z",
+            "frame": "J2000",
+            "centre": "199",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_VENUS": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_VENUS",
+          "frameId": 10012,
+          "bodyNaifId": 299,
+          "matrixJ2000ToBody": [
+            [
+              0.3148739546156907,
+              -0.872567650590941,
+              -0.373470330611257
+            ],
+            [
+              0.9489494434217134,
+              0.2971659049434837,
+              0.10577040592122583
+            ],
+            [
+              0.018690814168902045,
+              -0.38770880836179883,
+              0.9215923900425705
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.15501262821915224,
+            -0.12318640375993453,
+            0.5721784097821667,
+            0.7958693752120609
+          ],
+          "angularVelocityJ2000RadS": [
+            -5.593131603532104e-09,
+            1.1601989990484886e-07,
+            -2.7578186138611507e-07
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "RETROGRADE",
+            "spinOrbitCosine": -0.9989402812489656,
+            "orbitTargetNaifId": 299,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "299",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_EARTH": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_EARTH",
+          "frameId": 10013,
+          "bodyNaifId": 399,
+          "matrixJ2000ToBody": [
+            [
+              -0.35550228104668286,
+              -0.9346753444073636,
+              0.00035878626182767807
+            ],
+            [
+              0.9346748650427437,
+              -0.3555024620949698,
+              -0.0009466265068109032
+            ],
+            [
+              0.0010123378557242105,
+              -1.1793816175539104e-06,
+              0.9999994875852062
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            0.0004163721534689773,
+            -0.0002878222137468888,
+            0.8232563742126233,
+            0.5676695219147214
+          ],
+          "angularVelocityJ2000RadS": [
+            7.38208479947931e-08,
+            -8.292131796708992e-11,
+            7.292111282093805e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9174863375041511,
+            "orbitTargetNaifId": 399,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "399",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_MARS": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_MARS",
+          "frameId": 10014,
+          "bodyNaifId": 499,
+          "matrixJ2000ToBody": [
+            [
+              0.6411038504580954,
+              -0.47653767739443,
+              -0.601579333879852
+            ],
+            [
+              0.624454397700126,
+              0.7795889668589471,
+              0.04793483018403514
+            ],
+            [
+              0.4461418587408908,
+              -0.40639006480882583,
+              0.7973735367466752
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.12663070999215892,
+            -0.29202379169092396,
+            0.30687160158184756,
+            0.8969484871027597
+          ],
+          "angularVelocityJ2000RadS": [
+            3.162350849100216e-05,
+            -2.8805813755588538e-05,
+            5.651957471806698e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9048790587279946,
+            "orbitTargetNaifId": 4,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "499",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_JUPITER": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_JUPITER",
+          "frameId": 10015,
+          "bodyNaifId": 599,
+          "matrixJ2000ToBody": [
+            [
+              0.04294899843134032,
+              0.9015541364451182,
+              0.4305293516038621
+            ],
+            [
+              -0.9989705005314061,
+              0.04505221365782924,
+              0.0053138604198081085
+            ],
+            [
+              -0.014605567492453893,
+              -0.43031434684800657,
+              0.9025609343944578
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.15438252036666364,
+            0.15775160920893253,
+            -0.673527973120881,
+            0.7054364157178922
+          ],
+          "angularVelocityJ2000RadS": [
+            -2.568436366247409e-06,
+            -7.567216972398502e-05,
+            0.0001587182596566816
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9985186648604587,
+            "orbitTargetNaifId": 5,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "599",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_SATURN": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_SATURN",
+          "frameId": 10016,
+          "bodyNaifId": 699,
+          "matrixJ2000ToBody": [
+            [
+              -0.08866044259709333,
+              -0.9927793445103519,
+              0.080799127669075
+            ],
+            [
+              0.9923864862474794,
+              -0.095004356404852,
+              -0.07837878652723208
+            ],
+            [
+              0.08548910943429619,
+              0.07323486449564733,
+              0.9936439336052101
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            0.056347094429412624,
+            -0.0017430280427536311,
+            0.7377853232152214,
+            0.6726773250606982
+          ],
+          "angularVelocityJ2000RadS": [
+            1.4001832935217859e-05,
+            1.1994771579411203e-05,
+            0.00016274396171369186
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.8931347792338281,
+            "orbitTargetNaifId": 6,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "699",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_URANUS": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_URANUS",
+          "frameId": 10017,
+          "bodyNaifId": 799,
+          "matrixJ2000ToBody": [
+            [
+              -0.42247665661005473,
+              0.3298329682861231,
+              -0.8442296415378668
+            ],
+            [
+              0.8812318945926708,
+              -0.06838542502484299,
+              -0.467711216026282
+            ],
+            [
+              -0.2119995815377986,
+              -0.9415591572895124,
+              -0.2617680858165513
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.4763603820195744,
+            -0.6355822758309428,
+            0.5543225585835261,
+            0.24868143906841483
+          ],
+          "angularVelocityJ2000RadS": [
+            2.1462243101101812e-05,
+            9.532080856590314e-05,
+            2.6500666902982623e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "RETROGRADE",
+            "spinOrbitCosine": -0.13519147429800887,
+            "orbitTargetNaifId": 7,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "799",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_NEPTUNE": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_NEPTUNE",
+          "frameId": 10018,
+          "bodyNaifId": 899,
+          "matrixJ2000ToBody": [
+            [
+              0.8947613649961299,
+              0.44283950938802674,
+              -0.05740443044952334
+            ],
+            [
+              -0.26513257922317585,
+              0.6302903815385996,
+              0.7296840072074986
+            ],
+            [
+              0.3593143681300942,
+              -0.6376732736009079,
+              0.6813706634353822
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.38180502878502925,
+            -0.11635973649322125,
+            -0.19768593583045604,
+            0.8953243001798443
+          ],
+          "angularVelocityJ2000RadS": [
+            3.927784530357236e-05,
+            -6.970618078399253e-05,
+            7.44828908682065e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.8801939506885548,
+            "orbitTargetNaifId": 8,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "899",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_PLUTO": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_PLUTO",
+          "frameId": 10019,
+          "bodyNaifId": 999,
+          "matrixJ2000ToBody": [
+            [
+              0.2739054927333729,
+              0.3854406854634838,
+              0.8811420197901857
+            ],
+            [
+              0.6821548901630592,
+              0.5679802487827531,
+              -0.4605031409440185
+            ],
+            [
+              -0.6779679099169169,
+              0.7272096774535675,
+              -0.10735733855105338
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            0.45091090652746274,
+            0.5919104861802233,
+            0.11264648233835431,
+            0.6585074796395772
+          ],
+          "angularVelocityJ2000RadS": [
+            -7.719038104508625e-06,
+            8.279682752122316e-06,
+            -1.2223224358447403e-06
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "RETROGRADE",
+            "spinOrbitCosine": -0.4939078599504381,
+            "orbitTargetNaifId": 9,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "999",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        }
+      },
+      "provenance": {
+        "provider": "NAIF_SPICE",
+        "sourceVersion": "8.3.0",
+        "model": "DE440 / pinned PCK models",
+        "observationTimeUTC": "2010-06-01T00:00:00.000Z",
+        "producedAtUTC": "2026-10-26T15:11:19.168Z",
+        "frame": "J2000",
+        "centre": "SUN",
+        "aberrationCorrection": "NONE",
+        "kernelSetId": "h89-de440-earth-261025-v1",
+        "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+        "toolkitVersion": "CSPICE_N0067",
+        "cacheStatus": "NOT_APPLICABLE",
+        "method": "SPICE_SPKEZR_GEOMETRIC",
+        "limitations": [
+          "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+          "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+          "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+        ]
+      }
+    },
+    {
+      "schemaVersion": "2A.1",
+      "status": "COMPUTED",
+      "complete": true,
+      "timeUTC": "2026-10-10T06:00:00.123Z",
+      "ephemerisTime": {
+        "secondsPastJ2000TDB": 844884069.3053482,
+        "method": "STR2ET_PINNED_LSK"
+      },
+      "reference": {
+        "frame": "J2000",
+        "centre": "SUN",
+        "aberrationCorrection": "NONE"
+      },
+      "bodies": [
+        {
+          "status": "COMPUTED",
+          "naifId": 10,
+          "name": "SUN",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 199,
+          "name": "MERCURY",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              26892230.222449746,
+              -52354198.3112514,
+              -30754913.448580895
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              34.733008471546064,
+              20.994286456357898,
+              7.615615216375988
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 299,
+          "name": "VENUS",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              107335593.20987132,
+              16569636.894548064,
+              665362.3005239734
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -5.1291667801616745,
+              31.35051568445741,
+              14.43142037480235
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 399,
+          "name": "EARTH",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              143191657.10583985,
+              39128656.45194106,
+              16960887.69793655
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -8.988272659215596,
+              26.10243041474918,
+              11.31586453242432
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 301,
+          "name": "MOON",
+          "identity": "BODY_CENTRE",
+          "position": {
+            "xyz": [
+              142814194.2938871,
+              39066733.510790646,
+              16908359.642217968
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -8.820632267543992,
+              25.205772455154985,
+              10.851829909087556
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 4,
+          "name": "MARS BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              427729.4399063975,
+              213421273.14950126,
+              97879848.29914588
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -23.311487712767764,
+              1.6833691048808443,
+              1.4008433108195815
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 5,
+          "name": "JUPITER BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              -530112910.7928558,
+              538967339.167314,
+              243920067.85003975
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -9.890295924113243,
+              -7.54911323756015,
+              -2.994998512491817
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 6,
+          "name": "SATURN BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              1383253823.9029193,
+              273207881.2895515,
+              53275574.26519088
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -2.3984252873566043,
+              8.701114102875911,
+              3.6969804934937005
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 7,
+          "name": "URANUS BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              1331134356.3193858,
+              2375265393.7656655,
+              1021457804.7590134
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -6.115135153307801,
+              2.529295877703836,
+              1.194356721448352
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 8,
+          "name": "NEPTUNE BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              4463397577.281107,
+              236074071.65869385,
+              -14490181.196692487
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              -0.30170310946858436,
+              5.048709181086456,
+              2.073857005947895
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        },
+        {
+          "status": "COMPUTED",
+          "naifId": 9,
+          "name": "PLUTO BARYCENTER",
+          "identity": "SYSTEM_BARYCENTRE",
+          "position": {
+            "xyz": [
+              2990313729.768315,
+              -3872715216.1144037,
+              -2109404254.1183007
+            ],
+            "units": "km",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "velocity": {
+            "xyz": [
+              4.638194490163074,
+              2.29961684694199,
+              -0.6832406235215017
+            ],
+            "units": "km/s",
+            "frame": "J2000",
+            "centre": "SUN",
+            "epochUTC": "2026-10-10T06:00:00.123Z",
+            "aberrationCorrection": "NONE"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.170Z",
+            "frame": "J2000",
+            "centre": "SUN",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_SPKEZR_GEOMETRIC",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+            ]
+          }
+        }
+      ],
+      "orientations": {
+        "MOON_PA": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "MOON_PA",
+          "frameId": 31000,
+          "bodyNaifId": 301,
+          "matrixJ2000ToBody": [
+            [
+              0.9931640471920448,
+              0.11300291058682733,
+              0.029249231853563
+            ],
+            [
+              -0.11567667418537894,
+              0.9192892979024673,
+              0.3761995398872762
+            ],
+            [
+              0.015623137153839046,
+              -0.37701131144952954,
+              0.9260768805150996
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.19222244196144067,
+            0.0034774342309728114,
+            -0.058359950780881416,
+            0.9796083688915703
+          ],
+          "angularVelocityJ2000RadS": [
+            3.9216975675318803e-08,
+            -1.0028387821197133e-06,
+            2.4652866417595925e-06
+          ],
+          "model": "DE440_BINARY_LUNAR_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9932375530691634,
+            "orbitTargetNaifId": 301,
+            "orbitCentreNaifId": 399,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.171Z",
+            "frame": "J2000",
+            "centre": "301",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone."
+            ]
+          }
+        },
+        "MOON_ME": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "MOON_ME",
+          "frameId": 31001,
+          "bodyNaifId": 301,
+          "matrixJ2000ToBody": [
+            [
+              0.9932079345749638,
+              0.1125566502635996,
+              0.029478792016842916
+            ],
+            [
+              -0.11534997857335912,
+              0.9193269305512316,
+              0.3762078909411346
+            ],
+            [
+              0.015244052625865352,
+              -0.3770530403599589,
+              0.9260662090881251
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.19223344853043073,
+            0.0036327292819143824,
+            -0.05816215256059953,
+            0.9796174092744474
+          ],
+          "angularVelocityJ2000RadS": [
+            3.9216975675318823e-08,
+            -1.0028387821197133e-06,
+            2.465286641759593e-06
+          ],
+          "model": "DE440_BINARY_LUNAR_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9932375530691636,
+            "orbitTargetNaifId": 301,
+            "orbitCentreNaifId": 399,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.171Z",
+            "frame": "J2000",
+            "centre": "301",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone."
+            ]
+          }
+        },
+        "ITRF93": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "ITRF93",
+          "frameId": 13000,
+          "bodyNaifId": 399,
+          "matrixJ2000ToBody": [
+            [
+              -0.31758764955588464,
+              0.948228581370288,
+              0.0008014499733665637
+            ],
+            [
+              -0.948225311622147,
+              -0.3175886592976381,
+              0.0024903583298354626
+            ],
+            [
+              0.0026159603687391716,
+              3.095189777929663e-05,
+              0.9999965778908091
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.001052598088568417,
+            -0.0007765898913503011,
+            -0.8116607799358566,
+            0.5841276121356715
+          ],
+          "angularVelocityJ2000RadS": [
+            1.9084979426133702e-07,
+            2.3466829215261732e-09,
+            7.292090048860271e-05
+          ],
+          "model": "DATED_EARTH_BINARY_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9174795322383372,
+            "orbitTargetNaifId": 399,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.171Z",
+            "frame": "J2000",
+            "centre": "399",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Dated Earth PCK last data epoch 2026-10-25; later values include prediction."
+            ]
+          }
+        },
+        "IAU_SUN": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_SUN",
+          "frameId": 10010,
+          "bodyNaifId": 10,
+          "matrixJ2000ToBody": [
+            [
+              -0.9035258479243031,
+              -0.4218061109257222,
+              -0.07563495830888266
+            ],
+            [
+              0.4106953430071811,
+              -0.8019286856222061,
+              -0.43386601435057687
+            ],
+            [
+              0.12235349347232778,
+              -0.42307208364764326,
+              0.8977971010607901
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            0.012305858737942202,
+            -0.2257211007201736,
+            0.9491116418271482,
+            0.21928438585218565
+          ],
+          "angularVelocityJ2000RadS": [
+            3.5058309356182224e-07,
+            -1.2122409885941032e-06,
+            2.572484660210492e-06
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "UNAVAILABLE",
+            "reason": "No planetary orbital-plane rotation classification for this frame."
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.171Z",
+            "frame": "J2000",
+            "centre": "10",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_MERCURY": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_MERCURY",
+          "frameId": 10011,
+          "bodyNaifId": 199,
+          "matrixJ2000ToBody": [
+            [
+              -0.4011557020547611,
+              -0.8244211636160567,
+              -0.39925411418155615
+            ],
+            [
+              0.9114475554211785,
+              -0.31579965571516627,
+              -0.2636928728026988
+            ],
+            [
+              0.09130967323186265,
+              -0.4696810858786309,
+              0.8781014868124075
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.09558042012880778,
+            -0.22762609666248038,
+            0.8054590064960375,
+            0.5387824535567394
+          ],
+          "angularVelocityJ2000RadS": [
+            1.1321729118096136e-07,
+            -5.82369922192346e-07,
+            1.0887809393780514e-06
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9999998234366796,
+            "orbitTargetNaifId": 199,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.172Z",
+            "frame": "J2000",
+            "centre": "199",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_VENUS": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_VENUS",
+          "frameId": 10012,
+          "bodyNaifId": 299,
+          "matrixJ2000ToBody": [
+            [
+              0.2281827081819835,
+              0.899081526918849,
+              0.37361083983204596
+            ],
+            [
+              -0.9734389067385992,
+              0.20330835662103242,
+              0.10527301162033782
+            ],
+            [
+              0.018690814168902045,
+              -0.38770880836179883,
+              0.9215923900425705
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.16068755514847793,
+            0.11568627662397811,
+            -0.6103485326515407,
+            0.7669881770349505
+          ],
+          "angularVelocityJ2000RadS": [
+            -5.593131603532093e-09,
+            1.1601989990484886e-07,
+            -2.7578186138611507e-07
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "RETROGRADE",
+            "spinOrbitCosine": -0.9989396821517822,
+            "orbitTargetNaifId": 299,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.172Z",
+            "frame": "J2000",
+            "centre": "299",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_EARTH": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_EARTH",
+          "frameId": 10013,
+          "bodyNaifId": 399,
+          "matrixJ2000ToBody": [
+            [
+              -0.3161571641863606,
+              0.9487064657749331,
+              0.0008302592812950277
+            ],
+            [
+              -0.9487032589341882,
+              -0.3161582542589441,
+              0.0024667289246423736
+            ],
+            [
+              0.002602695005078789,
+              -7.795664293546023e-06,
+              0.999996612953233
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.0010579602249732173,
+            -0.0007577885891573149,
+            -0.8112200736234493,
+            0.5847395134818427
+          ],
+          "angularVelocityJ2000RadS": [
+            1.897915318096173e-07,
+            -5.653882958448788e-10,
+            7.292090319945801e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9174954510689024,
+            "orbitTargetNaifId": 399,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": false,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.172Z",
+            "frame": "J2000",
+            "centre": "399",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_MARS": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_MARS",
+          "frameId": 10014,
+          "bodyNaifId": 499,
+          "matrixJ2000ToBody": [
+            [
+              0.8561522608373242,
+              -0.06561618654865542,
+              -0.5125405567620483
+            ],
+            [
+              0.2607242979060164,
+              0.9112366368857231,
+              0.318858326029934
+            ],
+            [
+              0.4461234658080128,
+              -0.40662305352747646,
+              0.79726504099668
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.1921266398465613,
+            -0.2538795654693968,
+            0.08642358369338887,
+            0.9440145574512778
+          ],
+          "angularVelocityJ2000RadS": [
+            3.162220379301092e-05,
+            -2.8822328564275572e-05,
+            5.6511884101235446e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9048623288104967,
+            "orbitTargetNaifId": 4,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.172Z",
+            "frame": "J2000",
+            "centre": "499",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_JUPITER": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_JUPITER",
+          "frameId": 10015,
+          "bodyNaifId": 599,
+          "matrixJ2000ToBody": [
+            [
+              -0.46641548787047954,
+              0.8013648907988669,
+              0.37452757504550044
+            ],
+            [
+              -0.8844453761622947,
+              -0.41550241661538767,
+              -0.2124008436233482
+            ],
+            [
+              -0.014593466335305262,
+              -0.43031622509695505,
+              0.9025602346428891
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.10785023655748158,
+            0.1925829928967008,
+            -0.8343377821854822,
+            0.5051342223006233
+          ],
+          "angularVelocityJ2000RadS": [
+            -2.5663082383790366e-06,
+            -7.567250002353963e-05,
+            0.00015871813653272373
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.9985190873185411,
+            "orbitTargetNaifId": 5,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.172Z",
+            "frame": "J2000",
+            "centre": "599",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_SATURN": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_SATURN",
+          "frameId": 10016,
+          "bodyNaifId": 699,
+          "matrixJ2000ToBody": [
+            [
+              0.15270991177507343,
+              0.9845478523380765,
+              -0.08570419652578383
+            ],
+            [
+              -0.9845651497314629,
+              0.15906724034831093,
+              0.07300054097220574
+            ],
+            [
+              0.08550525586132865,
+              0.07323345891362491,
+              0.9936426478949236
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            7.670045460284327e-05,
+            -0.05637969643035036,
+            -0.6484337853188132,
+            0.7591804462738598
+          ],
+          "angularVelocityJ2000RadS": [
+            1.4004477477612612e-05,
+            1.1994541366174934e-05,
+            0.0001627437511336452
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.8931342859050682,
+            "orbitTargetNaifId": 6,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.172Z",
+            "frame": "J2000",
+            "centre": "699",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_URANUS": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_URANUS",
+          "frameId": 10017,
+          "bodyNaifId": 799,
+          "matrixJ2000ToBody": [
+            [
+              -0.9541915787598404,
+              0.1415623658654035,
+              0.2635877986447646
+            ],
+            [
+              -0.2111269960275133,
+              0.3056574060853961,
+              -0.9284389811148311
+            ],
+            [
+              -0.2119995815377986,
+              -0.9415591572895124,
+              -0.2617680858165513
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.02190377234242335,
+            0.7939800171701092,
+            -0.5888051644767336,
+            0.149747906086366
+          ],
+          "angularVelocityJ2000RadS": [
+            2.1462243101101812e-05,
+            9.532080856590316e-05,
+            2.6500666902982623e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "RETROGRADE",
+            "spinOrbitCosine": -0.13519831544700703,
+            "orbitTargetNaifId": 7,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.172Z",
+            "frame": "J2000",
+            "centre": "799",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_NEPTUNE": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_NEPTUNE",
+          "frameId": 10018,
+          "bodyNaifId": 899,
+          "matrixJ2000ToBody": [
+            [
+              0.49407666363251035,
+              -0.48934845081017975,
+              -0.7186280986320007
+            ],
+            [
+              0.7911982624284987,
+              0.595711633638471,
+              0.138321939973053
+            ],
+            [
+              0.3604074915757052,
+              -0.636918945578997,
+              0.6814988604382598
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            -0.23284445964837744,
+            -0.32408953607286556,
+            0.3846136253330343,
+            0.8323591709276172
+          ],
+          "angularVelocityJ2000RadS": [
+            3.9397337939056095e-05,
+            -6.962372290404533e-05,
+            7.449690447076793e-05
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "PROGRADE",
+            "spinOrbitCosine": 0.8800417740941358,
+            "orbitTargetNaifId": 8,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.172Z",
+            "frame": "J2000",
+            "centre": "899",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        },
+        "IAU_PLUTO": {
+          "status": "COMPUTED",
+          "bodyFixedFrame": "IAU_PLUTO",
+          "frameId": 10019,
+          "bodyNaifId": 999,
+          "matrixJ2000ToBody": [
+            [
+              -0.27586410678607165,
+              -0.3870708299959733,
+              -0.8798154165240293
+            ],
+            [
+              -0.6813651794082304,
+              -0.5668705827471616,
+              0.46303264971909197
+            ],
+            [
+              -0.6779679099169169,
+              0.7272096774535675,
+              -0.10735733855105338
+            ]
+          ],
+          "matrixLayout": "ROW_MAJOR",
+          "quaternionJ2000ToBodyXYZW": [
+            0.5912621699618841,
+            -0.4517606840435441,
+            -0.6586686099591698,
+            0.11170046096112735
+          ],
+          "angularVelocityJ2000RadS": [
+            -7.719038104508623e-06,
+            8.279682752122315e-06,
+            -1.2223224358447401e-06
+          ],
+          "model": "GENERIC_IAU_TEXT_PCK",
+          "rotationRelativeToOrbit": {
+            "status": "DERIVED",
+            "sense": "RETROGRADE",
+            "spinOrbitCosine": -0.4941092702062155,
+            "orbitTargetNaifId": 9,
+            "orbitCentreNaifId": 10,
+            "usesSystemBarycentrePlane": true,
+            "method": "sign(dot(inertial angular velocity, orbital r cross v)); not PM-rate sign alone"
+          },
+          "provenance": {
+            "provider": "NAIF_SPICE",
+            "sourceVersion": "8.3.0",
+            "model": "DE440 / pinned PCK models",
+            "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+            "producedAtUTC": "2026-10-26T15:11:19.172Z",
+            "frame": "J2000",
+            "centre": "999",
+            "aberrationCorrection": "NONE",
+            "kernelSetId": "h89-de440-earth-261025-v1",
+            "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+            "toolkitVersion": "CSPICE_N0067",
+            "cacheStatus": "NOT_APPLICABLE",
+            "method": "SPICE_PXFORM_SXFORM",
+            "limitations": [
+              "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+              "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+              "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim.",
+              "Matrix maps J2000 column vectors into the named body frame; row-major wire storage.",
+              "Rotating-frame velocities require sxform and its derivative; do not apply this 3x3 matrix to velocity alone.",
+              "Generic IAU analytic orientation, not high-precision Earth/lunar orientation or a certified validity interval."
+            ]
+          }
+        }
+      },
+      "provenance": {
+        "provider": "NAIF_SPICE",
+        "sourceVersion": "8.3.0",
+        "model": "DE440 / pinned PCK models",
+        "observationTimeUTC": "2026-10-10T06:00:00.123Z",
+        "producedAtUTC": "2026-10-26T15:11:19.170Z",
+        "frame": "J2000",
+        "centre": "SUN",
+        "aberrationCorrection": "NONE",
+        "kernelSetId": "h89-de440-earth-261025-v1",
+        "kernelSetHash": "0051f80c8df807add2edd22df5d2bad54d46a5f355a4b7403dc7f6cc85227f1b",
+        "toolkitVersion": "CSPICE_N0067",
+        "cacheStatus": "NOT_APPLICABLE",
+        "method": "SPICE_SPKEZR_GEOMETRIC",
+        "limitations": [
+          "Geometric simultaneous states (abcorr=NONE), not apparent observer directions.",
+          "UTC/ET uses pinned naif0012.tls; leap seconds after its last 2017-01-01 entry are not predicted.",
+          "No terrain, Horizons replacement, display scaling, or flight-certified accuracy claim."
+        ]
+      }
+    }
+  ],
+  "geometricSubEarthDirections": [
+    {
+      "utc": "2026-10-01T00:00:00.000Z",
+      "subEarthLongitudeDegreesEast": -1.1921225509303968,
+      "subEarthLatitudeDegrees": -6.659836472426687,
+      "method": "Geometric Earth-centre direction in MOON_ME; not apparent libration or a physical/optical decomposition."
+    },
+    {
+      "utc": "2026-10-08T00:00:00.000Z",
+      "subEarthLongitudeDegreesEast": 4.614155345507352,
+      "subEarthLatitudeDegrees": 1.565456924604517,
+      "method": "Geometric Earth-centre direction in MOON_ME; not apparent libration or a physical/optical decomposition."
+    },
+    {
+      "utc": "2026-10-15T00:00:00.000Z",
+      "subEarthLongitudeDegreesEast": 2.083752722265822,
+      "subEarthLatitudeDegrees": 6.483191679955635,
+      "method": "Geometric Earth-centre direction in MOON_ME; not apparent libration or a physical/optical decomposition."
+    },
+    {
+      "utc": "2026-10-22T00:00:00.000Z",
+      "subEarthLongitudeDegreesEast": -5.824121872953506,
+      "subEarthLatitudeDegrees": -0.9303108856401737,
+      "method": "Geometric Earth-centre direction in MOON_ME; not apparent libration or a physical/optical decomposition."
+    }
+  ],
+  "crossValidation": "Internal CSPICE consistency and numerical invariants only; independent Horizons validation blocked and not retried."
+}

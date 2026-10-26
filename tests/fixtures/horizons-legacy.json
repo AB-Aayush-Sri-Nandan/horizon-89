@@ -1,0 +1,10 @@
+{
+  "_fixtureNote": "Client wire fixture from USER-SUPPLIED historical numbers. Not a captured JPL response or independently verified science.",
+  "source": "JPL Horizons",
+  "dataType": "AIRLESS_APPARENT_AZ_EL",
+  "status": "LIVE",
+  "lunarSite": {"latitude": -89, "longitude": 0},
+  "timeUTC": "2026-10-10T06:00:00.123Z",
+  "sun": {"azimuthDegrees": 189.965237693, "elevationDegrees": 0.208258608, "geometricallyAboveHorizon": true, "terrainVisibilityEvaluated": false, "surfaceIlluminationStatus": "REFERENCE_HORIZON_ONLY"},
+  "earth": {"azimuthDegrees": 4.934865511, "elevationDegrees": -3.873679512, "geometricallyAboveHorizon": false, "terrainVisibilityEvaluated": false, "communicationStatus": "REFERENCE_HORIZON_ONLY"}
+}
