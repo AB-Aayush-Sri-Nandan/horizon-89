@@ -1,2155 +1,1027 @@
+import { lazy, Suspense, useEffect, useState, useRef } from "react";
 import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-
-import {
-  Canvas,
-  useFrame,
-  useThree,
-} from "@react-three/fiber";
-
-import {
-  OrbitControls,
-  Stars,
-  useTexture,
-} from "@react-three/drei";
-
-import {
-  Activity,
-  Bot,
-  ChevronDown,
-  Copy,
+  ArrowUpRight,
   Crosshair,
-  Cpu,
-  LocateFixed,
-  MapPin,
+  Globe2,
+  Layers,
   Pause,
   Play,
+  RotateCcw,
   Search,
-  Send,
-  Sparkles,
-  X,
+  Settings2,
+  ZoomIn,
+  Satellite,
+  BookOpen,
+  Orbit,
 } from "lucide-react";
-
-import * as THREE from "three";
-
 import {
-  getLunarGeometry,
-  type HorizonsGeometryResponse,
-} from "./services/horizons";
-
-type Quality =
-  | "low"
-  | "medium"
-  | "high";
-
-type MissionSite = {
-  id: string;
-  provider: string;
-  name: string;
-  status: string;
-  lat: number | null;
-  lon: number | null;
-  note: string;
-};
-
-const MOON_TEXTURE =
-  "/textures/moon-lro.png";
-
-const initialSites: MissionSite[] = [
-  {
-    id: "manual",
-    provider: "HORIZON 89",
-    name: "Manual South-Pole Target",
-    status: "DEMO",
-    lat: -89,
-    lon: 0,
-    note:
-      "Demo coordinate used only for interface testing.",
-  },
-
-  {
-    id: "mission-2",
-    provider: "CLPS DATA",
-    name: "Mission Site Unavailable",
-    status: "UNSOURCED",
-    lat: null,
-    lon: null,
-    note:
-      "Official coordinates will be loaded later.",
-  },
-
-  {
-    id: "mission-3",
-    provider: "CLPS DATA",
-    name: "Mission Site Unavailable",
-    status: "UNSOURCED",
-    lat: null,
-    lon: null,
-    note:
-      "Official coordinates will be loaded later.",
-  },
+  missions,
+  missionCoordinates,
+  datasets,
+  type Coordinates,
+  type Mission,
+} from "./data/catalog";
+import {
+  advanceMinutes,
+  formatCoordinates,
+  utcDay,
+  validCoordinates,
+} from "./lib/science";
+import Telemetry from "./components/Telemetry";
+import Copilot from "./components/Copilot";
+import Readiness from "./components/Readiness";
+import TerrainPanel, { type TerrainLayers } from "./components/TerrainPanel";
+import SiteComparison from "./components/SiteComparison";
+import { useTerrain } from "./science/useTerrain";
+const MoonViewer = lazy(() => import("./components/MoonViewer"));
+const SolarExplorer = lazy(() => import("./components/SolarExplorer"));
+type Page = "control" | "science" | "missions" | "solar";
+const pages: { id: Page; label: string; icon: typeof Crosshair }[] = [
+  { id: "control", label: "Mission control", icon: Crosshair },
+  { id: "science", label: "Lunar science", icon: Layers },
+  { id: "missions", label: "CLPS intelligence", icon: Satellite },
+  { id: "solar", label: "Solar System", icon: Orbit },
 ];
-
-/* ========================================
-   MOON POSITION
-======================================== */
-
-function latLonToVec3(
-  lat: number,
-  lon: number,
-  radius = 1
-) {
-  const phi =
-    THREE.MathUtils.degToRad(
-      90 - lat
-    );
-
-  const theta =
-    THREE.MathUtils.degToRad(
-      lon + 180
-    );
-
-  return new THREE.Vector3(
-    -radius *
-      Math.sin(phi) *
-      Math.cos(theta),
-
-    radius *
-      Math.cos(phi),
-
-    radius *
-      Math.sin(phi) *
-      Math.sin(theta)
-  );
-}
-
-/* ========================================
-   MOON MODEL
-======================================== */
-
-function MoonModel() {
-  const texture =
-    useTexture(
-      MOON_TEXTURE
-    );
-
-  texture.colorSpace =
-    THREE.SRGBColorSpace;
-
-  texture.anisotropy = 4;
-
-  return (
-    <mesh>
-      <sphereGeometry
-        args={[
-          1,
-          128,
-          128,
-        ]}
-      />
-
-      <meshStandardMaterial
-        map={texture}
-        bumpMap={texture}
-        bumpScale={0.035}
-        roughness={1}
-        metalness={0}
-      />
-    </mesh>
-  );
-}
-
-/* ========================================
-   TARGET MARKER
-======================================== */
-
-function SiteMarker({
-  lat,
-  lon,
+function MissionDetail({
+  mission,
+  onEvent,
 }: {
-  lat: number;
-  lon: number;
+  mission: Mission;
+  onEvent: (date: string) => void;
 }) {
-  const position =
-    useMemo(
-      () =>
-        latLonToVec3(
-          lat,
-          lon,
-          1.01
-        ),
-      [lat, lon]
-    );
-
-  const quaternion =
-    useMemo(() => {
-      return new THREE.Quaternion()
-        .setFromUnitVectors(
-          new THREE.Vector3(
-            0,
-            0,
-            1
-          ),
-          position
-            .clone()
-            .normalize()
-        );
-    }, [position]);
-
-  const ring =
-    useRef<THREE.Mesh>(
-      null
-    );
-
-  useFrame(
-    ({ clock }) => {
-      if (!ring.current) {
-        return;
-      }
-
-      const p =
-        (
-          clock.elapsedTime *
-          0.65
-        ) % 1;
-
-      ring.current.scale
-        .setScalar(
-          1 + p * 2
-        );
-
-      const material =
-        ring.current
-          .material as
-          THREE.MeshBasicMaterial;
-
-      material.opacity =
-        0.7 *
-        (1 - p);
-    }
-  );
-
   return (
-    <group
-      position={position}
-      quaternion={
-        quaternion
-      }
-    >
-      <mesh>
-        <sphereGeometry
-          args={[
-            0.012,
-            18,
-            18,
-          ]}
-        />
-
-        <meshBasicMaterial
-          color="#dffbff"
-        />
-      </mesh>
-
-      <mesh ref={ring}>
-        <ringGeometry
-          args={[
-            0.018,
-            0.021,
-            48,
-          ]}
-        />
-
-        <meshBasicMaterial
-          color="#5ce1ff"
-          transparent
-          opacity={0.7}
-          depthWrite={
-            false
-          }
-          side={
-            THREE.DoubleSide
-          }
-        />
-      </mesh>
-    </group>
-  );
-}
-
-/* ========================================
-   CAMERA FLY TO
-======================================== */
-
-function CameraFlyTo({
-  target,
-}: {
-  target:
-    | THREE.Vector3
-    | null;
-}) {
-  const camera =
-    useThree(
-      (state) =>
-        state.camera
-    );
-
-  const goal =
-    useRef<
-      THREE.Vector3 | null
-    >(null);
-
-  useEffect(() => {
-    goal.current =
-      target
-        ? target
-            .clone()
-            .normalize()
-            .multiplyScalar(
-              3.4
-            )
-        : null;
-  }, [target]);
-
-  useFrame(
-    (_, delta) => {
-      if (
-        !goal.current
-      ) {
-        return;
-      }
-
-      camera.position.lerp(
-        goal.current,
-        1 -
-          Math.pow(
-            0.001,
-            delta
-          )
-      );
-
-      camera.lookAt(
-        0,
-        0,
-        0
-      );
-
-      if (
-        camera.position
-          .distanceTo(
-            goal.current
-          ) < 0.01
-      ) {
-        goal.current =
-          null;
-      }
-    }
-  );
-
-  return null;
-}
-
-/* ========================================
-   MOON SCENE
-======================================== */
-
-function MoonScene({
-  site,
-  quality,
-  onInteract,
-}: {
-  site: MissionSite;
-  quality: Quality;
-  onInteract: () => void;
-}) {
-  const target =
-    site.lat !== null &&
-    site.lon !== null
-      ? latLonToVec3(
-          site.lat,
-          site.lon
-        )
-      : null;
-
-  const isPolar =
-    site.lat !== null &&
-    Math.abs(
-      site.lat
-    ) >= 80;
-
-  const sunPosition:
-    [
-      number,
-      number,
-      number
-    ] =
-    isPolar
-      ? [
-          4,
-          -0.6,
-          2.5,
-        ]
-      : [
-          5,
-          1.5,
-          3,
-        ];
-
-  const ambientIntensity =
-    isPolar
-      ? 0.06
-      : 0.025;
-
-  const starCount =
-    quality === "high"
-      ? 4200
-      : quality ===
-        "medium"
-      ? 2200
-      : 700;
-
-  const maxDpr =
-    quality === "high"
-      ? 1.7
-      : quality ===
-        "medium"
-      ? 1.3
-      : 1;
-
-  return (
-    <Canvas
-      dpr={[
-        1,
-        maxDpr,
-      ]}
-      camera={{
-        position: [
-          0,
-          0,
-          3.4,
-        ],
-        fov: 34,
-      }}
-      gl={{
-        antialias:
-          quality !==
-          "low",
-
-        powerPreference:
-          "high-performance",
-      }}
-    >
-      <color
-        attach="background"
-        args={[
-          "#020408",
-        ]}
-      />
-
-      <ambientLight
-        intensity={
-          ambientIntensity
-        }
-        color="#9db4ff"
-      />
-
-      <directionalLight
-        position={
-          sunPosition
-        }
-        intensity={2.8}
-        color="#fff6e8"
-      />
-
-      <Stars
-        radius={60}
-        depth={40}
-        count={starCount}
-        factor={2.4}
-        fade
-        speed={0.1}
-      />
-
-      <MoonModel />
-
-      {site.lat !== null &&
-        site.lon !== null && (
-          <SiteMarker
-            lat={site.lat}
-            lon={site.lon}
-          />
-        )}
-
-      <CameraFlyTo
-        target={target}
-      />
-
-      <OrbitControls
-        makeDefault
-        enableDamping
-        dampingFactor={
-          0.08
-        }
-        enablePan={
-          false
-        }
-        minDistance={
-          2.2
-        }
-        maxDistance={
-          5
-        }
-        rotateSpeed={
-          0.55
-        }
-        onStart={
-          onInteract
-        }
-      />
-    </Canvas>
-  );
-}
-
-/* ========================================
-   GAUGE
-======================================== */
-
-function ArcGauge({
-  label,
-  value,
-  sun = false,
-  badgeLabel,
-  badgeTone = "cached",
-  detail,
-  note,
-}: {
-  label: string;
-  value: number | null;
-  sun?: boolean;
-  badgeLabel: string;
-  badgeTone?: "cached" | "demo";
-  detail: string;
-  note: string;
-}) {
-  const min = -90;
-  const max = 90;
-
-  const circumference =
-    Math.PI * 54;
-
-  const progress =
-    value === null
-      ? 0
-      : Math.min(
-          1,
-          Math.max(
-            0,
-            (value -
-              min) /
-              (max -
-                min)
-          )
-        );
-
-  return (
-    <section
-      className={`panel gauge-card ${
-        sun
-          ? "sun-gauge"
-          : ""
-      }`}
-    >
-      <header>
-        <span className="panel-label">
-          {label}
-        </span>
-
-        <span
-          className={`badge ${badgeTone}`}
-        >
-          {badgeLabel}
-        </span>
-      </header>
-
-      <svg
-        viewBox="0 0 140 82"
-        className="arc"
-      >
-        <path
-          d="M16 70 A54 54 0 0 1 124 70"
-          className="arc-track"
-        />
-
-        <path
-          d="M16 70 A54 54 0 0 1 124 70"
-          className="arc-fill"
-          style={{
-            strokeDasharray:
-              circumference,
-
-            strokeDashoffset:
-              circumference *
-              (1 -
-                progress),
-          }}
-        />
-
-        <line
-          x1="70"
-          y1="16"
-          x2="70"
-          y2="24"
-          className="zero-tick"
-        />
-
-        <text
-          x="70"
-          y="13"
-          textAnchor="middle"
-          className="zero-label"
-        >
-          0°
-        </text>
-      </svg>
-
-      <div className="gauge-number num">
-        {value === null
-          ? "N/A"
-          : value.toFixed(
-              2
-            )}
-
-        {value !==
-          null && (
-          <small>°</small>
-        )}
+    <>
+      <div className="row">
+        <span className="eyebrow">{mission.provider}</span>
+        <span className="badge">HISTORICAL</span>
       </div>
-
+      <h2>{mission.name}</h2>
+      <p>{mission.description}</p>
+      <dl className="detail-list">
+        <div>
+          <dt>Destination</dt>
+          <dd>{mission.destination}</dd>
+        </div>
+        <div>
+          <dt>Catalog status</dt>
+          <dd>{mission.status}</dd>
+        </div>
+        <div>
+          <dt>Surface coordinates</dt>
+          <dd>{mission.coordinateNote}</dd>
+          {mission.coordinateEvidence && (
+            <dd>
+              <a
+                href={mission.coordinateEvidence.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                As-landed coordinate source ↗
+              </a>
+              <p>
+                {mission.coordinateEvidence.convention} · precision{" "}
+                {mission.coordinateEvidence.precisionDegrees}° · uncertainty{" "}
+                {mission.coordinateEvidence.uncertaintyM === null
+                  ? "not supplied"
+                  : mission.coordinateEvidence.uncertaintyM + " m"}{" "}
+                · published {mission.coordinateEvidence.publishedOn}
+              </p>
+            </dd>
+          )}
+        </div>
+      </dl>
       <p>
-        {detail}
+        Landing outcome: {mission.landingOutcome}. {mission.resultsNote}
       </p>
-
-      <small>
-        {note}
-      </small>
-    </section>
-  );
-}
-
-/* ========================================
-   CLOCK
-======================================== */
-
-function UtcClock() {
-  const [
-    time,
-    setTime,
-  ] =
-    useState(
-      new Date()
-    );
-
-  useEffect(() => {
-    const id =
-      window.setInterval(
-        () =>
-          setTime(
-            new Date()
-          ),
-        1000
-      );
-
-    return () =>
-      window.clearInterval(
-        id
-      );
-  }, []);
-
-  return (
-    <span className="utc num">
-      {time
-        .toISOString()
-        .slice(
-          0,
-          19
-        )
-        .replace(
-          "T",
-          " "
-        )}{" "}
-      UTC
-    </span>
-  );
-}
-
-/* ========================================
-   COPILOT
-======================================== */
-
-function CopilotDock() {
-  const [
-    collapsed,
-    setCollapsed,
-  ] =
-    useState(false);
-
-  const [
-    input,
-    setInput,
-  ] =
-    useState("");
-
-  const [
-    message,
-    setMessage,
-  ] =
-    useState(
-      "Mission Copilot is in UI-only standby. The secure backend will be connected later."
-    );
-
-  function sendToCopilot(
-    prompt: string
-  ) {
-    setMessage(
-      `STANDBY — "${prompt}" was not sent. /api/copilot is not connected yet.`
-    );
-  }
-
-  const suggestions = [
-    "Explain this site",
-    "Show next sunset",
-    "Why can Earth LOS change?",
-  ];
-
-  if (collapsed) {
-    return (
-      <button
-        className="copilot-orb"
-        onClick={() =>
-          setCollapsed(
-            false
-          )
-        }
-      >
-        <Bot
-          size={20}
-        />
-
-        <span />
-      </button>
-    );
-  }
-
-  return (
-    <section className="copilot panel">
-
-      <header>
-        <div className="copilot-brand">
-          <div className="ai-icon">
-            <Sparkles
-              size={15}
-            />
-          </div>
-
+      <details className="mission-provenance">
+        <summary>Mission verification & coordinate reference</summary>
+        <dl className="detail-list">
           <div>
-            <span className="panel-label">
-              Mission Copilot
-            </span>
-
-            <strong>
-              STANDBY
-            </strong>
+            <dt>Verification status</dt>
+            <dd>
+              {missionCoordinates(mission)
+                ? "Reviewed as-landed coordinate record"
+                : "Historical transcription · exact landing coordinates unverified"}
+            </dd>
           </div>
-        </div>
-
-        <button
-          className="icon-btn"
-          onClick={() =>
-            setCollapsed(
-              true
-            )
-          }
-        >
-          <ChevronDown
-            size={16}
-          />
-        </button>
-      </header>
-
-      <div className="ai-message">
-        <div className="avatar">
-          H89
-        </div>
-
-        <div className="bubble">
+          <div>
+            <dt>Reference frame / convention</dt>
+            <dd>
+              {mission.coordinateEvidence
+                ? `${mission.coordinateEvidence.referenceFrame} / ${mission.coordinateEvidence.convention}`
+                : "Not supplied for a verified landing location"}
+            </dd>
+          </div>
+          <div>
+            <dt>Datum / reference radius</dt>
+            <dd>
+              {mission.coordinateEvidence
+                ? `${mission.coordinateEvidence.datum} / ${mission.coordinateEvidence.radiusM === null ? "Radius not supplied" : mission.coordinateEvidence.radiusM + " m"}`
+                : "Unavailable; no radius inferred from destination names"}
+            </dd>
+          </div>
+          <div>
+            <dt>Source access / publication</dt>
+            <dd>
+              {mission.coordinateEvidence?.accessedOn ??
+                mission.source.accessedOn ??
+                "Access date not recorded; source not reverified here"}{" "}
+              / {mission.source.asOf} historical snapshot
+            </dd>
+          </div>
+          <div>
+            <dt>Uncertainty</dt>
+            <dd>
+              {mission.coordinateEvidence?.uncertaintyM != null
+                ? mission.coordinateEvidence.uncertaintyM + " m"
+                : "Not supplied; displayed decimal places are not accuracy"}
+            </dd>
+          </div>
+        </dl>
+      </details>
+      <h3>Selected NASA investigations</h3>
+      <ul className="payloads">
+        {mission.payloads.map((payload) => (
+          <li key={payload}>{payload}</li>
+        ))}
+      </ul>
+      <h3>Verified historical events</h3>
+      <div className="event-list">
+        {mission.events.map((event) => (
+          <button key={event.date} onClick={() => onEvent(event.date)}>
+            <time>{event.date}</time>
+            <div>
+              <strong>
+                {event.title}
+                <ArrowUpRight size={14} />
+              </strong>
+              <p>{event.description}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+      <p className="source-line">
+        Historical snapshot as of {mission.source.asOf}. Dates are UTC calendar
+        dates; exact event times are not asserted.
+      </p>
+      <a href={mission.source.url} target="_blank" rel="noreferrer">
+        {mission.source.name} ↗
+      </a>
+    </>
+  );
+}
+function Science({
+  grid,
+  onGrid,
+  onPolar,
+  evidence,
+  layers,
+  onLayers,
+  site,
+}: {
+  grid: boolean;
+  onGrid: () => void;
+  onPolar: () => void;
+  evidence: ReturnType<typeof useTerrain>;
+  layers: TerrainLayers;
+  onLayers: (value: TerrainLayers) => void;
+  site: Coordinates | null;
+}) {
+  const [filter, setFilter] = useState("all");
+  return (
+    <>
+      <div className="page-intro">
+        <span className="eyebrow">89° SOUTH / LUNAR SCIENCE</span>
+        <h1>
+          Explore the edge of light<span className="red">.</span>
+        </h1>
+        <p>
+          At the lunar poles, low solar angles make terrain essential to
+          illumination and communication planning. Explore what the project can
+          establish—and which observations are still needed.
+        </p>
+      </div>
+      <div className="science-summary panel">
+        <div>
+          <h2>The 89°S study target</h2>
           <p>
-            {message}
+            89°S, 0°E is an analyst-selected location, not an asserted CLPS
+            landing site. A spherical globe gives global context; it cannot
+            resolve local slopes, ice deposits or permanent shadow.
           </p>
-
-          <button
-            className="copy-btn"
-            onClick={() =>
-              navigator
-                .clipboard
-                ?.writeText(
-                  message
-                )
-            }
-          >
-            <Copy
-              size={12}
-            />
+        </div>
+        <div className="button-stack">
+          <button className="primary" onClick={onPolar}>
+            <Crosshair size={16} />
+            Inspect 89°S
+          </button>
+          <button aria-pressed={grid} onClick={onGrid}>
+            <Layers size={16} />
+            {grid ? "Hide" : "Show"} coordinate grid
           </button>
         </div>
       </div>
-
-      <div className="chips">
-        {suggestions.map(
-          (suggestion) => (
-            <button
-              key={
-                suggestion
-              }
-              onClick={() =>
-                sendToCopilot(
-                  suggestion
-                )
-              }
-            >
-              {suggestion}
-            </button>
+      <TerrainPanel
+        evidence={evidence}
+        layers={layers}
+        onLayers={onLayers}
+        site={site}
+      />
+      <div className="row dataset-header">
+        <h2>Data availability</h2>
+        <label>
+          Show{" "}
+          <select
+            aria-label="Filter datasets"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            <option value="all">All datasets</option>
+            <option value="integrated">Integrated</option>
+            <option value="missing">Missing datasets</option>
+          </select>
+        </label>
+      </div>
+      <div className="dataset-grid">
+        {datasets
+          .map((d) =>
+            d.id === "lola" && evidence.tile
+              ? {
+                  ...d,
+                  name: "Imported lunar DEM",
+                  available: true,
+                  kind: evidence.tile.metadata.productId,
+                  description: `Native scale ${evidence.tile.metadata.mapScaleM} m/px; bounded downsampled polar display. ${evidence.tile.source.verticalDatum}`,
+                }
+              : d,
           )
-        )}
+          .filter(
+            (d) =>
+              filter === "all" ||
+              (filter === "integrated" ? d.available : !d.available),
+          )
+          .map((d) => (
+            <section className="panel dataset" key={d.id}>
+              <div className="row">
+                <BookOpen size={20} />
+                <span className={`badge ${d.available ? "cyan" : ""}`}>
+                  {d.available ? "INTEGRATED" : "UNAVAILABLE"}
+                </span>
+              </div>
+              <h3>{d.name}</h3>
+              <span className="eyebrow">{d.kind}</span>
+              <p>{d.description}</p>
+              <a href={d.url} target="_blank" rel="noreferrer">
+                Source / documentation ↗
+              </a>
+            </section>
+          ))}
       </div>
-
-      <div className="ai-input">
-        <input
-          value={input}
-          placeholder="Ask about this mission..."
-          onChange={(e) =>
-            setInput(
-              e.target.value
-            )
-          }
-          onKeyDown={(e) => {
-            if (
-              e.key ===
-              "Enter"
-            ) {
-              const value =
-                input.trim();
-
-              if (value) {
-                sendToCopilot(
-                  value
-                );
-
-                setInput("");
-              }
-            }
-          }}
-        />
-
-        <button
-          onClick={() => {
-            const value =
-              input.trim();
-
-            if (!value) {
-              return;
-            }
-
-            sendToCopilot(
-              value
-            );
-
-            setInput("");
-          }}
-        >
-          <Send
-            size={15}
-          />
-        </button>
+      <div className="notice">
+        {evidence.tile
+          ? "DEM samples available as documented above; no PSR mask or terrain-accessibility model is integrated."
+          : "No reviewed DEM, slope map, PSR mask or terrain-accessibility model is integrated."}{" "}
+        No numerical surface claims are made from an image texture. Horizons
+        availability depends on external access.
       </div>
-    </section>
+    </>
   );
 }
-
-/* ========================================
-   APP
-======================================== */
-
 export default function App() {
-  const [
-    sites,
-    setSites,
-  ] =
-    useState(
-      initialSites
-    );
-
-  const [
-    activeId,
-    setActiveId,
-  ] =
-    useState(
-      "manual"
-    );
-
-  const [
-    quality,
-    setQuality,
-  ] =
-    useState<Quality>(
-      "medium"
-    );
-
-  const [
-    commandOpen,
-    setCommandOpen,
-  ] =
-    useState(false);
-
-  const [
-    booting,
-    setBooting,
-  ] =
-    useState(true);
-
-  const [
-    moonUsed,
-    setMoonUsed,
-  ] =
-    useState(false);
-
-  const [
-    manualLat,
-    setManualLat,
-  ] =
-    useState("-89");
-
-  const [
-    manualLon,
-    setManualLon,
-  ] =
-    useState("0");
-
-  const [
-    timeline,
-    setTimeline,
-  ] =
-    useState(360);
-
-  const [
-    playing,
-    setPlaying,
-  ] =
-    useState(false);
-
-  const [
-    speed,
-    setSpeed,
-  ] =
-    useState(1);
-
-  const [
-    geometry,
-    setGeometry,
-  ] =
-    useState<HorizonsGeometryResponse | null>(
-      null
-    );
-
-  const [
-    geometryLoading,
-    setGeometryLoading,
-  ] =
-    useState(false);
-
-  const [
-    geometryError,
-    setGeometryError,
-  ] =
-    useState<string | null>(
-      null
-    );
-
-  const activeSite =
-    sites.find(
-      (site) =>
-        site.id ===
-        activeId
-    ) ??
-    sites[0];
-
+  const commandTrigger = useRef<HTMLButtonElement>(null),
+    wasCommandOpen = useRef(false);
+  const evidence = useTerrain();
+  const [terrainLayers, setTerrainLayers] = useState<TerrainLayers>({
+    elevation: false,
+    slope: false,
+  });
+  const [solarBody, setSolarBody] = useState("Sun");
+  const [page, setPage] = useState<Page>("control"),
+    [activeId, setActiveId] = useState("manual"),
+    [search, setSearch] = useState(""),
+    [provider, setProvider] = useState("all");
+  const [manual, setManual] = useState<Coordinates>({
+      latitude: -89,
+      longitude: 0,
+    }),
+    [lat, setLat] = useState("-89"),
+    [lon, setLon] = useState("0"),
+    [siteError, setSiteError] = useState(""),
+    [selectionNotice, setSelectionNotice] = useState("");
+  const [grid, setGrid] = useState(false),
+    [quality, setQuality] = useState<"low" | "medium" | "high">(() => {
+      try {
+        const v = localStorage.getItem("h89-quality");
+        return v === "low" || v === "high" ? v : "medium";
+      } catch {
+        return "medium";
+      }
+    });
+  const [date, setDate] = useState("2025-03-02"),
+    [minutes, setMinutes] = useState(360),
+    [playbackRequested, setPlaying] = useState(false),
+    [speed, setSpeed] = useState(60);
+  const [view, setView] = useState<{
+    mode: "global" | "site" | "zoomIn" | "zoomOut";
+    version: number;
+  }>({ mode: "global", version: 0 });
+  const [command, setCommand] = useState(false),
+    [commandSearch, setCommandSearch] = useState("");
+  const playing = playbackRequested && minutes < 1439;
+  const mission = missions.find((m) => m.id === activeId) ?? null;
+  const site = mission ? missionCoordinates(mission) : manual;
+  const timeUTC = utcDay(date, minutes);
+  const filtered = missions.filter(
+    (m) =>
+      (provider === "all" || m.provider === provider) &&
+      `${m.name} ${m.provider} ${m.destination}`
+        .toLowerCase()
+        .includes(search.toLowerCase()),
+  );
   useEffect(() => {
-    const saved =
-      localStorage.getItem(
-        "h89-quality"
-      );
-
-    if (
-      saved === "low" ||
-      saved === "medium" ||
-      saved === "high"
-    ) {
-      setQuality(
-        saved
-      );
+    try {
+      localStorage.setItem("h89-quality", quality);
+    } catch {
+      /* Storage may be disabled. */
     }
-  }, []);
-
-  useEffect(() => {
-    document
-      .documentElement
-      .setAttribute(
-        "data-quality",
-        quality
-      );
-
-    localStorage.setItem(
-      "h89-quality",
-      quality
-    );
   }, [quality]);
-
   useEffect(() => {
-    const id =
-      window.setTimeout(
-        () =>
-          setBooting(
-            false
-          ),
-        2200
-      );
-
-    return () =>
-      window.clearTimeout(
-        id
-      );
-  }, []);
-
+    if (!playing) return;
+    const id = setInterval(
+      () => setMinutes((v) => advanceMinutes(v, speed, 0.25)),
+      250,
+    );
+    return () => clearInterval(id);
+  }, [playing, speed]);
   useEffect(() => {
-    function keydown(
-      e: KeyboardEvent
-    ) {
-      if (
-        (e.ctrlKey ||
-          e.metaKey) &&
-        e.key.toLowerCase() ===
-          "k"
-      ) {
+    function onKey(e: KeyboardEvent) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-
-        setCommandOpen(
-          true
-        );
+        setCommand((v) => !v);
       }
-
-      if (
-        e.key ===
-        "Escape"
-      ) {
-        setCommandOpen(
-          false
-        );
-      }
+      if (e.key === "Escape") setCommand(false);
     }
-
-    window.addEventListener(
-      "keydown",
-      keydown
-    );
-
-    return () =>
-      window.removeEventListener(
-        "keydown",
-        keydown
-      );
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
-
   useEffect(() => {
-    if (!playing) {
-      return;
-    }
-
-    const id =
-      window.setInterval(
-        () => {
-          setTimeline(
-            (current) =>
-              (
-                current +
-                speed
-              ) % 1440
-          );
-        },
-        700
-      );
-
-    return () =>
-      window.clearInterval(
-        id
-      );
-  }, [
-    playing,
-    speed,
-  ]);
-
-  function applyManualSite() {
-    const lat =
-      Number(
-        manualLat
-      );
-
-    const lon =
-      Number(
-        manualLon
-      );
-
-    if (
-      Number.isNaN(
-        lat
-      ) ||
-      Number.isNaN(
-        lon
-      )
-    ) {
-      return;
-    }
-
-    if (
-      lat < -90 ||
-      lat > 90 ||
-      lon < -180 ||
-      lon > 180
-    ) {
-      return;
-    }
-
-    setSites(
-      (current) =>
-        current.map(
-          (site) =>
-            site.id ===
-            "manual"
-              ? {
-                  ...site,
-                  lat,
-                  lon,
-                }
-              : site
-        )
+    if (wasCommandOpen.current && !command) commandTrigger.current?.focus();
+    wasCommandOpen.current = command;
+  }, [command]);
+  function polar() {
+    setSelectionNotice(
+      "89°S study preset selected. This is an analyst coordinate, not a mission landing record.",
     );
-
-    setActiveId(
-      "manual"
-    );
+    setManual({ latitude: -89, longitude: 0 });
+    setLat("-89");
+    setLon("0");
+    setActiveId("manual");
+    setPage("control");
+    setView((v) => ({ mode: "site", version: v.version + 1 }));
   }
-
-  const missionTime =
-    useMemo(() => {
-      const base =
-        new Date(
-          "2026-10-10T00:00:00Z"
-        );
-
-      return new Date(
-        base.getTime() +
-          timeline *
-            60_000
-      );
-    }, [timeline]);
-
-  useEffect(() => {
-    if (
-      activeSite.lat === null ||
-      activeSite.lon === null
-    ) {
-      setGeometry(null);
-      setGeometryError(
-        "Selected site has no verified coordinates."
-      );
-      setGeometryLoading(false);
-      return;
-    }
-
-    if (playing) {
-      setGeometry(null);
-      setGeometryError(null);
-      setGeometryLoading(false);
-      return;
-    }
-
-    let cancelled = false;
-
-    setGeometryLoading(true);
-    setGeometryError(null);
-
-    const timer =
-      window.setTimeout(() => {
-        getLunarGeometry(
-          activeSite.lat as number,
-          activeSite.lon as number,
-          missionTime.toISOString()
-        )
-          .then((data) => {
-            if (cancelled) {
-              return;
-            }
-
-            setGeometry(data);
-          })
-          .catch((error) => {
-            if (cancelled) {
-              return;
-            }
-
-            setGeometry(null);
-
-            setGeometryError(
-              error instanceof Error
-                ? error.message
-                : "NASA/JPL Horizons data is unavailable."
-            );
-          })
-          .finally(() => {
-            if (!cancelled) {
-              setGeometryLoading(false);
-            }
-          });
-      }, 500);
-
-    return () => {
-      cancelled = true;
-
-      window.clearTimeout(
-        timer
-      );
-    };
-  }, [
-    activeSite.lat,
-    activeSite.lon,
-    missionTime,
-    playing,
-  ]);
-
-  const geometryBadgeLabel =
-    playing
-      ? "PAUSE TO QUERY"
-      : geometryLoading
-      ? "REQUESTING"
-      : geometry
-      ? "JPL EPHEMERIS"
-      : geometryError
-      ? "UNAVAILABLE"
-      : "WAITING";
-
-  const geometryBadgeTone:
-    "cached" | "demo" =
-    geometry && !geometryLoading
-      ? "cached"
-      : "demo";
-
-  const sunElevation =
-    geometry?.sun.elevationDegrees ??
-    null;
-
-  const earthElevation =
-    geometry?.earth.elevationDegrees ??
-    null;
-
-  const sunAzimuth =
-    geometry?.sun.azimuthDegrees ??
-    null;
-
-  const earthAzimuth =
-    geometry?.earth.azimuthDegrees ??
-    null;
-
-  const geometryDetail =
-    playing
-      ? "Pause timeline to request JPL geometry"
-      : geometryLoading
-      ? "Requesting NASA/JPL Horizons"
-      : geometry
-      ? `Calculated for ${geometry.timeUTC
-          .slice(0, 16)
-          .replace("T", " ")} UTC`
-      : geometryError
-      ? "No fallback or demo geometry is being shown"
-      : "Waiting for a valid lunar site and time";
-
-  if (booting) {
-    return (
-      <div className="boot">
-        <div className="boot-logo">
-          H89
-        </div>
-
-        <h1>
-          HORIZON 89
-        </h1>
-
-        <p>
-          INITIALIZING LUNAR MODEL...
-        </p>
-
-        <p>
-          LOADING LRO MOSAIC...
-        </p>
-
-        <button
-          onClick={() =>
-            setBooting(
-              false
-            )
-          }
-        >
-          SKIP
-        </button>
-      </div>
-    );
+  function selectMission(id: string) {
+    setSelectionNotice("");
+    setActiveId(id);
+    setView((v) => ({ mode: "global", version: v.version + 1 }));
   }
-
+  function eventTime(day: string) {
+    setDate(day);
+    setMinutes(0);
+    setPlaying(false);
+    setPage("control");
+  }
+  function pick(coordinates: Coordinates) {
+    setSelectionNotice(
+      "Study target selected from the globe. Unsurveyed spherical coordinate; not a verified landing site.",
+    );
+    setManual(coordinates);
+    setLat(coordinates.latitude.toFixed(4));
+    setLon(coordinates.longitude.toFixed(4));
+    setActiveId("manual");
+    setSiteError("");
+  }
   return (
-    <>
-      <div className="app">
-
-        {/* TOP BAR */}
-
-        <header className="topbar panel">
-
-          <div className="brand-lockup">
-
-            <div className="brand-mark">
-              <LocateFixed
-                size={18}
-              />
-            </div>
-
-            <div>
-              <strong>
-                HORIZON 89
-              </strong>
-
-              <span>
-                CLPS LUNAR MISSION BROWSER
-              </span>
-            </div>
-
-          </div>
-
-          <div className="top-actions">
-
-            <div className="utc-block">
-              <span className="panel-label">
-                UTC
-              </span>
-
-              <UtcClock />
-            </div>
-
-            <div className="system-pill">
-              <span className="status-dot" />
-
-              {geometryLoading
-                ? "JPL QUERYING"
-                : geometry
-                ? "JPL LINKED"
-                : geometryError
-                ? "JPL UNAVAILABLE"
-                : "SYSTEM NOMINAL"}
-            </div>
-
-            <div className="quality">
-
-              {(
-                [
-                  "low",
-                  "medium",
-                  "high",
-                ] as Quality[]
-              ).map(
-                (item) => (
-                  <button
-                    key={
-                      item
-                    }
-                    className={
-                      quality ===
-                      item
-                        ? "active"
-                        : ""
-                    }
-                    onClick={() =>
-                      setQuality(
-                        item
-                      )
-                    }
-                  >
-                    {item.toUpperCase()}
-                  </button>
-                )
-              )}
-
-            </div>
-
-            <button
-              className="command-btn"
-              onClick={() =>
-                setCommandOpen(
-                  true
-                )
-              }
-            >
-              <Search
-                size={14}
-              />
-
-              <span>
-                COMMAND
-              </span>
-
-              <kbd>
-                Ctrl K
-              </kbd>
-            </button>
-
-          </div>
-
-        </header>
-
-        {/* LEFT RAIL */}
-
-        <aside className="left-rail">
-
-          <header className="rail-header">
-
-            <div>
-              <span className="panel-label">
-                Mission targets
-              </span>
-
-              <h2>
-                CLPS SITES
-              </h2>
-            </div>
-
-            <Crosshair
-              size={16}
-            />
-
-          </header>
-
-          <div className="mission-list">
-
-            {sites.map(
-              (site) => (
-                <button
-                  key={
-                    site.id
-                  }
-                  className={`mission-card ${
-                    site.id ===
-                    activeId
-                      ? "selected"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    setActiveId(
-                      site.id
-                    )
-                  }
-                >
-                  <div className="mission-card-top">
-
-                    <span>
-                      {site.provider}
-                    </span>
-
-                    <b>
-                      {site.status}
-                    </b>
-
-                  </div>
-
-                  <strong>
-                    {site.name}
-                  </strong>
-
-                  <div className="coords">
-
-                    <MapPin
-                      size={12}
-                    />
-
-                    {site.lat ===
-                      null ||
-                    site.lon ===
-                      null
-                      ? "Coordinates unavailable"
-                      : `${Math.abs(
-                          site.lat
-                        ).toFixed(
-                          3
-                        )}°${
-                          site.lat <
-                          0
-                            ? "S"
-                            : "N"
-                        }  ${Math.abs(
-                          site.lon
-                        ).toFixed(
-                          3
-                        )}°${
-                          site.lon <
-                          0
-                            ? "W"
-                            : "E"
-                        }`}
-
-                  </div>
-
-                  <small>
-                    {site.note}
-                  </small>
-
-                </button>
-              )
-            )}
-
-          </div>
-
-          {/* THIS ALWAYS STAYS BELOW THE SCROLLING LIST */}
-
-          <section className="manual-site panel">
-
-            <span className="panel-label">
-              Manual target
-            </span>
-
-            <div className="manual-grid">
-
-              <label>
-                LAT
-
-                <input
-                  value={
-                    manualLat
-                  }
-                  onChange={(e) =>
-                    setManualLat(
-                      e.target
-                        .value
-                    )
-                  }
-                />
-              </label>
-
-              <label>
-                LON
-
-                <input
-                  value={
-                    manualLon
-                  }
-                  onChange={(e) =>
-                    setManualLon(
-                      e.target
-                        .value
-                    )
-                  }
-                />
-              </label>
-
-            </div>
-
-            <button
-              className="apply-btn"
-              onClick={
-                applyManualSite
-              }
-            >
-              APPLY TARGET
-            </button>
-
-          </section>
-
-        </aside>
-
-        {/* MOON */}
-
-        <main className="stage panel bracket">
-
-          <MoonScene
-            site={
-              activeSite
-            }
-            quality={
-              quality
-            }
-            onInteract={() =>
-              setMoonUsed(
-                true
-              )
-            }
-          />
-
-          <div className="stage-header">
-
-            <div>
-              <span className="panel-label">
-                Lunar surface model
-              </span>
-
-              <strong>
-                LRO GLOBAL MOSAIC
-              </strong>
-            </div>
-
-            <span className="badge cached">
-              CACHED
-            </span>
-
-          </div>
-
-          <div className="hud-corners">
-            <i />
-            <i />
-            <i />
-            <i />
-          </div>
-
-          <div className="target-reticle">
-            <span />
-            <i />
-          </div>
-
-          <div className="selected-target">
-
-            <span className="panel-label">
-              Selected target
-            </span>
-
-            {activeSite.lat ===
-              null ||
-            activeSite.lon ===
-              null ? (
-              <strong className="num">
-                Coordinates unavailable
-              </strong>
-            ) : (
-              <strong className="num">
-                {activeSite.lat.toFixed(
-                  3
-                )}
-                ° /{" "}
-                {activeSite.lon.toFixed(
-                  3
-                )}
-                °
-              </strong>
-            )}
-
-            <small>
-              {activeSite.name}
-            </small>
-
-          </div>
-
-          {!moonUsed && (
-            <div className="drag-hint">
-              DRAG TO ROTATE · SCROLL TO ZOOM
-            </div>
-          )}
-
-          <CopilotDock />
-
-        </main>
-
-        {/* RIGHT PANEL */}
-
-        <aside className="right-panel">
-
-          <header className="right-header">
-
-            <div>
-              <span className="panel-label">
-                Environment
-              </span>
-
-              <h2>
-                LOCAL HORIZON
-              </h2>
-            </div>
-
-            <Activity
-              size={16}
-            />
-
-          </header>
-
-          <ArcGauge
-            label="Sun elevation"
-            value={
-              sunElevation
-            }
-            sun
-            badgeLabel={
-              geometryBadgeLabel
-            }
-            badgeTone={
-              geometryBadgeTone
-            }
-            detail={
-              geometryDetail
-            }
-            note="Geometric elevation only · terrain visibility not evaluated"
-          />
-
-          <ArcGauge
-            label="Earth elevation"
-            value={
-              earthElevation
-            }
-            badgeLabel={
-              geometryBadgeLabel
-            }
-            badgeTone={
-              geometryBadgeTone
-            }
-            detail={
-              geometryDetail
-            }
-            note="Geometric elevation only · communication link not confirmed"
-          />
-
-          <section className="panel azimuths">
-
-            <div>
-              <span className="panel-label">
-                Sun azimuth
-              </span>
-
-              <strong className="num">
-                {sunAzimuth === null
-                  ? "N/A"
-                  : `${sunAzimuth.toFixed(
-                      2
-                    )}°`}
-              </strong>
-            </div>
-
-            <div>
-              <span className="panel-label">
-                Earth azimuth
-              </span>
-
-              <strong className="num">
-                {earthAzimuth === null
-                  ? "N/A"
-                  : `${earthAzimuth.toFixed(
-                      2
-                    )}°`}
-              </strong>
-            </div>
-
-            <span
-              className={`badge ${geometryBadgeTone}`}
-            >
-              {geometryBadgeLabel}
-            </span>
-
-          </section>
-
-          <div className="status-grid">
-
-            <section
-              className={`panel status-card ${
-                geometry?.sun
-                  .geometricallyAboveHorizon
-                  ? "on"
-                  : ""
-              }`}
-            >
-
-              <span className="panel-label">
-                Sun horizon
-              </span>
-
-              <strong>
-                {geometry
-                  ? geometry.sun
-                      .geometricallyAboveHorizon
-                    ? "ABOVE"
-                    : "BELOW"
-                  : "N/A"}
-              </strong>
-
-              <span
-                className={`badge ${geometryBadgeTone}`}
-              >
-                {geometryBadgeLabel}
-              </span>
-
-              <small>
-                Geometric horizon only · terrain not evaluated
-              </small>
-
-            </section>
-
-            <section
-              className={`panel status-card ${
-                geometry?.earth
-                  .geometricallyAboveHorizon
-                  ? "on"
-                  : ""
-              }`}
-            >
-
-              <span className="panel-label">
-                Earth horizon
-              </span>
-
-              <strong>
-                {geometry
-                  ? geometry.earth
-                      .geometricallyAboveHorizon
-                    ? "ABOVE"
-                    : "BELOW"
-                  : "N/A"}
-              </strong>
-
-              <span
-                className={`badge ${geometryBadgeTone}`}
-              >
-                {geometryBadgeLabel}
-              </span>
-
-              <small>
-                Geometric horizon only · communications not confirmed
-              </small>
-
-            </section>
-
-          </div>
-
-          <section className="panel trend">
-
-            <header>
-              <div>
-                <span className="panel-label">
-                  30-day preview
-                </span>
-
-                <strong>
-                  VISIBILITY TREND
-                </strong>
-              </div>
-
-              <span className="badge demo">
-                DEMO
-              </span>
-            </header>
-
-            <svg
-              viewBox="0 0 280 80"
-            >
-
-              <line
-                x1="0"
-                y1="70"
-                x2="280"
-                y2="70"
-              />
-
-              <polyline
-                points="
-                0,60
-                20,53
-                40,42
-                60,31
-                80,25
-                100,28
-                120,38
-                140,48
-                160,51
-                180,43
-                200,32
-                220,24
-                240,20
-                260,26
-                280,36
-                "
-                className="solar-line"
-              />
-
-              <polyline
-                points="
-                0,33
-                20,29
-                40,27
-                60,31
-                80,40
-                100,47
-                120,49
-                140,44
-                160,35
-                180,27
-                200,24
-                220,27
-                240,35
-                260,42
-                280,45
-                "
-                className="earth-line"
-              />
-
-            </svg>
-
-            <div className="legend">
-
-              <span>
-                <i className="sun-key" />
-                Solar
-              </span>
-
-              <span>
-                <i className="earth-key" />
-                Earth LOS
-              </span>
-
-            </div>
-
-            <small>
-              Illustrative UI series · not mission data
-            </small>
-
-          </section>
-
-        </aside>
-
-        {/* BOTTOM */}
-
-        <footer className="timebar panel">
-
-          <div className="play-area">
-
-            <button
-              className="play-btn"
-              onClick={() =>
-                setPlaying(
-                  (value) =>
-                    !value
-                )
-              }
-            >
-              {playing ? (
-                <Pause
-                  size={16}
-                />
-              ) : (
-                <Play
-                  size={16}
-                />
-              )}
-            </button>
-
-            <div className="speed">
-
-              {[1, 10, 100].map(
-                (item) => (
-                  <button
-                    key={
-                      item
-                    }
-                    className={
-                      speed ===
-                      item
-                        ? "active"
-                        : ""
-                    }
-                    onClick={() =>
-                      setSpeed(
-                        item
-                      )
-                    }
-                  >
-                    {item}×
-                  </button>
-                )
-              )}
-
-            </div>
-
-          </div>
-
-          <div className="scrubber">
-
-            <div>
-              <span className="panel-label">
-                Mission timeline
-              </span>
-
-              <span className="num">
-                {timeline} MIN
-              </span>
-            </div>
-
-            <input
-              type="range"
-              min="0"
-              max="1439"
-              value={
-                timeline
-              }
-              onChange={(e) =>
-                setTimeline(
-                  Number(
-                    e.target
-                      .value
-                  )
-                )
-              }
-            />
-
-          </div>
-
-          <div className="mission-time">
-
-            <span className="panel-label">
-              Mission UTC
-            </span>
-
-            <strong className="num">
-              {missionTime
-                .toISOString()
-                .slice(
-                  0,
-                  16
-                )
-                .replace(
-                  "T",
-                  " "
-                )}
-            </strong>
-
-          </div>
-
-          <div className="mode">
-
-            <Cpu
-              size={14}
-            />
-
-            <div>
-              <span className="panel-label">
-                Mode
-              </span>
-
-              <strong>
-                UI DEMO
-              </strong>
-            </div>
-
-          </div>
-
-        </footer>
-
-      </div>
-
-      {/* COMMAND */}
-
-      {commandOpen && (
-        <div
-          className="command-overlay"
-          onMouseDown={() =>
-            setCommandOpen(
-              false
-            )
-          }
+    <div className="app-shell">
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
+      <header className="topbar">
+        <a
+          className="brand"
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            setPage("control");
+          }}
+          aria-label="HORIZON 89 home"
         >
-          <div
-            className="command-panel panel"
-            onMouseDown={(e) =>
-              e.stopPropagation()
-            }
-          >
-
-            <header>
-
-              <Search
-                size={17}
-              />
-
-              <input
-                autoFocus
-                placeholder="Search Horizon 89 commands..."
-              />
-
-              <button
-                onClick={() =>
-                  setCommandOpen(
-                    false
-                  )
-                }
-              >
-                <X
-                  size={17}
-                />
-              </button>
-
-            </header>
-
-            <button
-              onClick={() => {
-                setQuality(
-                  "low"
-                );
-
-                setCommandOpen(
-                  false
-                );
-              }}
-            >
-              Graphics quality: Low
-            </button>
-
-            <button
-              onClick={() => {
-                setQuality(
-                  "medium"
-                );
-
-                setCommandOpen(
-                  false
-                );
-              }}
-            >
-              Graphics quality: Medium
-            </button>
-
-            <button
-              onClick={() => {
-                setQuality(
-                  "high"
-                );
-
-                setCommandOpen(
-                  false
-                );
-              }}
-            >
-              Graphics quality: High
-            </button>
-
+          <div className="brand-symbol">
+            H<span>89</span>
           </div>
+          <div>
+            <strong>
+              HORIZON <b>89</b>
+            </strong>
+            <span>LUNAR EXPLORATION SYSTEMS</span>
+          </div>
+        </a>
+        <nav aria-label="Primary navigation">
+          {pages.map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              aria-current={page === id ? "page" : undefined}
+              onClick={() => setPage(id)}
+              className={page === id ? "active" : ""}
+            >
+              <Icon size={15} />
+              <span>{label}</span>
+            </button>
+          ))}
+        </nav>
+        <button
+          ref={commandTrigger}
+          className="command-trigger"
+          onClick={() => setCommand(true)}
+          aria-label="Open commands"
+        >
+          <Search size={16} />
+          <kbd>⌘ K</kbd>
+        </button>
+      </header>
+      <div className="workspace-strip">
+        <span>
+          <i className="red-dot" /> INDEPENDENT MISSION EXPLORER
+        </span>
+        <span className="mono">LUNAR SOUTH POLE / 89°S</span>
+        <span>SCIENCE WITH PROVENANCE</span>
+      </div>
+      <main id="main-content" tabIndex={-1}>
+        <Readiness evidence={evidence} />
+        {page === "control" ? (
+          <>
+            <div className="control-heading">
+              <div>
+                <span className="eyebrow">OPERATIONS / LUNAR SURFACE</span>
+                <h1>
+                  Mission control<span className="red">.</span>
+                </h1>
+              </div>
+              <div className="heading-meta">
+                <span className="badge cyan">ANALYST WORKSPACE</span>
+                <p>Surface context. Sourced science. Honest limits.</p>
+              </div>
+            </div>
+            <div className="control-grid">
+              <aside className="mission-rail panel">
+                <div className="section-title">
+                  <div className="row">
+                    <span className="eyebrow">01 / MISSION CATALOG</span>
+                    <span className="counter">0{missions.length}</span>
+                  </div>
+                  <h2>Destination: Moon</h2>
+                </div>
+                <div className="search-field">
+                  <Search size={15} />
+                  <input
+                    aria-label="Search missions"
+                    placeholder="Search missions, locations…"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+                <select
+                  aria-label="Filter mission provider"
+                  value={provider}
+                  onChange={(e) => setProvider(e.target.value)}
+                >
+                  <option value="all">All providers</option>
+                  {missions.map((m) => (
+                    <option key={m.id} value={m.provider}>
+                      {m.provider}
+                    </option>
+                  ))}
+                </select>
+                <div className="mission-list">
+                  <button
+                    className={`mission-card study ${activeId === "manual" ? "selected" : ""}`}
+                    onClick={() => selectMission("manual")}
+                  >
+                    <span className="eyebrow">ANALYST TARGET</span>
+                    <strong>South pole · 89°S</strong>
+                    <span className="mono cyan-text">
+                      {formatCoordinates(manual)}
+                    </span>
+                    <small>Study coordinate · not a mission landing</small>
+                  </button>
+                  {filtered.map((m, index) => (
+                    <button
+                      className={`mission-card ${activeId === m.id ? "selected" : ""}`}
+                      key={m.id}
+                      onClick={() => selectMission(m.id)}
+                    >
+                      <div className="row">
+                        <span className="eyebrow">{m.provider}</span>
+                        <span className="index">0{index + 1}</span>
+                      </div>
+                      <strong>{m.name}</strong>
+                      <span>{m.destination}</span>
+                      <small>{m.status} ↗</small>
+                    </button>
+                  ))}
+                  {!filtered.length && (
+                    <p className="notice">
+                      No matching missions. Adjust search or provider.
+                    </p>
+                  )}
+                </div>
+                <form
+                  className="manual-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const latitude = Number(lat),
+                      longitude = Number(lon);
+                    if (
+                      !lat.trim() ||
+                      !lon.trim() ||
+                      !validCoordinates(latitude, longitude)
+                    ) {
+                      setSiteError(
+                        "Enter latitude −90…90 and longitude −180…180.",
+                      );
+                      return;
+                    }
+                    setManual({ latitude, longitude });
+                    setActiveId("manual");
+                    setSiteError("");
+                    setSelectionNotice(
+                      "Study target applied. Unsurveyed spherical coordinate; no survey uncertainty is supplied.",
+                    );
+                    setView((v) => ({ mode: "site", version: v.version + 1 }));
+                  }}
+                >
+                  <span className="eyebrow">MANUAL SURFACE TARGET</span>
+                  <div className="coordinate-inputs">
+                    <label>
+                      Latitude °
+                      <input
+                        aria-label="Latitude"
+                        type="number"
+                        step="any"
+                        min="-90"
+                        max="90"
+                        required
+                        value={lat}
+                        onChange={(e) => setLat(e.target.value)}
+                      />
+                    </label>
+                    <label>
+                      Longitude ° E
+                      <input
+                        aria-label="Longitude"
+                        type="number"
+                        step="any"
+                        min="-180"
+                        max="180"
+                        required
+                        value={lon}
+                        onChange={(e) => setLon(e.target.value)}
+                      />
+                    </label>
+                  </div>
+                  <button className="wide">
+                    Apply target <ArrowUpRight size={14} />
+                  </button>
+                  {siteError && (
+                    <p role="alert" className="error">
+                      {siteError}
+                    </p>
+                  )}
+                </form>
+              </aside>
+              <section
+                className="lunar-stage panel"
+                aria-label="Interactive lunar globe"
+              >
+                <div className="stage-top">
+                  <div>
+                    <span className="eyebrow">02 / LUNAR OBSERVATORY</span>
+                    <h2>{mission ? mission.name : "The lunar frontier"}</h2>
+                  </div>
+                  <span className="badge">IMAGE MAP</span>
+                </div>
+                <div className="moon-canvas">
+                  <Suspense
+                    fallback={
+                      <div className="scene-fallback">
+                        Loading lunar viewer…
+                      </div>
+                    }
+                  >
+                    <MoonViewer
+                      site={site}
+                      grid={grid}
+                      quality={quality}
+                      view={view}
+                      onPick={pick}
+                      markerKind={mission && site ? "verified" : "study"}
+                      terrainTile={evidence.tile}
+                      terrainLayers={terrainLayers}
+                    />
+                  </Suspense>
+                </div>
+                <div className="stage-tools">
+                  <button
+                    aria-label="Zoom in Moon"
+                    title="Zoom in"
+                    onClick={() =>
+                      setView((v) => ({
+                        mode: "zoomIn",
+                        version: v.version + 1,
+                      }))
+                    }
+                  >
+                    +
+                  </button>
+                  <button
+                    aria-label="Zoom out Moon"
+                    title="Zoom out"
+                    onClick={() =>
+                      setView((v) => ({
+                        mode: "zoomOut",
+                        version: v.version + 1,
+                      }))
+                    }
+                  >
+                    −
+                  </button>
+                  <button
+                    title="Reset global camera"
+                    aria-label="Reset camera"
+                    onClick={() =>
+                      setView((v) => ({
+                        mode: "global",
+                        version: v.version + 1,
+                      }))
+                    }
+                  >
+                    <RotateCcw size={16} />
+                  </button>
+                  <button
+                    title="Focus selected target"
+                    disabled={!site}
+                    aria-label="Focus selected target"
+                    onClick={() =>
+                      setView((v) => ({ mode: "site", version: v.version + 1 }))
+                    }
+                  >
+                    <Crosshair size={16} />
+                  </button>
+                  <button
+                    title="Coordinate grid"
+                    aria-label="Toggle coordinate grid"
+                    aria-pressed={grid}
+                    onClick={() => setGrid((v) => !v)}
+                  >
+                    <Globe2 size={16} />
+                  </button>
+                  <button
+                    title="Focus 89 degrees south"
+                    aria-label="Focus 89 degrees south"
+                    onClick={polar}
+                  >
+                    89°S
+                  </button>
+                </div>
+                <div className="stage-bottom">
+                  <div>
+                    <span className="eyebrow">
+                      SELECTED SURFACE TARGET ·{" "}
+                      {mission
+                        ? site
+                          ? "AS-LANDED RECORD"
+                          : "UNVERIFIED LOCATION"
+                        : "STUDY / UNSURVEYED"}
+                    </span>
+                    <strong className="mono">{formatCoordinates(site)}</strong>
+                    <p>
+                      {mission
+                        ? mission.destination
+                        : "Manual study coordinate · east-positive longitude"}
+                    </p>
+                  </div>
+                  <div className="view-instructions">
+                    <ZoomIn size={16} />
+                    <span>
+                      Drag to rotate · scroll/pinch to zoom
+                      <br />
+                      Right-drag/two fingers to pan · double-click to select
+                    </span>
+                  </div>
+                </div>
+                <div className="stage-caption">
+                  <span>Global imagery · qualitative surface context</span>
+                  <span>Studio lighting · not simulation illumination</span>
+                </div>
+              </section>
+              <Telemetry site={site} timeUTC={timeUTC} playing={playing} />
+            </div>
+            {selectionNotice && (
+              <p role="status" className="selection-notice">
+                {selectionNotice}
+              </p>
+            )}
+            <section className="timeline panel" aria-label="Mission timeline">
+              <div className="timeline-play">
+                <button
+                  className="primary"
+                  aria-label={playing ? "Pause timeline" : "Play timeline"}
+                  onClick={() => {
+                    if (minutes >= 1439) setMinutes(0);
+                    setPlaying(!playing);
+                  }}
+                >
+                  {playing ? <Pause size={18} /> : <Play size={18} />}
+                </button>
+                <label className="sr-only" htmlFor="speed">
+                  Playback speed
+                </label>
+                <select
+                  id="speed"
+                  value={speed}
+                  onChange={(e) => setSpeed(Number(e.target.value))}
+                >
+                  <option value={1}>1×</option>
+                  <option value={60}>60×</option>
+                  <option value={600}>600×</option>
+                </select>
+              </div>
+              <div className="scrubber">
+                <div className="row">
+                  <label htmlFor="timeline">SIMULATION TIME / UTC</label>
+                  <strong className="mono" data-testid="simulation-time">
+                    {timeUTC.slice(11, 19)}
+                  </strong>
+                </div>
+                <input
+                  id="timeline"
+                  type="range"
+                  min="0"
+                  max="1439"
+                  step="1"
+                  value={minutes}
+                  onChange={(e) => {
+                    setMinutes(Number(e.target.value));
+                    setPlaying(false);
+                  }}
+                />
+                <div className="row muted mono">
+                  <span>00:00</span>
+                  <span>12:00</span>
+                  <span>23:59</span>
+                </div>
+              </div>
+              <label className="date-label">
+                UTC DATE
+                <input
+                  aria-label="Simulation date"
+                  type="date"
+                  min="1962-01-01"
+                  max="2100-12-31"
+                  value={date}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setDate(e.target.value);
+                      setPlaying(false);
+                    }
+                  }}
+                />
+              </label>
+              <div className="timeline-note">
+                <span className="badge">
+                  {minutes >= 1439 ? "DAY COMPLETE" : "SIMULATION CLOCK"}
+                </span>
+                <p>
+                  Time control is simulated. Geometry is queried when paused.
+                </p>
+              </div>
+            </section>
+            <div className="control-lower">
+              <section className="panel selected-details">
+                {mission ? (
+                  <MissionDetail mission={mission} onEvent={eventTime} />
+                ) : (
+                  <>
+                    <span className="eyebrow">MISSION PLANNING / 89°S</span>
+                    <h2>A new perspective on the south pole.</h2>
+                    <p>
+                      Inspect a manually selected surface coordinate. The cyan
+                      marker shows your study target. Select a catalog mission
+                      for its history and sources; unverified landing
+                      coordinates are never plotted.
+                    </p>
+                    <div className="row">
+                      <button onClick={() => setPage("science")}>
+                        Explore lunar science <ArrowUpRight size={15} />
+                      </button>
+                      <a
+                        href="https://www.nasa.gov/commercial-lunar-payload-services/"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        About NASA CLPS ↗
+                      </a>
+                    </div>
+                  </>
+                )}
+              </section>
+              <section className="panel operational-note">
+                <span className="eyebrow">
+                  DATA INTEGRITY / READ BEFORE PLANNING
+                </span>
+                <h3>Seeing the surface is only the beginning.</h3>
+                <p>
+                  Imagery is not elevation. Geometric Earth visibility is not a
+                  working radio link. Permanent shadow needs terrain and
+                  long-term illumination analysis.
+                </p>
+                <button onClick={() => setPage("science")}>
+                  Inspect data availability <ArrowUpRight size={15} />
+                </button>
+              </section>
+            </div>
+          </>
+        ) : page === "science" ? (
+          <div className="content-page">
+            <Science
+              grid={grid}
+              onGrid={() => setGrid((v) => !v)}
+              onPolar={polar}
+              evidence={evidence}
+              layers={terrainLayers}
+              onLayers={setTerrainLayers}
+              site={site}
+            />
+          </div>
+        ) : page === "missions" ? (
+          <div className="content-page">
+            <div className="page-intro">
+              <span className="eyebrow">CLPS / MISSION INTELLIGENCE</span>
+              <h1>
+                Small landers. Big questions<span className="red">.</span>
+              </h1>
+              <p>
+                A curated historical snapshot of commercial lunar science
+                deliveries. Compare providers, scientific objectives and
+                documented events. This is not a live mission-status feed.
+              </p>
+            </div>
+            <div className="comparison-table panel">
+              <table>
+                <caption>CLPS historical mission comparison</caption>
+                <thead>
+                  <tr>
+                    <th>Mission</th>
+                    <th>Provider</th>
+                    <th>Destination</th>
+                    <th>Snapshot status</th>
+                    <th>Explore</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {missions.map((m) => (
+                    <tr key={m.id}>
+                      <th>{m.name}</th>
+                      <td>{m.provider}</td>
+                      <td>{m.destination}</td>
+                      <td>
+                        {m.status}
+                        <br />
+                        <small>As of {m.source.asOf}</small>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => {
+                            selectMission(m.id);
+                            setPage("control");
+                          }}
+                        >
+                          Select <ArrowUpRight size={14} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <SiteComparison
+              study={manual}
+              tile={evidence.tile}
+              timeUTC={timeUTC}
+            />
+            <div className="mission-detail-grid">
+              {missions.map((m) => (
+                <section className="panel selected-details" key={m.id}>
+                  <MissionDetail
+                    mission={m}
+                    onEvent={(day) => {
+                      selectMission(m.id);
+                      eventTime(day);
+                    }}
+                  />
+                </section>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="content-page">
+            <Suspense fallback={<p>Loading orbital atlas…</p>}>
+              <SolarExplorer onSelectBody={setSolarBody} />
+            </Suspense>
+          </div>
+        )}
+      </main>
+      <footer className="site-footer">
+        <span>
+          HORIZON 89 <b>/</b> INDEPENDENT EXPLORATION · NO NASA AFFILIATION
+        </span>
+        <label>
+          <Settings2 size={13} /> Graphics{" "}
+          <select
+            aria-label="Graphics quality"
+            value={quality}
+            onChange={(e) => setQuality(e.target.value as typeof quality)}
+          >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+        <button onClick={() => setPage("science")}>
+          Sources & limitations <ArrowUpRight size={13} />
+        </button>
+      </footer>
+      <Copilot
+        key={`${activeId}-${page}`}
+        solarBody={page === "solar" ? solarBody : null}
+        missionId={activeId}
+        site={site}
+        timeUTC={timeUTC}
+      />
+      {command && (
+        <div className="modal-backdrop" onClick={() => setCommand(false)}>
+          <section
+            className="command-panel panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Commands"
+            onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => {
+              if (e.key === "Tab") {
+                e.preventDefault();
+                const els = Array.from(
+                  e.currentTarget.querySelectorAll<HTMLElement>("input,button"),
+                );
+                const index = els.indexOf(
+                  document.activeElement as HTMLElement,
+                );
+                els[
+                  (index + (e.shiftKey ? -1 : 1) + els.length) % els.length
+                ]?.focus();
+              }
+            }}
+          >
+            <div className="row">
+              <label htmlFor="command-search">Navigate workspace</label>
+              <button onClick={() => setCommand(false)}>Close / Esc</button>
+            </div>
+            <input
+              id="command-search"
+              autoFocus
+              placeholder="Search commands…"
+              value={commandSearch}
+              onChange={(e) => setCommandSearch(e.target.value)}
+            />
+            {pages
+              .filter((p) =>
+                p.label.toLowerCase().includes(commandSearch.toLowerCase()),
+              )
+              .map((p) => (
+                <button
+                  key={p.id}
+                  onClick={() => {
+                    setPage(p.id);
+                    setCommand(false);
+                    setCommandSearch("");
+                  }}
+                >
+                  <p.icon size={16} />
+                  {p.label}
+                  <ArrowUpRight size={16} />
+                </button>
+              ))}
+          </section>
         </div>
       )}
-
-    </>
+    </div>
   );
 }

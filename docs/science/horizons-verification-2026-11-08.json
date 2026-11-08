@@ -1,0 +1,62 @@
+{
+  "runUTC": "2026-11-08T12:49:24.275Z",
+  "method": "Observer API retrieval and returned-time validation only. Independent official web/batch reference comparisons remain manual and must be recorded separately.",
+  "report": [
+    {
+      "case": "south89-midnight",
+      "body": "10",
+      "status": "blocked-or-failed",
+      "request": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%270%2C-89%2C0%27&START_TIME=%272025-03-02+00%3A00%3A00.000%27&STOP_TIME=%272025-03-02+00%3A01%3A00.000%27&STEP_SIZE=%271+m%27&QUANTITIES=%274%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&EXTRA_PREC=%27YES%27&OBJ_DATA=%27NO%27&TIME_TYPE=%27UT%27&TIME_DIGITS=%27FRACSEC%27&CAL_FORMAT=%27CAL%27",
+      "error": "fetch failed"
+    },
+    {
+      "case": "south89-midnight",
+      "body": "399",
+      "status": "blocked-or-failed",
+      "request": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%270%2C-89%2C0%27&START_TIME=%272025-03-02+00%3A00%3A00.000%27&STOP_TIME=%272025-03-02+00%3A01%3A00.000%27&STEP_SIZE=%271+m%27&QUANTITIES=%274%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&EXTRA_PREC=%27YES%27&OBJ_DATA=%27NO%27&TIME_TYPE=%27UT%27&TIME_DIGITS=%27FRACSEC%27&CAL_FORMAT=%27CAL%27",
+      "error": "fetch failed"
+    },
+    {
+      "case": "south89-noon",
+      "body": "10",
+      "status": "blocked-or-failed",
+      "request": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%270%2C-89%2C0%27&START_TIME=%272025-03-02+12%3A00%3A00.000%27&STOP_TIME=%272025-03-02+12%3A01%3A00.000%27&STEP_SIZE=%271+m%27&QUANTITIES=%274%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&EXTRA_PREC=%27YES%27&OBJ_DATA=%27NO%27&TIME_TYPE=%27UT%27&TIME_DIGITS=%27FRACSEC%27&CAL_FORMAT=%27CAL%27",
+      "error": "fetch failed"
+    },
+    {
+      "case": "south89-noon",
+      "body": "399",
+      "status": "blocked-or-failed",
+      "request": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%270%2C-89%2C0%27&START_TIME=%272025-03-02+12%3A00%3A00.000%27&STOP_TIME=%272025-03-02+12%3A01%3A00.000%27&STEP_SIZE=%271+m%27&QUANTITIES=%274%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&EXTRA_PREC=%27YES%27&OBJ_DATA=%27NO%27&TIME_TYPE=%27UT%27&TIME_DIGITS=%27FRACSEC%27&CAL_FORMAT=%27CAL%27",
+      "error": "fetch failed"
+    },
+    {
+      "case": "equator-leap-day",
+      "body": "10",
+      "status": "blocked-or-failed",
+      "request": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%270%2C0%2C0%27&START_TIME=%272024-02-29+00%3A00%3A00.000%27&STOP_TIME=%272024-02-29+00%3A01%3A00.000%27&STEP_SIZE=%271+m%27&QUANTITIES=%274%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&EXTRA_PREC=%27YES%27&OBJ_DATA=%27NO%27&TIME_TYPE=%27UT%27&TIME_DIGITS=%27FRACSEC%27&CAL_FORMAT=%27CAL%27",
+      "error": "fetch failed"
+    },
+    {
+      "case": "equator-leap-day",
+      "body": "399",
+      "status": "blocked-or-failed",
+      "request": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%270%2C0%2C0%27&START_TIME=%272024-02-29+00%3A00%3A00.000%27&STOP_TIME=%272024-02-29+00%3A01%3A00.000%27&STEP_SIZE=%271+m%27&QUANTITIES=%274%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&EXTRA_PREC=%27YES%27&OBJ_DATA=%27NO%27&TIME_TYPE=%27UT%27&TIME_DIGITS=%27FRACSEC%27&CAL_FORMAT=%27CAL%27",
+      "error": "fetch failed"
+    },
+    {
+      "case": "north85",
+      "body": "10",
+      "status": "blocked-or-failed",
+      "request": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%2790%2C85%2C0%27&START_TIME=%272025-03-02+06%3A00%3A00.000%27&STOP_TIME=%272025-03-02+06%3A01%3A00.000%27&STEP_SIZE=%271+m%27&QUANTITIES=%274%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&EXTRA_PREC=%27YES%27&OBJ_DATA=%27NO%27&TIME_TYPE=%27UT%27&TIME_DIGITS=%27FRACSEC%27&CAL_FORMAT=%27CAL%27",
+      "error": "fetch failed"
+    },
+    {
+      "case": "north85",
+      "body": "399",
+      "status": "blocked-or-failed",
+      "request": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27coord%40301%27&COORD_TYPE=%27GEODETIC%27&SITE_COORD=%2790%2C85%2C0%27&START_TIME=%272025-03-02+06%3A00%3A00.000%27&STOP_TIME=%272025-03-02+06%3A01%3A00.000%27&STEP_SIZE=%271+m%27&QUANTITIES=%274%27&CSV_FORMAT=%27YES%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&EXTRA_PREC=%27YES%27&OBJ_DATA=%27NO%27&TIME_TYPE=%27UT%27&TIME_DIGITS=%27FRACSEC%27&CAL_FORMAT=%27CAL%27",
+      "error": "fetch failed"
+    }
+  ]
+}

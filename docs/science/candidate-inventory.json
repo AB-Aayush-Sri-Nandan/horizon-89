@@ -1,0 +1,70 @@
+{
+  "reviewedOn": "2026-11-08",
+  "networkObservation": "All six authoritative probes failed at proxy CONNECT with HTTP 403; no product metadata or bytes were retrieved.",
+  "candidates": [
+    {
+      "candidate": "LOLA GDR LDEM_80S_120M (name/path candidate, not validated)",
+      "source": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/SOUTH_POLE/ldem_80s_120m.lbl",
+      "state": "blocked-unverified",
+      "productId": null,
+      "format": null,
+      "crs": null,
+      "projection": null,
+      "resolution": null,
+      "heightUnits": null,
+      "noData": null,
+      "coverage": null,
+      "processingEpoch": null,
+      "license": null,
+      "publisherChecksum": null
+    },
+    {
+      "candidate": "PDS LOLA GDR LDEM_4 (name/path candidate, not validated)",
+      "source": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-4-gdr-v1/lrolol_2001/data/lola_gdr/cylindrical/img/ldem_4.lbl",
+      "state": "blocked-unverified",
+      "productId": null,
+      "format": null,
+      "crs": null,
+      "projection": null,
+      "resolution": null,
+      "heightUnits": null,
+      "noData": null,
+      "coverage": null,
+      "processingEpoch": null,
+      "license": null,
+      "publisherChecksum": null
+    },
+    {
+      "candidate": "USGS lunar LOLA DEM catalog entry (identifier pending)",
+      "source": "https://astrogeology.usgs.gov/search/map/moon_lro_lola_dem_118m",
+      "state": "blocked-unverified",
+      "productId": null,
+      "format": null,
+      "crs": null,
+      "projection": null,
+      "resolution": null,
+      "heightUnits": null,
+      "noData": null,
+      "coverage": null,
+      "processingEpoch": null,
+      "license": null,
+      "publisherChecksum": null
+    },
+    {
+      "candidate": "NASA PGDA polar illumination / PSR catalog (specific suitable product pending)",
+      "source": "https://pgda.gsfc.nasa.gov/",
+      "state": "blocked-unverified",
+      "productId": null,
+      "format": null,
+      "crs": null,
+      "projection": null,
+      "resolution": null,
+      "heightUnits": null,
+      "noData": null,
+      "coverage": null,
+      "processingEpoch": null,
+      "license": null,
+      "publisherChecksum": null
+    }
+  ]
+}

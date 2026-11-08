@@ -1,57 +1,48 @@
-export type HorizonBodyGeometry = {
+import type { Coordinates } from "../data/catalog";
+export interface HorizonBodyGeometry {
+  returnedTimeUTC?: string;
   azimuthDegrees: number;
   elevationDegrees: number;
   geometricallyAboveHorizon: boolean;
-  terrainVisibilityEvaluated: boolean;
-};
-
-export type SunGeometry = HorizonBodyGeometry & {
-  surfaceIlluminationStatus: string;
-};
-
-export type EarthGeometry = HorizonBodyGeometry & {
-  communicationStatus: string;
-};
-
-export type HorizonsGeometryResponse = {
+  terrainVisibilityEvaluated: false;
+}
+export interface HorizonsGeometryResponse {
   source: string;
-  dataType: string;
+  sourceUrl: string;
+  dataType: "calculated";
   status: string;
-
-  lunarSite: {
-    latitude: number;
-    longitude: number;
-  };
-
+  lunarSite: Coordinates;
   timeUTC: string;
-
-  sun: SunGeometry;
-  earth: EarthGeometry;
-};
-
-export async function getLunarGeometry(
+  fetchedAt: string;
+  cached: boolean;
+  frame: string;
+  sun: HorizonBodyGeometry;
+  earth: HorizonBodyGeometry;
+}
+export async function requestJSON<T>(
+  url: string,
+  init?: RequestInit,
+): Promise<T> {
+  const response = await fetch(url, {
+    ...init,
+    signal: init?.signal ?? AbortSignal.timeout(25000),
+  });
+  const body = await response.json().catch(() => ({
+    error:
+      "Service returned a non-JSON response. Check that the backend is running.",
+  }));
+  if (!response.ok)
+    throw new Error(body.error ?? `Request failed (${response.status})`);
+  return body as T;
+}
+export function getLunarGeometry(
   latitude: number,
   longitude: number,
-  timeUTC: string
-): Promise<HorizonsGeometryResponse> {
-  const params = new URLSearchParams({
-    lat: String(latitude),
-    lon: String(longitude),
-    time: timeUTC,
-  });
-
-  const response = await fetch(
-    `/api/horizons?${params.toString()}`
+  timeUTC: string,
+  signal?: AbortSignal,
+) {
+  return requestJSON<HorizonsGeometryResponse>(
+    `/api/horizons?${new URLSearchParams({ lat: String(latitude), lon: String(longitude), time: timeUTC })}`,
+    { signal },
   );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(
-      data?.error ??
-        "Could not retrieve NASA/JPL Horizons data"
-    );
-  }
-
-  return data as HorizonsGeometryResponse;
 }
