@@ -1,3 +1,5 @@
+> Current opening experience and delivery: see [Phase 4 handoff](docs/PHASE4_HANDOFF.md). Historical Phase 1–3 counts and default-screen descriptions below are retained for context.
+
 > Current release: see [Phase 3 handoff](docs/PHASE3_HANDOFF.md). This file retains the Phase 1/2 audit and historical results; Phase 3 results supersede earlier release counts.
 
 # HORIZON 89 — Phase 2 engineering handoff

@@ -6,9 +6,11 @@ import * as THREE from "three";
 import type { Coordinates } from "../data/catalog";
 import { surfaceVector } from "../lib/science";
 import SceneBoundary from "./SceneBoundary";
+import type { LunarImage } from "./LunarImagery";
 import type { TerrainTile } from "../science/terrain";
 import type { TerrainLayers } from "./TerrainPanel";
 interface Props {
+  image: LunarImage;
   site: Coordinates | null;
   grid: boolean;
   quality: "low" | "medium" | "high";
@@ -113,6 +115,7 @@ function Scene({
   terrainTile,
   terrainLayers,
   markerKind,
+  image,
 }: { onStatus: (status: string) => void } & Props) {
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
   const controls = useRef<Controls>(null);
@@ -122,7 +125,7 @@ function Scene({
     let loaded: THREE.Texture | undefined;
     const loader = new THREE.TextureLoader();
     loader.load(
-      "/textures/moon.jpg",
+      image.url,
       (map) => {
         loaded = map;
         if (!active) {
@@ -132,7 +135,11 @@ function Scene({
         map.colorSpace = THREE.SRGBColorSpace;
         map.anisotropy = 4;
         setTexture(map);
-        onStatus("Imagery loaded · 1024 × 512");
+        onStatus(
+          image.state === "available"
+            ? "LROC WAC imagery loaded · 2880 × 1440"
+            : "Imagery loaded · 1024 × 512",
+        );
         invalidate();
       },
       undefined,
@@ -145,7 +152,7 @@ function Scene({
       active = false;
       loaded?.dispose();
     };
-  }, [invalidate, onStatus]);
+  }, [invalidate, onStatus, image.url, image.state]);
   useEffect(() => {
     if (view.mode === "zoomIn" || view.mode === "zoomOut") {
       const target = controls.current?.target ?? new THREE.Vector3();
@@ -234,7 +241,7 @@ export default function MoonViewer(props: Props) {
   const fallback = (
     <div className="scene-fallback">
       <img
-        src="/textures/moon.jpg"
+        src={props.image.url}
         alt="Equirectangular lunar surface image map"
       />
       <strong>3D rendering unavailable</strong>

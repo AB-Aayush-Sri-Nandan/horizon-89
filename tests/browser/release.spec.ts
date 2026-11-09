@@ -3,6 +3,9 @@ test("release readiness, coordinate feedback, keyboard zoom and operator import 
   page,
 }) => {
   await page.goto("/");
+  await page
+    .getByRole("button", { name: "Mission control", exact: true })
+    .click();
   await expect(
     page.getByRole("region", { name: "Scientific readiness" }),
   ).toContainText("No reviewed DEM");

@@ -14,6 +14,9 @@ test("actual landing globe, mission workflow, time controls, science, atlas and 
   });
   page.on("pageerror", (error) => exceptions.push(error.message));
   await page.goto("/");
+  await page
+    .getByRole("button", { name: "Mission control", exact: true })
+    .click();
   await expect(
     page.getByRole("heading", { name: "Mission control." }),
   ).toBeVisible();
@@ -185,6 +188,9 @@ test("mobile navigation, no horizontal overflow, manual fields, command search a
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
+  await page
+    .getByRole("button", { name: "Mission control", exact: true })
+    .click();
   await expect(page.getByText("Imagery loaded · 1024 × 512")).toBeVisible();
   expect(
     await page.evaluate(
@@ -213,6 +219,9 @@ test("mobile navigation, no horizontal overflow, manual fields, command search a
   await page.screenshot({ path: "docs/mobile.png", fullPage: true });
   await page.route("**/textures/moon.jpg", (route) => route.abort());
   await page.reload();
+  await page
+    .getByRole("button", { name: "Mission control", exact: true })
+    .click();
   await expect(
     page.getByText("Texture unavailable · untextured sphere fallback"),
   ).toBeVisible();
@@ -256,6 +265,9 @@ test("telemetry source contract, stale-response rejection and day-end playback",
     });
   });
   await page.goto("/");
+  await page
+    .getByRole("button", { name: "Mission control", exact: true })
+    .click();
   await expect(
     page.getByText("TEST CONTRACT FIXTURE", { exact: false }).first(),
   ).toBeVisible();
@@ -279,6 +291,9 @@ test("telemetry source contract, stale-response rejection and day-end playback",
 test("tablet layout and recovery from WebGL context loss", async ({ page }) => {
   await page.setViewportSize({ width: 768, height: 1024 });
   await page.goto("/");
+  await page
+    .getByRole("button", { name: "Mission control", exact: true })
+    .click();
   await expect(page.getByText("Imagery loaded · 1024 × 512")).toBeVisible();
   expect(
     await page.evaluate(

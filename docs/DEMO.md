@@ -1,17 +1,15 @@
-# HORIZON 89 · Phase 2 90-second demo
+# Phase 4 · 90-second demonstration
 
-Before presenting: `npm ci && npm run build && npm start`. Check actual upstream/key/data availability. No hidden source edits are required. This environment has no reviewed DEM or landing coordinates and no AI key; present the unavailable states as evidence boundaries, not working observations.
+Start `npm run dev -- --host 0.0.0.0 --port 5173 --strictPort` and use the actual forwarded/private preview. Check key/network/data readiness before claiming a remote result.
 
-**0–12 s — Mission control.** Rotate/zoom the natural Moon. “HORIZON 89 separates lunar imagery from scientific evidence.” Press **89°S**, enable the grid and reset/focus the camera.
+**0–18 seconds:** Open HORIZON 89's full-screen Solar System. Select Earth or Jupiter to see the actual NASA source map. Rotate, zoom and pan; show the not-to-scale / schematic-position label. Explain that missing Sun/Mercury/Uranus imagery uses honest plain materials, and that Venus's false-color surface is opt-in.
 
-**12–28 s — Terrain evidence.** Open **Lunar science**. If a reviewed DEM has actually been imported and independently checked, enable elevation, inspect the legend, toggle slope, and inspect source, scale, datum, epoch and hashes; return to the globe to see the color overlay. In this environment, show disabled layers and the explicit missing-product reason. “The pipeline is tested; we do not invent terrain to fill a network gap.”
+**18–30 seconds:** Select **Moon**. Let the highlight and eased camera approach lead into **Mission Control**. This is a client-side transition, not a page reload or computed spacecraft trajectory.
 
-**28–43 s — Mission intelligence.** Select IM-1 or Blue Ghost. Show historical events and NASA references. Exact coordinate records are withheld here because LROC/official source retrieval is blocked. Open the location comparison and choose the study target and another mission. Explain which values have evidence and which remain unavailable; no suitability score is produced.
+**30–45 seconds:** Rotate the natural Moon, focus 89°S and select a CLPS mission. Show a historical event and source reference. Exact unverified landing coordinates remain unplotted. The current Moon map is visibly labeled legacy because the requested LROC source is blocked; the importer and review requirements are documented, not pretended complete.
 
-**43–58 s — Time and geometry.** Choose a historical event/date, scrub UTC, play/pause. Inspect Sun/Earth geometry and source/returned timestamps if reachable. Here show the unavailable state and explain that an eight-case verification report records all blocked requests. “Flat-horizon Earth visibility does not establish terrain LOS or a radio link.”
+**45–62 seconds:** Scrub UTC, play/pause, inspect geometry source/error state. Explain the short/long JPL column parser fix and distinguish network unavailability from unsupported output. Show science availability, terrain import instructions and comparison gaps. No DEM/PSR/ice/radio-link claim is inferred from texture or flat-horizon geometry.
 
-**58–70 s — Shadow evidence.** Open the illumination/PSR explanation. No reviewed mask or terrain-horizon model is integrated; darkness is not proof of permanent shadow or ice.
+**62–78 seconds:** Open Copilot. With an actual configured provider, ask for a contextual comparison and inspect source links; without a key, demonstrate the clear missing-key state. Do not substitute a scripted answer or claim a skipped smoke test passed.
 
-**70–81 s — Copilot.** Select a comparison context and ask “Explain terrain versus flat-horizon visibility.” With a real configured key show a labeled AI answer and context-source links; otherwise show the honest missing-key error. No scripted answer substitutes for a model response.
-
-**81–90 s — Broader context.** Open the Solar System, focus Saturn and play/pause the explicitly schematic orbits. Return to Mission control. Close with the next evidence step: authoritative product access, independently checked terrain registration and verified as-landed coordinates.
+**78–90 seconds:** Use **Back to Solar System** and show preserved selection/context. Select Saturn and play/pause schematic orbits. Close on the actual verified work: sourced visual assets and navigation, honest data boundaries, and explicit next prerequisites for live science.

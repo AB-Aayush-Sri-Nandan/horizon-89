@@ -1873,3 +1873,386 @@ td small {
     max-height: calc(100dvh - 90px);
   }
 }
+/* Phase 4 / cinematic entry. Existing lunar workspace styles remain scoped above. */
+.solar-entry .topbar {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #070910b8;
+  border-color: #ffffff12;
+  backdrop-filter: blur(12px);
+}
+.solar-entry .workspace-strip,
+.solar-entry > .site-footer {
+  display: none;
+}
+.solar-entry main {
+  padding: 0;
+  max-width: none;
+}
+.solar-entry .solar-host {
+  margin: 0;
+  max-width: none;
+}
+.cinematic-solar {
+  display: block;
+  position: relative;
+  height: 100svh;
+  min-height: 650px;
+  background: #03060c;
+}
+.cinematic-solar .solar-stage {
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: radial-gradient(ellipse at 35% 55%, #0b1627 0, #02040a 65%);
+}
+.cinematic-solar .stage-heading {
+  left: 40px;
+  top: 120px;
+  right: 365px;
+}
+.cinematic-solar .stage-heading h1 {
+  font-size: clamp(36px, 4.5vw, 70px);
+  letter-spacing: -2px;
+  margin: 14px 0;
+}
+.cinematic-solar .stage-heading p {
+  font-size: 13px;
+  color: #9daec1;
+  max-width: 440px;
+}
+.cinematic-solar .stage-heading .badge {
+  font-size: 7px;
+}
+.cinematic-solar .solar-info {
+  position: absolute;
+  z-index: 5;
+  right: 28px;
+  top: 118px;
+  bottom: 95px;
+  width: 288px;
+  padding: 20px;
+  background: #0b111ac9;
+  border-color: #354051;
+  backdrop-filter: blur(14px);
+  overflow: auto;
+}
+.cinematic-solar .object-list {
+  margin: 16px 0 24px;
+  grid-template-columns: 1fr 1fr;
+}
+.cinematic-solar .object-list button {
+  padding: 9px;
+  font-size: 10px;
+  background: #141c27;
+  border-color: #2c3948;
+}
+.cinematic-solar .object-list button.active {
+  background: #431925;
+  border-color: #bf455c;
+}
+.solar-selected h2 {
+  font-size: 35px;
+  margin: 9px 0 14px;
+}
+.solar-selected p {
+  font-size: 11px;
+}
+.solar-selected > small {
+  display: block;
+  color: #a0abbc;
+  font-size: 10px;
+  line-height: 1.7;
+  margin: 12px 0;
+}
+.texture-status {
+  font: 9px var(--mono);
+  color: var(--cyan);
+  border-left: 2px solid var(--cyan);
+  padding-left: 9px;
+}
+.solar-selected details {
+  margin: 15px 0;
+}
+.solar-selected details p,
+.solar-selected details a {
+  font-size: 10px;
+}
+.solar-selected > a {
+  font-size: 10px;
+}
+.enter-moon {
+  width: 100%;
+  margin: 12px 0;
+}
+.venus-mode {
+  display: flex;
+  gap: 8px;
+  font-size: 10px;
+  line-height: 1.6;
+  margin: 15px 0;
+}
+.venus-mode input {
+  width: auto;
+  accent-color: var(--red);
+}
+.cinematic-solar .solar-controls {
+  left: 40px;
+  right: 355px;
+  bottom: 32px;
+  flex-wrap: wrap;
+}
+.cinematic-solar .solar-controls button {
+  font-size: 10px;
+  background: #111d2ad9;
+  border-color: #324558;
+}
+.cinematic-solar .solar-controls > span {
+  font-size: 8px;
+}
+.solar-entry-caption {
+  position: absolute;
+  left: 40px;
+  bottom: 100px;
+  color: #8396ac;
+  font: 8px/1.9 var(--mono);
+  pointer-events: none;
+}
+.moon-flight {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 30px 115px;
+  background: linear-gradient(0deg, #03060ee8, transparent 65%);
+  pointer-events: none;
+}
+.moon-flight h2 {
+  font-size: 28px;
+  margin: 10px 0;
+  color: #f0f6ff;
+}
+.moon-flight progress {
+  width: 240px;
+  accent-color: var(--cyan);
+  height: 4px;
+}
+.moon-flight p {
+  font: 9px var(--mono);
+  margin: 15px 0;
+  color: #9eb4c9;
+}
+.moon-flight button {
+  pointer-events: auto;
+}
+.back-to-solar {
+  margin-bottom: 10px;
+  font-size: 10px;
+  background: #21131d;
+  border-color: #773147;
+}
+.solar-loading {
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  color: var(--cyan);
+  font-family: var(--mono);
+}
+.solar-entry .copilot-toggle {
+  right: 28px;
+  bottom: 24px;
+}
+.solar-entry .copilot {
+  bottom: 80px;
+}
+.cinematic-solar[data-flying="true"] .solar-info {
+  opacity: 0.3;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+@media (max-width: 1100px) {
+  .cinematic-solar .solar-info {
+    width: 250px;
+    right: 18px;
+    padding: 16px;
+  }
+  .cinematic-solar .stage-heading {
+    left: 26px;
+    right: 290px;
+  }
+  .cinematic-solar .solar-controls {
+    left: 26px;
+    right: 290px;
+  }
+  .solar-entry-caption {
+    left: 26px;
+  }
+  .solar-entry .topbar nav button {
+    font-size: 10px;
+  }
+}
+@media (max-width: 700px) {
+  .cinematic-solar {
+    min-height: 780px;
+    height: 100svh;
+  }
+  .solar-entry .topbar {
+    background: #080e18ed;
+  }
+  .cinematic-solar .stage-heading {
+    top: 154px;
+    left: 20px;
+    right: 20px;
+  }
+  .cinematic-solar .stage-heading h1 {
+    font-size: 39px;
+  }
+  .cinematic-solar .stage-heading p {
+    font-size: 11px;
+    max-width: 300px;
+  }
+  .cinematic-solar .stage-heading .badge {
+    font-size: 6px;
+  }
+  .cinematic-solar .solar-info {
+    top: auto;
+    bottom: 92px;
+    left: 14px;
+    right: 14px;
+    width: auto;
+    max-height: 260px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 13px;
+  }
+  .cinematic-solar .solar-info > .eyebrow {
+    grid-column: 1/-1;
+    font-size: 7px;
+  }
+  .cinematic-solar .object-list {
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
+    gap: 5px;
+    align-content: start;
+  }
+  .cinematic-solar .object-list button {
+    font-size: 8px;
+    padding: 7px;
+  }
+  .solar-selected h2 {
+    font-size: 25px;
+    margin: 5px 0 8px;
+  }
+  .solar-selected > p {
+    font-size: 9px;
+    line-height: 1.6;
+  }
+  .solar-selected > .muted,
+  .solar-selected > a {
+    display: none;
+  }
+  .solar-selected > small {
+    font-size: 8px;
+    margin: 7px 0;
+  }
+  .solar-selected > .eyebrow {
+    font-size: 6px;
+  }
+  .solar-selected details {
+    margin: 8px 0;
+  }
+  .solar-selected summary {
+    font-size: 9px;
+  }
+  .solar-selected .enter-moon {
+    font-size: 9px;
+    padding: 8px;
+    margin: 7px 0;
+  }
+  .cinematic-solar .solar-controls {
+    left: 14px;
+    right: 14px;
+    bottom: 16px;
+    gap: 5px;
+  }
+  .cinematic-solar .solar-controls button {
+    font-size: 8px;
+    padding: 8px;
+  }
+  .cinematic-solar .solar-controls span {
+    width: auto;
+    margin-left: 0;
+    font-size: 7px;
+  }
+  .solar-entry-caption {
+    left: 20px;
+    bottom: 370px;
+    font-size: 6px;
+    right: 20px;
+  }
+  .solar-entry .copilot-toggle {
+    top: 17px;
+    bottom: auto;
+    right: 64px;
+  }
+  .moon-flight {
+    padding-bottom: 370px;
+  }
+  .moon-flight h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+  .moon-flight p {
+    font-size: 7px;
+    text-align: center;
+  }
+  .solar-entry .solar-stage > div:has(canvas) {
+    height: calc(100% - 150px) !important;
+  }
+  .heading-meta .back-to-solar {
+    display: block;
+  }
+  .control-heading .heading-meta {
+    display: block;
+  }
+  .control-heading .heading-meta > .badge,
+  .control-heading .heading-meta > p {
+    display: none;
+  }
+  .control-heading {
+    gap: 12px;
+  }
+  .control-heading h1 {
+    font-size: 25px;
+  }
+  .back-to-solar {
+    font-size: 8px;
+    padding: 8px;
+    margin: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-solar[data-flying="true"] .solar-info {
+    transition: none;
+  }
+}
+.lunar-imagery-details {
+  border: 1px solid #40313c;
+  background: #171018;
+  padding: 15px 20px;
+  margin: 14px 0;
+}
+.lunar-imagery-details p {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.lunar-imagery-details a {
+  font-size: 11px;
+}

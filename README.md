@@ -2,9 +2,15 @@
 
 **An independent lunar mission explorer built around one rule: every scientific claim needs a source.**
 
-HORIZON 89 brings a natural-looking interactive Moon, CLPS mission histories, observer-geometry queries and explicit data availability into a crimson-and-cyan mission-control workspace. A secondary 3D Solar System atlas puts lunar exploration in context. No NASA or government affiliation is implied.
+HORIZON 89 opens in a full-screen interactive Solar System with sourced NASA visualization maps. Select the Moon for a smooth camera approach into the existing lunar mission-control workspace, with CLPS histories, observer-geometry queries and explicit data availability. No NASA or government affiliation is implied.
 
-![Actual mission-control landing screen](docs/landing.png)
+![Solar System opening screen](docs/phase4-solar.png)
+
+## Phase 4 · cinematic planetary entry · 0.4.0-rc.1
+
+New opening scene, six pinned NASA visual maps (Venus surface map is explicitly optional false color), Moon highlight/fly-in without a reload, preserved navigation context, back-to-Solar navigation, source manifest and an honest LROC replacement/import path. Missing Sun/Mercury/Uranus imagery and separate cloud maps use labeled untextured materials. The requested LROC TIFF/IMG and live JPL remain network-blocked; no official Moon replacement is claimed.
+
+See [Phase 4 handoff](docs/PHASE4_HANDOFF.md), [planetary map provenance](public/textures/planets/README.md), [LROC import instructions](docs/science/LROC-IMAGERY.md) and [real AI setup/test workflow](docs/AI_SETUP.md).
 
 ## Phase 3 release candidate · 0.3.0-rc.1
 
@@ -18,13 +24,13 @@ See [terrain ingestion and methods](docs/science/INGESTION.md), [candidate datas
 
 ## What works
 
-- Default lunar mission-control screen; bundled photographic Moon image, rotate, zoom, pan, camera reset, target focus, 89°S shortcut, coordinate grid and double-click surface selection.
+- Solar System landing and Moon-to-Mission-Control transition; preserved lunar mission-control screen with bundled photographic Moon image, rotate, zoom, pan, camera reset, target focus, 89°S shortcut, coordinate grid and double-click surface selection.
 - Searchable and provider-filtered historical catalog: IM-1/Odysseus, Blue Ghost Mission 1 and Peregrine Mission One. Details, selected payloads, comparison, references and historical event selection.
 - Manual, validated geographic targets. The default 89°S, 0°E is an analyst study coordinate, not an asserted mission landing site.
 - UTC date selection, day scrubber, play/pause and 1×/60×/600× playback; pause to query a fixed observer instant.
 - Server-side JPL Horizons integration, bounded cache, request coalescing, timeouts, input validation, provenance and honest unavailable states.
 - Science workspace with imagery/ephemeris availability and explicit missing terrain/PSR datasets.
-- Separate schematic Solar System: ten selectable objects, focus, orbital guides, animation, Earth–Moon relationship and Saturn’s rings.
+- Full-screen schematic Solar System: ten selectable objects, focus, orbital guides, animation, Earth–Moon relationship and Saturn’s rings.
 - Real server-side AI Copilot integration with context and bounded conversation history; useful missing-key/error states. No fake assistant responses.
 - Responsive navigation, keyboard command search (Ctrl/Cmd K), graphics quality, WebGL/texture fallbacks and reload recovery.
 
@@ -95,7 +101,7 @@ Horizons requests have a 12-second upstream timeout, 100-entry / 5-minute cache 
 
 The 1024×512 Moon image is bundled from the Three.js example assets (238,093 bytes). Its upstream acquisition/registration metadata is not supplied; it is qualitative imagery, not an asserted LRO mosaic or a precision map. See [texture provenance and license](public/textures/README.md). Source links in the interface identify NASA CLPS, mission references, Horizons, LOLA and planetary references.
 
-The Solar System uses illustrative circular coplanar orbits, arbitrary initial phases, compressed distances and exaggerated body sizes. Approximate orbital periods drive schematic motion; no real-time ephemerides or true scale are claimed. Other bodies use plain schematic materials rather than invented photographic maps.
+The Solar System uses illustrative circular coplanar orbits, arbitrary initial phases, compressed distances and exaggerated body sizes. Approximate orbital periods drive schematic motion; no real-time ephemerides or true scale are claimed. NASA display maps are used where available. Missing objects use labeled plain materials; false-color Venus is opt-in. No invented photographic map or procedural cloud pattern is substituted.
 
 ## Architecture
 
@@ -149,6 +155,16 @@ npm run science:inspect -- .data/lola/PRODUCT.lbl .data/lola/PRODUCT.img .data/l
 ```
 
 Then follow [the complete import instructions](docs/science/INGESTION.md) and the operator guide in Lunar science. Unsupported inputs/checksum failures are rejected. Successful synthetic-fixture tests do not establish that a real LOLA product has been processed or independently validated.
+
+## Optional imagery and AI workflows
+
+```sh
+npm run imagery:prepare        # Verify/reproduce pinned NASA display maps
+npm run science:import-moon -- .data/lroc/REGISTERED_DISPLAY.tif .data/lroc/review.json
+npm run test:ai:live           # Real response only with a configured key; otherwise explicit skip
+```
+
+The WAC importer supports a deliberately strict registered 8-bit GeoTIFF subset. Read the LROC guide first; no real LROC file was available for validation here.
 
 ## Demo & next steps
 

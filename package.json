@@ -1,7 +1,7 @@
 {
   "name": "lunar-ops",
   "private": true,
-  "version": "0.3.0-rc.1",
+  "version": "0.4.0-rc.1",
   "type": "module",
   "scripts": {
     "dev": "node scripts/dev.mjs",
@@ -18,7 +18,10 @@
     "science:fetch": "NODE_USE_ENV_PROXY=1 node scripts/science/fetch-dem.mjs",
     "science:verify-horizons": "NODE_USE_ENV_PROXY=1 node --experimental-strip-types scripts/science/verify-horizons.ts",
     "science:inspect": "node --experimental-strip-types scripts/science/ingest-dem.ts --inspect",
-    "check:secrets": "node scripts/check-secrets.mjs"
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "science:import-moon": "node --experimental-strip-types scripts/science/import-moon.ts",
+    "test:ai:live": "NODE_USE_ENV_PROXY=1 node --env-file-if-exists=.env scripts/test-ai-live.mjs",
+    "imagery:prepare": "NODE_USE_ENV_PROXY=1 node scripts/science/prepare-planet-textures.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

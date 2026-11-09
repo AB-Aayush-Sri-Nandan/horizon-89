@@ -33,3 +33,5 @@ playwright-report
 .data/
 public/science/terrain.json
 public/science/terrain.json.provenance.json
+public/textures/lroc-moon.jpg
+public/textures/lroc-moon.json

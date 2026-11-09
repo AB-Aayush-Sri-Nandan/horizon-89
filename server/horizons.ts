@@ -1,8 +1,10 @@
 export class ServiceError extends Error {
   status: number;
-  constructor(message: string, status = 502) {
+  code: string;
+  constructor(message: string, status = 502, code = "INVALID_DATA") {
     super(message);
     this.status = status;
+    this.code = code;
   }
 }
 export function validateQuery(params: URLSearchParams) {
@@ -43,27 +45,50 @@ export function validateQuery(params: URLSearchParams) {
   return { latitude: lat, longitude: lon, timeUTC: date.toISOString() };
 }
 export function parseHorizons(text: string, expectedTimeUTC?: string) {
+  if (!text.includes("$$SOE"))
+    throw new ServiceError(
+      "JPL did not return an observer table. Check observer parameters or upstream availability.",
+      502,
+      "UPSTREAM_ERROR",
+    );
   if (!text.includes("$$EOE"))
     throw new ServiceError("Horizons result has no end-of-ephemeris marker.");
+  const azNames = ["Azi_(a-app)", "Azimuth_(a-app)"],
+    elNames = ["Elev_(a-app)", "Elevation_(a-app)"];
+  const split = (line: string) =>
+    line.split(",").map((value) => value.trim().replace(/^"|"$/g, ""));
   const section = text.split("$$SOE")[1]?.split("$$EOE")[0];
   const header = text
     .split("$$SOE")[0]
     ?.split("\n")
     .findLast(
-      (line) => line.includes("Azi_(a-app)") && line.includes("Elev_(a-app)"),
+      (line) =>
+        split(line).some((v) => azNames.includes(v)) &&
+        split(line).some((v) => elNames.includes(v)),
     );
   if (!section || !header)
     throw new ServiceError(
-      "Horizons did not supply supported azimuth/elevation columns.",
+      "Horizons did not supply supported airless azimuth/elevation columns. Expected quantity 4 observer output.",
+      502,
+      "UNSUPPORTED_TABLE",
     );
-  const headings = header.split(",").map((v) => v.trim());
+  const headings = split(header);
+  if (
+    headings.filter((v) => azNames.includes(v)).length !== 1 ||
+    headings.filter((v) => elNames.includes(v)).length !== 1
+  )
+    throw new ServiceError(
+      "Ambiguous observer geometry columns.",
+      502,
+      "UNSUPPORTED_TABLE",
+    );
   const row = section
     .trim()
     .split("\n")[0]
     ?.split(",")
-    .map((v) => v.trim());
-  const az = row?.[headings.findIndex((v) => v.includes("Azi_(a-app)"))];
-  const el = row?.[headings.findIndex((v) => v.includes("Elev_(a-app)"))];
+    .map((v) => v.trim().replace(/^"|"$/g, ""));
+  const az = row?.[headings.findIndex((v) => azNames.includes(v))];
+  const el = row?.[headings.findIndex((v) => elNames.includes(v))];
   if (!az || !el)
     throw new ServiceError("Horizons returned incomplete observer geometry.");
   const azimuthDegrees = Number(az),
@@ -177,12 +202,23 @@ export async function fetchBody(
       throw new ServiceError(
         "JPL Horizons is unavailable. Retry when the service and network are reachable.",
         503,
+        "UPSTREAM_HTTP",
       );
-    const data = (await response.json()) as { result?: string; error?: string };
-    if (data.error || !data.result)
+    let data: { result?: string; error?: string };
+    try {
+      data = (await response.json()) as typeof data;
+    } catch {
+      throw new ServiceError(
+        "JPL returned a non-JSON response.",
+        502,
+        "UPSTREAM_FORMAT",
+      );
+    }
+    if (!data || data.error || typeof data.result !== "string" || !data.result)
       throw new ServiceError(
         "JPL could not calculate this observer request.",
         502,
+        "UPSTREAM_ERROR",
       );
     return parseHorizons(data.result, site.timeUTC);
   } catch (error) {
@@ -190,6 +226,9 @@ export async function fetchBody(
     throw new ServiceError(
       "JPL Horizons could not be reached within 12 seconds. No substitute telemetry is shown.",
       503,
+      error instanceof DOMException && error.name === "TimeoutError"
+        ? "TIMEOUT"
+        : "NETWORK_ERROR",
     );
   }
 }

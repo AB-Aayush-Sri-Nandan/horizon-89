@@ -1,4 +1,11 @@
-import { lazy, Suspense, useEffect, useState, useRef } from "react";
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from "react";
 import {
   ArrowUpRight,
   Crosshair,
@@ -30,6 +37,11 @@ import {
 import Telemetry from "./components/Telemetry";
 import Copilot from "./components/Copilot";
 import Readiness from "./components/Readiness";
+import {
+  LunarImageryDetails,
+  type LunarImage,
+} from "./components/LunarImagery";
+import type { SolarSession } from "./lib/solar";
 import TerrainPanel, { type TerrainLayers } from "./components/TerrainPanel";
 import SiteComparison from "./components/SiteComparison";
 import { useTerrain } from "./science/useTerrain";
@@ -290,13 +302,34 @@ function Science({
 export default function App() {
   const commandTrigger = useRef<HTMLButtonElement>(null),
     wasCommandOpen = useRef(false);
+  const [lunarImage, setLunarImage] = useState<LunarImage>({
+    state: "unavailable",
+    url: "/textures/moon.jpg",
+    reason:
+      "Requested LROC product not yet imported; using the legacy qualitative map.",
+  });
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/imagery", { signal: controller.signal })
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        if (!controller.signal.aborted) setLunarImage(data);
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
   const evidence = useTerrain();
   const [terrainLayers, setTerrainLayers] = useState<TerrainLayers>({
     elevation: false,
     slope: false,
   });
   const [solarBody, setSolarBody] = useState("Sun");
-  const [page, setPage] = useState<Page>("control"),
+  const [solarSession, setSolarSession] = useState<SolarSession>({
+    selected: "Sun",
+    day: 0,
+    tracking: true,
+  });
+  const [page, setPage] = useState<Page>("solar"),
     [activeId, setActiveId] = useState("manual"),
     [search, setSearch] = useState(""),
     [provider, setProvider] = useState("all");
@@ -327,6 +360,19 @@ export default function App() {
   }>({ mode: "global", version: 0 });
   const [command, setCommand] = useState(false),
     [commandSearch, setCommandSearch] = useState("");
+  const enterMoon = useCallback(() => {
+    setPage("control");
+    setView((v) => ({ mode: "global", version: v.version + 1 }));
+  }, []);
+  const saveSolarSession = useCallback((session: SolarSession) => {
+    setSolarSession((current) =>
+      current.selected === session.selected &&
+      current.day === session.day &&
+      current.tracking === session.tracking
+        ? current
+        : session,
+    );
+  }, []);
   const playing = playbackRequested && minutes < 1439;
   const mission = missions.find((m) => m.id === activeId) ?? null;
   const site = mission ? missionCoordinates(mission) : manual;
@@ -401,7 +447,7 @@ export default function App() {
     setSiteError("");
   }
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${page === "solar" ? "solar-entry" : ""}`}>
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
@@ -411,7 +457,7 @@ export default function App() {
           href="#"
           onClick={(e) => {
             e.preventDefault();
-            setPage("control");
+            setPage("solar");
           }}
           aria-label="HORIZON 89 home"
         >
@@ -456,7 +502,7 @@ export default function App() {
         <span>SCIENCE WITH PROVENANCE</span>
       </div>
       <main id="main-content" tabIndex={-1}>
-        <Readiness evidence={evidence} />
+        {page !== "solar" && <Readiness evidence={evidence} />}
         {page === "control" ? (
           <>
             <div className="control-heading">
@@ -467,6 +513,12 @@ export default function App() {
                 </h1>
               </div>
               <div className="heading-meta">
+                <button
+                  className="back-to-solar"
+                  onClick={() => setPage("solar")}
+                >
+                  ← Back to Solar System
+                </button>
                 <span className="badge cyan">ANALYST WORKSPACE</span>
                 <p>Surface context. Sourced science. Honest limits.</p>
               </div>
@@ -623,6 +675,7 @@ export default function App() {
                       quality={quality}
                       view={view}
                       onPick={pick}
+                      image={lunarImage}
                       markerKind={mission && site ? "verified" : "study"}
                       terrainTile={evidence.tile}
                       terrainLayers={terrainLayers}
@@ -719,7 +772,11 @@ export default function App() {
                   </div>
                 </div>
                 <div className="stage-caption">
-                  <span>Global imagery · qualitative surface context</span>
+                  <span>
+                    {lunarImage.state === "available"
+                      ? "LROC WAC · 8 px/degree"
+                      : "Legacy qualitative image · requested LROC unavailable"}
+                  </span>
                   <span>Studio lighting · not simulation illumination</span>
                 </div>
               </section>
@@ -805,6 +862,7 @@ export default function App() {
                 </p>
               </div>
             </section>
+            <LunarImageryDetails image={lunarImage} />
             <div className="control-lower">
               <section className="panel selected-details">
                 {mission ? (
@@ -933,9 +991,21 @@ export default function App() {
             </div>
           </div>
         ) : (
-          <div className="content-page">
-            <Suspense fallback={<p>Loading orbital atlas…</p>}>
-              <SolarExplorer onSelectBody={setSolarBody} />
+          <div className="content-page solar-host">
+            <Suspense
+              fallback={
+                <div className="solar-loading">Loading planetary explorer…</div>
+              }
+            >
+              <SolarExplorer
+                onSelectBody={setSolarBody}
+                onEnterMoon={enterMoon}
+                moonImage={lunarImage}
+                initialSession={solarSession}
+                onSessionChange={saveSolarSession}
+                quality={quality}
+                onQualityChange={setQuality}
+              />
             </Suspense>
           </div>
         )}
