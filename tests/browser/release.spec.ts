@@ -87,5 +87,5 @@ test("release readiness, coordinate feedback, keyboard zoom and operator import 
     .getByRole("button", { name: "Mission control", exact: true })
     .click();
   await expect(page.getByText("Imagery loaded · 1024 × 512")).toBeVisible();
-  await page.screenshot({ path: "docs/phase3-desktop.png", fullPage: true });
+  await page.screenshot({ path: "test-results/phase3-desktop.png", fullPage: true });
 });

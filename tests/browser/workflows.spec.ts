@@ -181,7 +181,7 @@ test("actual landing globe, mission workflow, time controls, science, atlas and 
   await expect(page.getByText("Imagery loaded · 1024 × 512")).toBeVisible();
   expect(exceptions).toEqual([]);
   expect(unexpectedResources).toEqual([]);
-  await page.screenshot({ path: "docs/mission-control.png", fullPage: true });
+  await page.screenshot({ path: "test-results/mission-control.png", fullPage: true });
 });
 test("mobile navigation, no horizontal overflow, manual fields, command search and texture failure fallback", async ({
   page,
@@ -216,7 +216,7 @@ test("mobile navigation, no horizontal overflow, manual fields, command search a
     .getByRole("button", { name: "Mission control", exact: true })
     .click();
   await expect(page.getByText("Imagery loaded · 1024 × 512")).toBeVisible();
-  await page.screenshot({ path: "docs/mobile.png", fullPage: true });
+  await page.screenshot({ path: "test-results/mobile.png", fullPage: true });
   await page.route("**/textures/moon.jpg", (route) => route.abort());
   await page.reload();
   await page

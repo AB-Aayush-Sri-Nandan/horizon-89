@@ -5,6 +5,7 @@ import type { OrbitControls as Controls } from "three-stdlib";
 import * as THREE from "three";
 import type { Coordinates } from "../data/catalog";
 import { surfaceVector } from "../lib/science";
+import { useScenePreferences } from "../lib/useScenePreferences";
 import SceneBoundary from "./SceneBoundary";
 import type { LunarImage } from "./LunarImagery";
 import type { TerrainTile } from "../science/terrain";
@@ -117,6 +118,7 @@ function Scene({
   markerKind,
   image,
 }: { onStatus: (status: string) => void } & Props) {
+  const { reduced } = useScenePreferences();
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
   const controls = useRef<Controls>(null);
   const { camera, invalidate, gl } = useThree();
@@ -226,7 +228,7 @@ function Scene({
       <OrbitControls
         ref={controls}
         makeDefault
-        enableDamping
+        enableDamping={!reduced}
         enablePan
         minDistance={1.35}
         maxDistance={7}
@@ -236,6 +238,7 @@ function Scene({
   );
 }
 export default function MoonViewer(props: Props) {
+  const { visible } = useScenePreferences();
   const [status, setStatus] = useState("Loading lunar imagery…");
   const [attempt, setAttempt] = useState(0);
   const fallback = (
@@ -250,9 +253,15 @@ export default function MoonViewer(props: Props) {
   );
   return (
     <>
-      <SceneBoundary key={attempt} fallback={fallback}>
+      <SceneBoundary
+        key={attempt}
+        fallback={fallback}
+        onFailure={() =>
+          setStatus("3D rendering unavailable · reload viewer to retry")
+        }
+      >
         <Canvas
-          frameloop="demand"
+          frameloop={visible ? "demand" : "never"}
           camera={{ position: [3.5, 1.2, 2.5], fov: 34 }}
           dpr={[
             1,

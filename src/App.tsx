@@ -41,14 +41,17 @@ import {
   LunarImageryDetails,
   type LunarImage,
 } from "./components/LunarImagery";
+import { useScenePreferences } from "./lib/useScenePreferences";
+import Home from "./components/Home";
 import type { SolarSession } from "./lib/solar";
 import TerrainPanel, { type TerrainLayers } from "./components/TerrainPanel";
 import SiteComparison from "./components/SiteComparison";
 import { useTerrain } from "./science/useTerrain";
 const MoonViewer = lazy(() => import("./components/MoonViewer"));
 const SolarExplorer = lazy(() => import("./components/SolarExplorer"));
-type Page = "control" | "science" | "missions" | "solar";
+type Page = "home" | "control" | "science" | "missions" | "solar";
 const pages: { id: Page; label: string; icon: typeof Crosshair }[] = [
+  { id: "home", label: "Home", icon: Globe2 },
   { id: "control", label: "Mission control", icon: Crosshair },
   { id: "science", label: "Lunar science", icon: Layers },
   { id: "missions", label: "CLPS intelligence", icon: Satellite },
@@ -329,7 +332,8 @@ export default function App() {
     day: 0,
     tracking: true,
   });
-  const [page, setPage] = useState<Page>("solar"),
+  const { visible } = useScenePreferences();
+  const [page, setPage] = useState<Page>("home"),
     [activeId, setActiveId] = useState("manual"),
     [search, setSearch] = useState(""),
     [provider, setProvider] = useState("all");
@@ -368,7 +372,10 @@ export default function App() {
     setSolarSession((current) =>
       current.selected === session.selected &&
       current.day === session.day &&
-      current.tracking === session.tracking
+      current.tracking === session.tracking &&
+      current.falseColor === session.falseColor &&
+      JSON.stringify(current.camera) === JSON.stringify(session.camera) &&
+      JSON.stringify(current.target) === JSON.stringify(session.target)
         ? current
         : session,
     );
@@ -392,13 +399,13 @@ export default function App() {
     }
   }, [quality]);
   useEffect(() => {
-    if (!playing) return;
+    if (!playing || !visible || page !== "control") return;
     const id = setInterval(
       () => setMinutes((v) => advanceMinutes(v, speed, 0.25)),
       250,
     );
     return () => clearInterval(id);
-  }, [playing, speed]);
+  }, [playing, speed, visible, page]);
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
@@ -414,6 +421,9 @@ export default function App() {
     if (wasCommandOpen.current && !command) commandTrigger.current?.focus();
     wasCommandOpen.current = command;
   }, [command]);
+  useEffect(() => {
+    document.getElementById("main-content")?.focus({ preventScroll: true });
+  }, [page]);
   function polar() {
     setSelectionNotice(
       "89°S study preset selected. This is an analyst coordinate, not a mission landing record.",
@@ -447,7 +457,9 @@ export default function App() {
     setSiteError("");
   }
   return (
-    <div className={`app-shell ${page === "solar" ? "solar-entry" : ""}`}>
+    <div
+      className={`app-shell ${page === "solar" || page === "home" ? "solar-entry" : ""}`}
+    >
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
@@ -457,7 +469,7 @@ export default function App() {
           href="#"
           onClick={(e) => {
             e.preventDefault();
-            setPage("solar");
+            setPage("home");
           }}
           aria-label="HORIZON 89 home"
         >
@@ -502,8 +514,15 @@ export default function App() {
         <span>SCIENCE WITH PROVENANCE</span>
       </div>
       <main id="main-content" tabIndex={-1}>
-        {page !== "solar" && <Readiness evidence={evidence} />}
-        {page === "control" ? (
+        {page !== "solar" && page !== "home" && (
+          <Readiness evidence={evidence} />
+        )}
+        {page === "home" ? (
+          <Home
+            onExplore={() => setPage("solar")}
+            onLunar={() => setPage("control")}
+          />
+        ) : page === "control" ? (
           <>
             <div className="control-heading">
               <div>
@@ -520,7 +539,10 @@ export default function App() {
                   ← Back to Solar System
                 </button>
                 <span className="badge cyan">ANALYST WORKSPACE</span>
-                <p>Surface context. Sourced science. Honest limits.</p>
+                <p>
+                  Choose a mission, explore a study target, then inspect the
+                  sources.
+                </p>
               </div>
             </div>
             <div className="control-grid">
@@ -958,6 +980,7 @@ export default function App() {
                       </td>
                       <td>
                         <button
+                          aria-label={`Select ${m.name}`}
                           onClick={() => {
                             selectMission(m.id);
                             setPage("control");
@@ -1030,13 +1053,15 @@ export default function App() {
           Sources & limitations <ArrowUpRight size={13} />
         </button>
       </footer>
-      <Copilot
-        key={`${activeId}-${page}`}
-        solarBody={page === "solar" ? solarBody : null}
-        missionId={activeId}
-        site={site}
-        timeUTC={timeUTC}
-      />
+      {page !== "home" && (
+        <Copilot
+          key={`${activeId}-${page}`}
+          solarBody={page === "solar" ? solarBody : null}
+          missionId={activeId}
+          site={site}
+          timeUTC={timeUTC}
+        />
+      )}
       {command && (
         <div className="modal-backdrop" onClick={() => setCommand(false)}>
           <section
@@ -1071,6 +1096,13 @@ export default function App() {
               value={commandSearch}
               onChange={(e) => setCommandSearch(e.target.value)}
             />
+            {!pages.some((p) =>
+              p.label.toLowerCase().includes(commandSearch.toLowerCase()),
+            ) && (
+              <p role="status" className="notice">
+                No matching workspace. Try “Mission”, “science” or “Home”.
+              </p>
+            )}
             {pages
               .filter((p) =>
                 p.label.toLowerCase().includes(commandSearch.toLowerCase()),

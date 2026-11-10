@@ -2,9 +2,28 @@
 
 **An independent lunar mission explorer built around one rule: every scientific claim needs a source.**
 
-HORIZON 89 opens in a full-screen interactive Solar System with sourced NASA visualization maps. Select the Moon for a smooth camera approach into the existing lunar mission-control workspace, with CLPS histories, observer-geometry queries and explicit data availability. No NASA or government affiliation is implied.
+HORIZON 89 opens on a dedicated cinematic homepage with a locally bundled NASA Tycho star visualization. Explore Universe opens the interactive Solar System with sourced NASA visualization maps; Discover Lunar Missions opens Lunar Mission Control. Select the Moon for a smooth camera approach into the existing lunar mission-control workspace, with CLPS histories, observer-geometry queries and explicit data availability. No NASA or government affiliation is implied.
 
-![Solar System opening screen](docs/phase4-solar.png)
+![Phase 4.1 homepage](docs/phase41-home.png)
+
+## Final presentation and release review
+
+The final pass preserves Phases 1–4.1 and improves API failure/deadline handling, recoverable Solar WebGL loss, keyboard navigation, upfront Copilot configuration, reduced-motion behavior and hidden-tab work scheduling. The local demo needs no key or live provider. Missing science/model data remains explicitly unavailable.
+
+- [Final handoff and actual checks](docs/FINAL_HANDOFF.md)
+- [2–3 minute judge demo](docs/DEMO_SCRIPT.md)
+- [Project architecture and API boundaries](docs/PROJECT_ARCHITECTURE.md)
+- [Scientific sources, imagery and limitations](docs/SCIENTIFIC_SOURCES.md)
+
+Start from this checkout with `npm run dev -- --host 0.0.0.0 --port 5173 --strictPort`. The homepage is the first screen; the frontend uses **5173** and proxies the internal API on **3001**. Explore Universe opens Solar System; Discover Lunar Missions opens Mission Control. With WebGL unavailable, the object directory and source panels remain usable. No release commit, tag, push or deployment is implied by this readiness review.
+
+## Phase 4.1 · homepage and continuous motion
+
+A distinct landing page, local NASA background with gradient/star fallback, delta-time orbit/rotation animation, eased camera travel, restored camera/selection/day/false-color state, reduced-motion support and hidden-tab render suspension. Pausing orbits also pauses illustrative surface rotation. Low-power mode requests motion frames at 30 Hz; actual hardware frame rates are not asserted.
+
+Optional Mercury GLB loading supports `.data/manual-assets/Mercury_1_4878 (1).glb` (and the original unsuffixed name). Raw models stay ignored and outside `public/`; the backend serves only the named local asset via `/api/models/mercury.glb`, with an availability inventory at `/api/models/mercury`. The loader centers geometry, fits its largest dimension to the schematic diameter, preserves authored materials/orientation, and retains a solid fallback. **The user model was not present in this workspace, so its geometry, materials, orientation, performance and provenance remain unverified.** Self-contained GLB 2.0 up to 32 MiB with no required compression extensions is supported. Restart/reopen the Solar scene after adding the file.
+
+See [Phase 4.1 handoff](docs/PHASE41_HANDOFF.md) for actual verification, model limitations and commands. Reproduce the background with `NODE_USE_ENV_PROXY=1 node scripts/science/prepare-space-background.mjs`; source and display hashes are checked before writing. The six prior planetary maps and their provenance remain unchanged.
 
 ## Phase 4 · cinematic planetary entry · 0.4.0-rc.1
 
@@ -24,7 +43,7 @@ See [terrain ingestion and methods](docs/science/INGESTION.md), [candidate datas
 
 ## What works
 
-- Solar System landing and Moon-to-Mission-Control transition; preserved lunar mission-control screen with bundled photographic Moon image, rotate, zoom, pan, camera reset, target focus, 89°S shortcut, coordinate grid and double-click surface selection.
+- Dedicated homepage, Solar System exploration and Moon-to-Mission-Control transition; preserved lunar mission-control screen with bundled photographic Moon image, rotate, zoom, pan, camera reset, target focus, 89°S shortcut, coordinate grid and double-click surface selection.
 - Searchable and provider-filtered historical catalog: IM-1/Odysseus, Blue Ghost Mission 1 and Peregrine Mission One. Details, selected payloads, comparison, references and historical event selection.
 - Manual, validated geographic targets. The default 89°S, 0°E is an analyst study coordinate, not an asserted mission landing site.
 - UTC date selection, day scrubber, play/pause and 1×/60×/600× playback; pause to query a fixed observer instant.
@@ -110,6 +129,8 @@ src/App.tsx                 navigation, selected mission/site, UTC simulation st
 src/components/MoonViewer   lazy R3F globe, image loading, controls, grid, recovery
 src/components/Telemetry    debounced/cancelled queries, provenance, freshness checks
 src/components/Copilot      contextual chat, errors, submission and copying
+src/components/Home        cinematic homepage with local NASA background
+src/components/MercuryModel optional local GLB loader with material/geometry disposal
 src/components/SolarExplorer lazy schematic atlas
 src/components/SceneBoundary render fallback
 src/data/catalog.ts         typed catalog / source and availability manifest
@@ -120,7 +141,7 @@ server/index.ts             native Node HTTP API, cache, AI and production stati
 scripts/dev.mjs             dependency-free development process orchestration
 ```
 
-React 19, TypeScript 6, Vite 8, Three.js / React Three Fiber / Drei, Lucide, Oxlint; Node’s native HTTP server and fetch. Playwright is the only added package, as a development dependency. The 3D stack is lazy-loaded; default DPR is capped at 1.25, the globe uses modest geometry and on-demand rendering. No synthetic particle field or texture-derived displacement is used.
+React 19, TypeScript 6, Vite 8, Three.js / React Three Fiber / Drei, Lucide, Oxlint; Node’s native HTTP server and fetch. Playwright is the only added package, as a development dependency. The 3D stack is lazy-loaded; default DPR is capped at 1.25, the globe uses modest geometry and on-demand rendering. Decorative stars are schematic graphics; no synthetic scientific surface or texture-derived displacement is used.
 
 ## Checks
 
@@ -134,7 +155,7 @@ npm run check:secrets # credential-pattern and raw-artifact checks; no values pr
 
 For browser tests on a machine without system Chromium, run `npx playwright install chromium` once, or set `CHROMIUM_PATH` to your installed Chrome/Chromium executable. The cloud instance already provides `/usr/bin/chromium`.
 
-Actual results and limitations are recorded in [HANDOFF.md](HANDOFF.md). Fixture-based remote-provider contracts are explicitly separate from live service verification. Screenshots are real application captures, not mockups: [desktop](docs/landing.png), [mobile](docs/mobile.png), [atlas](docs/solar-system.png).
+Current results and limitations are recorded in [FINAL_HANDOFF.md](docs/FINAL_HANDOFF.md); prior phase reports remain historical evidence. Fixture-based remote-provider contracts are explicitly separate from live service verification. Screenshots are real application captures, not mockups: [desktop](docs/landing.png), [mobile](docs/mobile.png), [atlas](docs/solar-system.png).
 
 ## Production deployment
 
@@ -168,4 +189,4 @@ The WAC importer supports a deliberately strict registered 8-bit GeoTIFF subset.
 
 ## Demo & next steps
 
-See the [60–90 second demo script](docs/DEMO.md), [project description](docs/PROJECT.md), and [engineering handoff](HANDOFF.md). Priorities are a permitted, independently cross-checked live JPL query, a configured AI provider, verified mission coordinate ingestion and georeferenced terrain datasets.
+See the [2–3 minute demo script](docs/DEMO_SCRIPT.md), [scientific sources](docs/SCIENTIFIC_SOURCES.md), [architecture](docs/PROJECT_ARCHITECTURE.md), and [final handoff](docs/FINAL_HANDOFF.md). Priorities are a permitted, independently cross-checked live JPL query, a configured AI provider, verified mission coordinate ingestion and georeferenced terrain datasets.

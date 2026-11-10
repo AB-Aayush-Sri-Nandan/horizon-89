@@ -3,6 +3,9 @@ export interface SolarSession {
   selected: string;
   day: number;
   tracking: boolean;
+  falseColor?: boolean;
+  camera?: [number, number, number];
+  target?: [number, number, number];
 }
 /** Circular, compressed display coordinates with arbitrary phases: never an ephemeris. */
 export function solarPosition(

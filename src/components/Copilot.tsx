@@ -1,5 +1,5 @@
 import { missions, type Coordinates } from "../data/catalog";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Bot, Send, X } from "lucide-react";
 import { requestJSON } from "../services/horizons";
 interface Message {
@@ -26,12 +26,59 @@ export default function Copilot({
     [copied, setCopied] = useState(false),
     [compareId, setCompareId] = useState("");
   const controller = useRef<AbortController | null>(null);
+  const trigger = useRef<HTMLButtonElement>(null),
+    inputField = useRef<HTMLInputElement>(null),
+    wasOpen = useRef(false);
+  const [configuration, setConfiguration] = useState("checking");
+  useEffect(() => {
+    if (open && !busy) inputField.current?.focus();
+    else if (!open && wasOpen.current) trigger.current?.focus();
+    wasOpen.current = open;
+  }, [open, busy]);
+  useEffect(() => {
+    if (!open) return;
+    let active = true;
+    const health = new AbortController();
+    requestJSON<{ copilotConfigured: boolean }>("/api/health", {
+      signal: AbortSignal.any([health.signal, AbortSignal.timeout(5000)]),
+    })
+      .then((data) => {
+        if (active)
+          setConfiguration(
+            data.copilotConfigured ? "configured" : "unconfigured",
+          );
+      })
+      .catch(() => {
+        if (active) setConfiguration("unreachable");
+      });
+    return () => {
+      active = false;
+      health.abort();
+    };
+  }, [open]);
+  const close = useCallback(() => {
+    controller.current?.abort();
+    setOpen(false);
+  }, []);
+  useEffect(() => {
+    if (!open) return;
+    const escape = (event: KeyboardEvent) => {
+      if (
+        event.key === "Escape" &&
+        !document.querySelector('[role="dialog"][aria-modal="true"]')
+      )
+        close();
+    };
+    window.addEventListener("keydown", escape);
+    return () => window.removeEventListener("keydown", escape);
+  }, [open, close]);
   useEffect(() => () => controller.current?.abort(), []);
   async function send(question: string) {
     if (!question.trim() || busy) return;
     const message = question.trim();
     setInput("");
     setError("");
+    setCopied(false);
     setBusy(true);
     controller.current = new AbortController();
     const timeout = setTimeout(() => controller.current?.abort(), 24000);
@@ -82,22 +129,32 @@ export default function Copilot({
   return (
     <>
       <button
+        ref={trigger}
         className="copilot-toggle"
         aria-label="Mission Copilot"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => (open ? close() : setOpen(true))}
       >
         <Bot size={18} /> <span className="copilot-label">Mission Copilot</span>{" "}
         <span className="badge">AI</span>
       </button>
       {open && (
-        <section className="copilot panel" aria-label="Mission Copilot">
+        <section
+          className="copilot panel"
+          aria-label="Mission Copilot"
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              e.stopPropagation();
+              close();
+            }
+          }}
+        >
           <header className="row">
             <div>
               <span className="eyebrow">CONTEXTUAL ASSISTANCE</span>
               <h2>Mission Copilot</h2>
             </div>
-            <button aria-label="Close Copilot" onClick={() => setOpen(false)}>
+            <button aria-label="Close Copilot" onClick={close}>
               <X size={18} />
             </button>
           </header>
@@ -105,6 +162,15 @@ export default function Copilot({
             Selected catalog, science availability and simulation UTC are sent
             with your question. AI answers require a server key and should be
             checked against sources.
+          </p>
+          <p className="notice copilot-configuration" role="status">
+            {configuration === "unconfigured"
+              ? "Copilot is not configured. Mission history, imagery and source panels work without AI. No generated answer is available."
+              : configuration === "configured"
+                ? "Server configured. Provider access is verified only when a real answer succeeds."
+                : configuration === "unreachable"
+                  ? "Could not check Copilot configuration. The API may be unavailable; the local explorer remains usable."
+                  : "Checking server configuration…"}
           </p>
           <div className="chat-history" aria-live="polite">
             {history.map((message, i) => (
@@ -189,6 +255,7 @@ export default function Copilot({
               Ask Copilot
             </label>
             <input
+              ref={inputField}
               id="copilot-input"
               value={input}
               onChange={(e) => setInput(e.target.value)}

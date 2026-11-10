@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { missions, datasets, solarBodies } from "../src/data/catalog.js";
 import { ServiceError, validateQuery, fetchBody } from "./horizons.js";
 import { terrainEvidence } from "./science.js";
+import { mercuryAsset } from "./mercury.js";
 import { lunarImagery } from "./imagery.js";
 import { sampleTerrain } from "../src/science/terrain.js";
 const root = fileURLToPath(new URL("../../dist/", import.meta.url));
@@ -89,6 +90,29 @@ export function createApp(
           res.setHeader("Retry-After", "60");
           throw new ServiceError("Too many requests. Wait one minute.", 429);
         }
+      }
+      if (
+        ["/api/models/mercury", "/api/models/mercury.glb"].includes(
+          url.pathname,
+        ) &&
+        req.method === "GET"
+      ) {
+        const asset = await mercuryAsset();
+        if (url.pathname.endsWith(".glb")) {
+          if (!asset)
+            throw new ServiceError("Local Mercury model unavailable.", 404);
+          res.writeHead(200, {
+            "Content-Type": "model/gltf-binary",
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+          });
+          return res.end(asset.data);
+        }
+        return json(res, 200, {
+          available: Boolean(asset),
+          filename: asset?.name ?? null,
+          url: asset ? "/api/models/mercury.glb" : null,
+        });
       }
       if (url.pathname === "/api/imagery" && req.method === "GET")
         return json(res, 200, await lunarImagery(root));

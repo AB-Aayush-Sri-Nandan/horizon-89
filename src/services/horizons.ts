@@ -25,14 +25,23 @@ export async function requestJSON<T>(
 ): Promise<T> {
   const response = await fetch(url, {
     ...init,
-    signal: init?.signal ?? AbortSignal.timeout(25000),
+    signal: init?.signal
+      ? AbortSignal.any([init.signal, AbortSignal.timeout(25000)])
+      : AbortSignal.timeout(25000),
   });
-  const body = await response.json().catch(() => ({
-    error:
+  const body: unknown = await response.json().catch(() => {
+    throw new Error(
       "Service returned a non-JSON response. Check that the backend is running.",
-  }));
+    );
+  });
+  if (!body || typeof body !== "object" || Array.isArray(body))
+    throw new Error("Service returned an invalid JSON response.");
   if (!response.ok)
-    throw new Error(body.error ?? `Request failed (${response.status})`);
+    throw new Error(
+      "error" in body && typeof body.error === "string"
+        ? body.error
+        : `Request failed (${response.status})`,
+    );
   return body as T;
 }
 export function getLunarGeometry(

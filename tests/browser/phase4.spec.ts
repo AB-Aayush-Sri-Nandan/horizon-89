@@ -5,6 +5,7 @@ test("Solar entry, sourced planet selection, smooth Moon fly-in and preserved lu
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
+  await page.getByRole("button", { name: "Explore Universe" }).click();
   await expect(
     page.getByRole("heading", { name: "The Solar System." }),
   ).toBeVisible();
@@ -76,7 +77,7 @@ test("Solar entry, sourced planet selection, smooth Moon fly-in and preserved lu
   await expect(
     page.getByRole("heading", { name: "Sun", exact: true }),
   ).toBeVisible();
-  await page.screenshot({ path: "docs/phase4-solar.png", fullPage: true });
+  await page.screenshot({ path: "test-results/phase4-solar.png", fullPage: true });
 });
 test("planet texture failure and mobile/reduced-motion entry remain navigable", async ({
   page,
@@ -85,6 +86,7 @@ test("planet texture failure and mobile/reduced-motion entry remain navigable", 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.route("**/textures/planets/earth.jpg", (route) => route.abort());
   await page.goto("/");
+  await page.getByRole("button", { name: "Explore Universe" }).click();
   await page.getByRole("button", { name: "Earth", exact: true }).click();
   await expect(
     page.getByText("Image unavailable · untextured fallback"),
@@ -97,7 +99,7 @@ test("planet texture failure and mobile/reduced-motion entry remain navigable", 
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await page.screenshot({ path: "docs/phase4-mobile.png", fullPage: true });
+  await page.screenshot({ path: "test-results/phase4-mobile.png", fullPage: true });
   await page.getByRole("button", { name: "Moon", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Mission control." }),

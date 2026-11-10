@@ -37,7 +37,7 @@ test("real inventory gaps and evidence comparison remain honest and usable", asy
   await expect(
     table.getByText("Unavailable — no valid DEM sample"),
   ).toHaveCount(2);
-  await page.screenshot({ path: "docs/phase2-comparison.png", fullPage: true });
+  await page.screenshot({ path: "test-results/phase2-comparison.png", fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   expect(
     await page.evaluate(

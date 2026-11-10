@@ -2256,3 +2256,251 @@ td small {
 .lunar-imagery-details a {
   font-size: 11px;
 }
+
+/* Phase 4.1 / a distinct, image-backed landing experience. */
+.home-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 150px clamp(24px, 7vw, 120px) 130px;
+  background:
+    radial-gradient(ellipse at 80% 45%, #15324755, transparent 60%),
+    radial-gradient(ellipse at 95% 95%, #6a173655, transparent 60%), #03060c;
+}
+.space-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  z-index: -3;
+  pointer-events: none;
+}
+.home-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, #04070de8 5%, #04070d70 65%, #04070d33),
+    linear-gradient(0deg, #04070d, transparent 35%);
+}
+.home-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  background-image:
+    radial-gradient(1px 1px at 15px 35px, #e7f4ff 70%, transparent),
+    radial-gradient(1px 1px at 90px 100px, #839daf 70%, transparent);
+  background-size:
+    143px 167px,
+    211px 193px;
+}
+.home-content {
+  max-width: 950px;
+  animation: home-reveal 1.1s ease-out both;
+}
+.home-kicker {
+  color: #92b8c8;
+  letter-spacing: 3px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.home-kicker i {
+  height: 5px;
+  width: 5px;
+  background: #d53355;
+  box-shadow: 0 0 18px #eb3355;
+}
+.home-wordmark {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  margin: 35px 0 22px;
+  color: #f4f5f7;
+}
+.home-wordmark > span:first-child {
+  color: #e44662;
+}
+.home-index {
+  color: #607382;
+  font: 10px var(--mono);
+  letter-spacing: 1px;
+  margin-left: 20px;
+}
+.home-content h1 {
+  font-size: clamp(48px, 6.9vw, 104px);
+  line-height: 1.04;
+  letter-spacing: -0.06em;
+  font-weight: 500;
+  margin: 0;
+}
+.home-content h1 em {
+  font-style: normal;
+  color: #a4bac8;
+}
+.home-description {
+  color: #a6b5c4;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.8;
+  max-width: 520px;
+  margin: 30px 0;
+}
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.home-actions button {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 54px;
+  padding: 16px 22px;
+  border-radius: 3px;
+  background: #101b2780;
+  border: 1px solid #536777;
+  font-size: 12px;
+}
+.home-actions .primary {
+  background: #b82745;
+  border-color: #d63a58;
+}
+.home-actions button:hover {
+  border-color: #9ee9f3;
+  transform: translateY(-2px);
+}
+.home-principles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 52px;
+  font: 9px var(--mono);
+  color: #77909f;
+  letter-spacing: 1px;
+}
+.home-bottom {
+  position: absolute;
+  bottom: 30px;
+  left: clamp(24px, 7vw, 120px);
+  right: clamp(24px, 7vw, 120px);
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  border-top: 1px solid #849bb52a;
+  padding-top: 20px;
+  color: #79909f;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.home-bottom p {
+  margin: 0;
+  font-size: 9px;
+  text-align: right;
+  line-height: 1.8;
+  letter-spacing: 0;
+}
+.home-orbit {
+  position: absolute;
+  z-index: -1;
+  right: -25vw;
+  top: 20%;
+  width: 75vw;
+  aspect-ratio: 1;
+  border: 1px solid #8fbed333;
+  border-radius: 50%;
+  transform: rotate(-28deg) scaleY(0.55);
+}
+.home-orbit span {
+  position: absolute;
+  inset: 12%;
+  border: 1px solid #8fbed31a;
+  border-radius: 50%;
+}
+.home-orbit i {
+  position: absolute;
+  left: 8%;
+  top: 20%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #a9e7f5;
+  box-shadow: 0 0 30px #3aa9d5;
+}
+@keyframes home-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.cinematic-solar .solar-stage {
+  background:
+    linear-gradient(#02050bd9, #02050b99),
+    url("/images/tycho-starfield.jpg") center/cover,
+    #03060c;
+}
+.solar-background-credit {
+  position: absolute;
+  bottom: 12px;
+  left: 40px;
+  font-size: 9px;
+  color: #8196a8;
+}
+@media (max-width: 700px) {
+  .home-hero {
+    padding-top: 150px;
+    padding-bottom: 160px;
+  }
+  .home-kicker {
+    font-size: 8px;
+    letter-spacing: 1.3px;
+  }
+  .home-content h1 {
+    font-size: clamp(41px, 9.3vw, 64px);
+  }
+  .home-wordmark {
+    margin-top: 28px;
+  }
+  .home-principles {
+    gap: 16px;
+    margin-top: 30px;
+    font-size: 8px;
+  }
+  .home-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .home-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    bottom: 22px;
+    gap: 12px;
+  }
+  .home-bottom p {
+    text-align: left;
+  }
+  .solar-background-credit {
+    left: 18px;
+    font-size: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-content {
+    animation: none;
+  }
+  .home-actions button:hover {
+    transform: none;
+  }
+}
