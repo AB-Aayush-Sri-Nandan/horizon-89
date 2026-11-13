@@ -4,9 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node server/dev.mjs",
+    "dev:frontend": "vite",
+    "dev:api": "node --use-env-proxy server/index.mjs",
     "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
     "lint": "oxlint",
+    "test": "node --test server/index.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
