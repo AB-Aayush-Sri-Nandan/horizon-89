@@ -97,7 +97,7 @@ Optional: copy `.env.example` to `.env` and supply values locally or through you
 | `H89_AI_API_KEY`     | Server-only OpenAI API key; no generation without it | Unset                                                    |
 | `H89_AI_MODEL`       | Model available to your account                      | `gpt-4.1-mini`                                           |
 | `PORT`               | Backend / production HTTP port                       | `3001`                                                   |
-| `HOST`               | Backend bind address                                 | `127.0.0.1`                                              |
+| `HOST`               | Backend bind address                                 | `127.0.0.1` in development; `0.0.0.0` with `npm start`   |
 | `NODE_USE_ENV_PROXY` | Honor inherited HTTP(S) proxy settings in Node 24    | Enabled by provided scripts                              |
 | `CHROMIUM_PATH`      | Optional executable override for browser tests       | System Chromium if present; otherwise Playwright browser |
 
@@ -148,7 +148,7 @@ React 19, TypeScript 6, Vite 8, Three.js / React Three Fiber / Drei, Lucide, Oxl
 ```sh
 npm run lint          # no warnings/errors on the completed implementation
 npm run build         # frontend type check + Vite build + strict backend TypeScript build
-npm test              # builds backend, then Node unit/API tests
+npm test              # builds frontend and backend, then Node unit/API tests
 npm run test:browser  # production build required; starts/reuses API on 3001
 npm run check:secrets # credential-pattern and raw-artifact checks; no values printed
 ```
@@ -166,6 +166,12 @@ HOST=0.0.0.0 PORT=3001 npm start
 ```
 
 The Node server serves `dist/` and `/api` from one origin. Deploy `dist/`, `dist-server/`, `package.json` and the Node runtime together (or retain the checkout). The compiled backend needs only Node built-ins and compiled catalog files. For internet-facing operation, place it behind HTTPS and configure trusted access, quotas and durable rate limits appropriate to your deployment. The bundled limiter is process-local; this application is not flight-qualified mission operations software. A static-only host can serve the offline frontend, but requires a same-origin API reverse proxy for Horizons and Copilot. No deployment or publication was performed here.
+
+### Render web service settings
+
+Create a **Node** web service from this repository after reviewing the audit branch. Use Node **24** (the repository's `.nvmrc`), npm with `package-lock.json`, build command `npm ci && npm run build`, start command `npm start`, and health check path `/api/health`. Render supplies `PORT`; `npm start` binds to `0.0.0.0` in production when `HOST` is unset. Do not set `HOST=127.0.0.1` on Render. Set `H89_AI_API_KEY` as a secret only if Copilot should be enabled; `H89_AI_MODEL` optionally selects the model (default `gpt-4.1-mini`). Neither is needed for the catalog, imagery or local science views. `NODE_ENV=production` is set by the start script. Keep secrets out of `VITE_*` variables and source files.
+
+The health endpoint confirms the process is serving requests; it does not probe JPL or the AI provider. Horizons needs outbound HTTPS to `ssd.jpl.nasa.gov`, and Copilot needs outbound HTTPS to `api.openai.com` plus a valid key. The current in-memory rate limiter is per process and sees the proxy address unless a trusted proxy strategy is added; configure edge protection before public use if abuse resistance is required. No verified terrain import or live provider result is included in the build.
 
 ## Manual scientific import
 

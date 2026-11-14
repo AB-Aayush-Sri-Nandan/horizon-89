@@ -297,7 +297,7 @@ function Scene({
     invalidate();
   }, [day, focusVersion, invalidate]);
   useFrame((_, delta) => {
-    if (!visible) return;
+    if (!visible || document.hidden) return;
     const dt = Math.min(delta, 0.1);
     if (controls.current)
       controls.current.dampingFactor = 1 - Math.exp(-5 * dt);
@@ -361,7 +361,7 @@ function Scene({
     initialSession.target,
   ]);
   useFrame((_, delta) => {
-    if (!visible) return;
+    if (!visible || document.hidden) return;
     const dt = Math.min(delta, 0.1);
     const current = flight.current;
     const target = new THREE.Vector3(...solarPosition(selected, clock.current));
@@ -398,7 +398,7 @@ function Scene({
     // Demand mode when idle; cap low-power motion at 30 requested frames/sec.
     const id = window.setInterval(
       () => {
-        if ((playing && !reduced) || flight.current) invalidate();
+        if (!document.hidden && ((playing && !reduced) || flight.current)) invalidate();
         else clearInterval(id);
       },
       quality === "low" ? 33 : 16,
