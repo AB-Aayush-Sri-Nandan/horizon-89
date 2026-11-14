@@ -1,4 +1,5 @@
 import { spawn, spawnSync } from "node:child_process";
+import { copyFileSync } from "node:fs";
 // One documented command for the complete development stack; no new runtime dependency.
 const build = spawnSync(
   process.execPath,
@@ -6,6 +7,8 @@ const build = spawnSync(
   { stdio: "inherit" },
 );
 if (build.status !== 0) process.exit(build.status ?? 1);
+copyFileSync("server/index.mjs", "dist-server/server/index.mjs");
+copyFileSync("server/evidence.json", "dist-server/server/evidence.json");
 const env = { ...process.env, NODE_USE_ENV_PROXY: "1" };
 const children = [
   spawn(

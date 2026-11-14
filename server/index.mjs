@@ -13,7 +13,7 @@ const EVIDENCE_PATH = fileURLToPath(new URL('./evidence.json', import.meta.url))
 const sessions = new Map();
 const requestsByAddress = new Map();
 
-const developmentOrigins = ['http://127.0.0.1:5173', 'http://localhost:5173'];
+const developmentOrigins = process.env.NODE_ENV === 'production' ? [] : ['http://127.0.0.1:5173', 'http://localhost:5173'];
 const allowedOrigins = new Set([
   ...developmentOrigins,
   ...(process.env.HORIZON_ALLOWED_ORIGINS || '').split(',').map((value) => value.trim()).filter(Boolean),
@@ -97,7 +97,14 @@ function readBody(req) {
 
 function safeMutationOrigin(req) {
   const origin = req.headers.origin;
-  if (!origin || !allowedOrigins.has(origin)) return false;
+  if (!origin) return false;
+  let sameHost = false;
+  try {
+    const parsed = new URL(origin);
+    sameHost = ['http:', 'https:'].includes(parsed.protocol) && parsed.host === req.headers.host &&
+      (req.headers['x-forwarded-proto'] !== 'https' || parsed.protocol === 'https:');
+  } catch { /* Invalid origins are rejected. */ }
+  if (!sameHost && !allowedOrigins.has(origin)) return false;
   const site = req.headers['sec-fetch-site'];
   return !site || site === 'same-origin' || site === 'same-site';
 }
@@ -276,7 +283,7 @@ async function handle(req, res) {
     return reply(res, 200, { ok: true, models: adapters[provider].models(data).slice(0, 100) });
   }
 
-  if (req.method === 'POST' && path === '/api/copilot') {
+  if (req.method === 'POST' && (path === '/api/copilot' || path === '/api/research/copilot')) {
     const body = await readBody(req);
     const message = typeof body.message === 'string' ? body.message.trim() : '';
     if (!message || message.length > 2000) return reply(res, 400, { error: 'Question must contain 1 to 2000 characters' });
@@ -307,16 +314,20 @@ async function handle(req, res) {
   return reply(res, 404, { error: 'Not found' });
 }
 
+export async function handleLegacy(req, res) {
+  try {
+    await handle(req, res);
+  } catch (error) {
+    // Provider responses and credentials are intentionally never logged or reflected.
+    if (res.headersSent || res.destroyed) return;
+    if (error?.name === 'TimeoutError') return reply(res, 504, { error: 'Provider timed out' });
+    if (error?.status) return reply(res, error.status, { error: error.message });
+    return reply(res, 500, { error: 'Server request failed' });
+  }
+}
+
 export function makeServer() {
-  return createServer((req, res) => {
-    handle(req, res).catch((error) => {
-      // Provider responses and credentials are intentionally never logged or reflected.
-      if (res.headersSent || res.destroyed) return;
-      if (error?.name === 'TimeoutError') return reply(res, 504, { error: 'Provider timed out' });
-      if (error?.status) return reply(res, error.status, { error: error.message });
-      return reply(res, 500, { error: 'Server request failed' });
-    });
-  });
+  return createServer((req, res) => { void handleLegacy(req, res); });
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {

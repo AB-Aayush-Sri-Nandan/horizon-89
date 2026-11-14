@@ -20,6 +20,8 @@ import {
   Satellite,
   BookOpen,
   Orbit,
+  Network,
+  Bot,
 } from "lucide-react";
 import {
   missions,
@@ -49,14 +51,32 @@ import SiteComparison from "./components/SiteComparison";
 import { useTerrain } from "./science/useTerrain";
 const MoonViewer = lazy(() => import("./components/MoonViewer"));
 const SolarExplorer = lazy(() => import("./components/SolarExplorer"));
-type Page = "home" | "control" | "science" | "missions" | "solar";
+const LunarExplorer = lazy(() => import("./features/LunarExplorer"));
+const LandingLab = lazy(() => import("./features/LandingLab"));
+const KnowledgeGraph = lazy(() => import("./features/KnowledgeGraph"));
+const ResearchCopilot = lazy(() => import("./features/Copilot"));
+const ResearchMissions = lazy(() => import("./features/Missions"));
+const OriginalSolar = lazy(() => import("./features/SolarSystem"));
+type Page = "home" | "control" | "science" | "missions" | "solar" | "moon" | "lab" | "graph" | "copilot" | "research-missions" | "solar-overview";
 const pages: { id: Page; label: string; icon: typeof Crosshair }[] = [
   { id: "home", label: "Home", icon: Globe2 },
   { id: "control", label: "Mission control", icon: Crosshair },
   { id: "science", label: "Lunar science", icon: Layers },
   { id: "missions", label: "CLPS intelligence", icon: Satellite },
   { id: "solar", label: "Solar System", icon: Orbit },
+  { id: "moon", label: "Moon explorer", icon: Globe2 },
+  { id: "lab", label: "Landing Lab", icon: Layers },
+  { id: "graph", label: "Knowledge Graph", icon: Network },
+  { id: "copilot", label: "Horizon Intelligence", icon: Bot },
+  { id: "research-missions", label: "Research leads", icon: Satellite },
+  { id: "solar-overview", label: "Solar overview", icon: Orbit },
 ];
+const primaryPages = pages.slice(0, 5);
+const researchPages = pages.slice(5);
+function pageFromHash(): Page {
+  const value = window.location.hash.slice(1);
+  return pages.find((item) => item.id === value)?.id ?? "home";
+}
 function MissionDetail({
   mission,
   onEvent,
@@ -333,10 +353,22 @@ export default function App() {
     tracking: true,
   });
   const { visible } = useScenePreferences();
-  const [page, setPage] = useState<Page>("home"),
+  const [page, setPageState] = useState<Page>(pageFromHash),
     [activeId, setActiveId] = useState("manual"),
     [search, setSearch] = useState(""),
     [provider, setProvider] = useState("all");
+  const setPage = useCallback((next: Page) => {
+    if (window.location.hash !== `#${next}`) window.location.hash = next;
+    setPageState(next);
+  }, []);
+  useEffect(() => {
+    const onHashChange = () => setPageState(pageFromHash());
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+  const [researchMission, setResearchMission] = useState<string>();
+  const [researchRegion, setResearchRegion] = useState<string>();
+  const [researchCoordinates, setResearchCoordinates] = useState<string>();
   const [manual, setManual] = useState<Coordinates>({
       latitude: -89,
       longitude: 0,
@@ -367,7 +399,7 @@ export default function App() {
   const enterMoon = useCallback(() => {
     setPage("control");
     setView((v) => ({ mode: "global", version: v.version + 1 }));
-  }, []);
+  }, [setPage]);
   const saveSolarSession = useCallback((session: SolarSession) => {
     setSolarSession((current) =>
       current.selected === session.selected &&
@@ -438,6 +470,7 @@ export default function App() {
   function selectMission(id: string) {
     setSelectionNotice("");
     setActiveId(id);
+    setResearchMission(missions.find((mission) => mission.id === id)?.name);
     setView((v) => ({ mode: "global", version: v.version + 1 }));
   }
   function eventTime(day: string) {
@@ -458,9 +491,12 @@ export default function App() {
   }
   return (
     <div
-      className={`app-shell ${page === "solar" || page === "home" ? "solar-entry" : ""}`}
+      className={`app-shell ${page === "solar" || page === "home" ? "solar-entry" : ""} ${researchPages.some((item) => item.id === page) ? "legacy-workspace" : ""}`}
     >
-      <a className="skip-link" href="#main-content">
+      <a className="skip-link" href="#main-content" onClick={(event) => {
+        event.preventDefault();
+        document.getElementById("main-content")?.focus({ preventScroll: false });
+      }}>
         Skip to main content
       </a>
       <header className="topbar">
@@ -484,7 +520,7 @@ export default function App() {
           </div>
         </a>
         <nav aria-label="Primary navigation">
-          {pages.map(({ id, label, icon: Icon }) => (
+          {primaryPages.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               aria-current={page === id ? "page" : undefined}
@@ -506,6 +542,13 @@ export default function App() {
           <kbd>⌘ K</kbd>
         </button>
       </header>
+      <nav className="research-nav" aria-label="Research workspaces">
+        {researchPages.map(({ id, label, icon: Icon }) => (
+          <button key={id} type="button" aria-current={page === id ? "page" : undefined} className={page === id ? "active" : ""} onClick={() => setPage(id)}>
+            <Icon size={15} /> {label}
+          </button>
+        ))}
+      </nav>
       <div className="workspace-strip">
         <span>
           <i className="red-dot" /> INDEPENDENT MISSION EXPLORER
@@ -514,7 +557,7 @@ export default function App() {
         <span>SCIENCE WITH PROVENANCE</span>
       </div>
       <main id="main-content" tabIndex={-1}>
-        {page !== "solar" && page !== "home" && (
+        {page !== "solar" && page !== "home" && !researchPages.some((item) => item.id === page) && (
           <Readiness evidence={evidence} />
         )}
         {page === "home" ? (
@@ -1013,6 +1056,30 @@ export default function App() {
               ))}
             </div>
           </div>
+        ) : page === "moon" ? (
+          <Suspense fallback={<div role="status">Loading Moon explorer…</div>}>
+            <LunarExplorer onBack={() => setPage("solar")} onCoordinateChange={setResearchCoordinates} />
+          </Suspense>
+        ) : page === "lab" ? (
+          <Suspense fallback={<div role="status">Loading Landing Lab…</div>}>
+            <LandingLab onRegionChange={setResearchRegion} />
+          </Suspense>
+        ) : page === "graph" ? (
+          <Suspense fallback={<div role="status">Loading Knowledge Graph…</div>}>
+            <KnowledgeGraph />
+          </Suspense>
+        ) : page === "copilot" ? (
+          <Suspense fallback={<div role="status">Loading Horizon Intelligence…</div>}>
+            <ResearchCopilot context={{ section: page, selectedMission: researchMission, selectedRegion: researchRegion, selectedCoordinates: researchCoordinates }} />
+          </Suspense>
+        ) : page === "research-missions" ? (
+          <Suspense fallback={<div role="status">Loading research leads…</div>}>
+            <ResearchMissions onMoon={() => setPage("moon")} onCopilot={(name) => { setResearchMission(name); setPage("copilot"); }} />
+          </Suspense>
+        ) : page === "solar-overview" ? (
+          <Suspense fallback={<div role="status">Loading solar overview…</div>}>
+            <OriginalSolar onMoon={() => setPage("moon")} />
+          </Suspense>
         ) : (
           <div className="content-page solar-host">
             <Suspense
@@ -1053,7 +1120,7 @@ export default function App() {
           Sources & limitations <ArrowUpRight size={13} />
         </button>
       </footer>
-      {page !== "home" && (
+      {page !== "home" && page !== "copilot" && (
         <Copilot
           key={`${activeId}-${page}`}
           solarBody={page === "solar" ? solarBody : null}

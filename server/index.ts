@@ -12,6 +12,7 @@ import { terrainEvidence } from "./science.js";
 import { mercuryAsset } from "./mercury.js";
 import { lunarImagery } from "./imagery.js";
 import { sampleTerrain } from "../src/science/terrain.js";
+import { handleLegacy } from "./index.mjs";
 const root = fileURLToPath(new URL("../../dist/", import.meta.url));
 function json(res: ServerResponse, status: number, body: unknown) {
   res.writeHead(status, {
@@ -70,7 +71,8 @@ export function createApp(
             const parsed = new URL(origin);
             sameOrigin =
               ["http:", "https:"].includes(parsed.protocol) &&
-              parsed.host === req.headers.host;
+              parsed.host === req.headers.host &&
+              (req.headers["x-forwarded-proto"] !== "https" || parsed.protocol === "https:");
           } catch {
             /* Reject opaque/malformed origins. */
           }
@@ -91,6 +93,8 @@ export function createApp(
           throw new ServiceError("Too many requests. Wait one minute.", 429);
         }
       }
+      if (url.pathname.startsWith("/api/session/") || url.pathname === "/api/research/copilot")
+        return await handleLegacy(req, res);
       if (
         ["/api/models/mercury", "/api/models/mercury.glb"].includes(
           url.pathname,

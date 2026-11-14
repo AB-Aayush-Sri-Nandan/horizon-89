@@ -86,7 +86,7 @@ export default function Copilot({ context }: { context: Context }) {
     setMessages((items) => [...items, { id: nextId.current++, role: "user", text: message }]);
     setLoading(true);
     try {
-      const result = await request<{ answer: string; citations?: Citation[] }>("/api/copilot", {
+      const result = await request<{ answer: string; citations?: Citation[] }>("/api/research/copilot", {
         method: "POST", body: JSON.stringify({ message, context: { mission: context.selectedMission, region: context.selectedRegion, coordinates: context.selectedCoordinates, dataState: "source verification pending" } }),
       });
       setMessages((items) => [...items, {

@@ -1,5 +1,7 @@
 # HORIZON 89 local API
 
+The production Node server in `server/index.ts` mounts this research API's session routes and `/api/research/copilot` alongside its mission-platform routes. `npm run build:server` copies this module and `evidence.json` into `dist-server/server/`. The standalone command below remains available for research API development.
+
 From the repository root, start with `node --use-env-proxy server/index.mjs`. The
 API binds to `127.0.0.1:3001` by default, where Vite already proxies `/api`.
 Node's `--use-env-proxy` flag makes provider calls use the cloud environment's
@@ -18,6 +20,7 @@ The routes are:
 | `POST /api/session/config` | `{provider,key,model?}` stores key in server memory for 30 minutes. An existing session can send `{model}` to update selection. |
 | `DELETE /api/session/config` | Erases the key from server memory and expires the cookie. |
 | `POST /api/copilot` | `{message,context?}` retrieves verified local facts and returns `{answer,citations,dataState}`. |
+| `POST /api/research/copilot` | Same research contract on the combined production server; `/api/copilot` there serves the mission-platform contract. |
 
 `provider` is `openai` or `gemini`. The model selector should use IDs returned
 by the test endpoint; no model is silently chosen. All mutating requests need

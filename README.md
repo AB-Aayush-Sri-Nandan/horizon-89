@@ -4,6 +4,8 @@
 
 HORIZON 89 opens on a dedicated cinematic homepage with a locally bundled NASA Tycho star visualization. Explore Universe opens the interactive Solar System with sourced NASA visualization maps; Discover Lunar Missions opens Lunar Mission Control. Select the Moon for a smooth camera approach into the existing lunar mission-control workspace, with CLPS histories, observer-geometry queries and explicit data availability. No NASA or government affiliation is implied.
 
+The research navigation also retains the original Moon explorer (`#moon`), Landing Lab (`#lab`), Knowledge Graph (`#graph`), dedicated Horizon Intelligence workspace (`#copilot`), research-lead catalogue (`#research-missions`), and schematic Solar overview (`#solar-overview`). These hash links can be opened directly, refreshed, and traversed with browser history. The mission-platform Home, Mission control, Lunar science, CLPS intelligence, and Solar System remain available in the primary navigation. The dedicated research assistant uses temporary provider sessions; the mission-platform Copilot uses the optional server key.
+
 ![Phase 4.1 homepage](docs/phase41-home.png)
 
 ## Final presentation and release review
@@ -148,7 +150,7 @@ React 19, TypeScript 6, Vite 8, Three.js / React Three Fiber / Drei, Lucide, Oxl
 ```sh
 npm run lint          # no warnings/errors on the completed implementation
 npm run build         # frontend type check + Vite build + strict backend TypeScript build
-npm test              # builds frontend and backend, then Node unit/API tests
+npm test              # builds frontend and backend, then Node unit/API tests for both APIs
 npm run test:browser  # production build required; starts/reuses API on 3001
 npm run check:secrets # credential-pattern and raw-artifact checks; no values printed
 ```
@@ -165,13 +167,13 @@ npm run build
 HOST=0.0.0.0 PORT=3001 npm start
 ```
 
-The Node server serves `dist/` and `/api` from one origin. Deploy `dist/`, `dist-server/`, `package.json` and the Node runtime together (or retain the checkout). The compiled backend needs only Node built-ins and compiled catalog files. For internet-facing operation, place it behind HTTPS and configure trusted access, quotas and durable rate limits appropriate to your deployment. The bundled limiter is process-local; this application is not flight-qualified mission operations software. A static-only host can serve the offline frontend, but requires a same-origin API reverse proxy for Horizons and Copilot. No deployment or publication was performed here.
+The Node server serves `dist/` and `/api` from one origin. Deploy `dist/`, `dist-server/` (including its copied research API and evidence registry), `package.json` and the Node runtime together (or retain the checkout). The compiled backend needs only Node built-ins and compiled catalog files. For internet-facing operation, place it behind HTTPS and configure trusted access, quotas and durable rate limits appropriate to your deployment. The bundled limiters and research sessions are process-local; this application is not flight-qualified mission operations software. A static-only host can serve the offline frontend, but requires a same-origin API reverse proxy for Horizons and both Copilot workflows. No deployment or publication was performed here.
 
 ### Render web service settings
 
 Create a **Node** web service from this repository after reviewing the audit branch. Use Node **24** (the repository's `.nvmrc`), npm with `package-lock.json`, build command `npm ci && npm run build`, start command `npm start`, and health check path `/api/health`. Render supplies `PORT`; `npm start` binds to `0.0.0.0` in production when `HOST` is unset. Do not set `HOST=127.0.0.1` on Render. Set `H89_AI_API_KEY` as a secret only if Copilot should be enabled; `H89_AI_MODEL` optionally selects the model (default `gpt-4.1-mini`). Neither is needed for the catalog, imagery or local science views. `NODE_ENV=production` is set by the start script. Keep secrets out of `VITE_*` variables and source files.
 
-The health endpoint confirms the process is serving requests; it does not probe JPL or the AI provider. Horizons needs outbound HTTPS to `ssd.jpl.nasa.gov`, and Copilot needs outbound HTTPS to `api.openai.com` plus a valid key. The current in-memory rate limiter is per process and sees the proxy address unless a trusted proxy strategy is added; configure edge protection before public use if abuse resistance is required. No verified terrain import or live provider result is included in the build.
+The health endpoint confirms the process is serving requests; it does not probe JPL or an AI provider. Horizons needs outbound HTTPS to `ssd.jpl.nasa.gov`. The mission-platform Copilot needs `api.openai.com` and `H89_AI_API_KEY`; the dedicated research assistant accepts a temporary OpenAI or Gemini key through `/api/session/config` and needs outbound HTTPS to the selected provider. Its evidence registry currently contains pending leads only, so it explicitly declines evidence-backed synthesis until verified records are imported. The current in-memory rate limiters see the proxy address unless a trusted proxy strategy is added; configure edge protection before public use if abuse resistance is required. No verified terrain import or live provider result is included in the build.
 
 ## Manual scientific import
 
