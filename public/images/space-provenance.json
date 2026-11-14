@@ -1,0 +1,21 @@
+{
+  "title": "Tycho Star Map",
+  "publisher": "NASA 3D Resources",
+  "revision": "11ebb4ee043715aefbba6aeec8a61746fad67fa7",
+  "sourceUrl": "https://github.com/nasa/NASA-3D-Resources/blob/11ebb4ee043715aefbba6aeec8a61746fad67fa7/Images%20and%20Textures/Tycho%20Star%20Map/Tycho%20Star%20Map.jpg",
+  "sourceSha256": "d49f636ce99ee4d70f12699dd4bc0ec937baa8e969f2c358beed7a3555561508",
+  "path": "/images/tycho-starfield.jpg",
+  "sha256": "42178e9968315c40f5047b4e9508b7efadb7d309548244f7a51d478c1c9799c9",
+  "sourceDimensions": [
+    2880,
+    1440
+  ],
+  "displayDimensions": [
+    2560,
+    1280
+  ],
+  "retrievedAt": "2026-11-10T04:38:29.434Z",
+  "processing": "Sharp resize to 2560 pixels wide, JPEG quality 88; CSS crops and dims the map. No generated nebula or synthetic image features.",
+  "interpretation": "NASA-hosted Tycho star visualization, decorative display background. Not a telescope exposure or a live sky view. Scene stars, camera orientation and planet positions are schematic.",
+  "usage": "NASA collection usage notes and NASA media guidelines apply; no affiliation or endorsement. See /textures/planets/NASA-README.md."
+}

@@ -22,3 +22,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+dist-server
+.env
+.env.*
+!.env.example
+test-results
+playwright-report
+# Raw authoritative science products stay outside version control.
+.data/
+public/science/terrain.json
+public/science/terrain.json.provenance.json
+public/textures/lroc-moon.jpg
+public/textures/lroc-moon.json

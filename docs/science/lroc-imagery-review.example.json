@@ -1,0 +1,11 @@
+{
+  "productId": "WAC_GLOBAL_E000N0000_008P",
+  "sourceUrl": "https://data.lroc.im-ldi.com/lroc/view_rdr_product/WAC_GLOBAL_E000N0000_008P",
+  "target": "MOON",
+  "datum": "REPLACE_WITH_REVIEWED_LUNAR_CRS_DATUM_AND_RADIUS",
+  "license": "REPLACE_WITH_PRODUCT_USAGE_TERMS",
+  "attribution": "REPLACE_WITH_REQUIRED_LROC_ATTRIBUTION",
+  "retrievedAt": "REPLACE_WITH_REAL_RETRIEVAL_UTC_ENDING_IN_Z",
+  "registrationChecked": false,
+  "expectedSha256": null
+}
