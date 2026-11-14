@@ -509,6 +509,13 @@ export default function SolarExplorer({
     [statuses, setStatuses] = useState<Record<string, string>>({}),
     [unavailable, setUnavailable] = useState(false),
     [attempt, setAttempt] = useState(0);
+  const stageRef = useRef<HTMLElement>(null);
+  const [fullscreen, setFullscreen] = useState(false);
+  useEffect(() => {
+    const sync = () => setFullscreen(document.fullscreenElement === stageRef.current);
+    document.addEventListener('fullscreenchange', sync);
+    return () => document.removeEventListener('fullscreenchange', sync);
+  }, []);
   const { visible, reduced } = useScenePreferences();
   const markUnavailable = useCallback(() => {
     setUnavailable(true);
@@ -570,6 +577,7 @@ export default function SolarExplorer({
   return (
     <div className="solar-layout cinematic-solar" data-flying={flying}>
       <section
+        ref={stageRef}
         className="solar-stage panel"
         aria-label="Interactive Solar System"
       >
@@ -632,7 +640,9 @@ export default function SolarExplorer({
             </Canvas>
           )}
         </SceneBoundary>
+        {fullscreen && <label className="solar-fullscreen-select">DESTINATION <select aria-label="Fullscreen destination" value={selected} onChange={(event) => select(event.target.value)}>{solarBodies.map((item) => <option key={item.name} value={item.name}>{item.name}</option>)}</select></label>}
         <div className="solar-controls">
+          <button type="button" onClick={() => fullscreen ? document.exitFullscreen() : stageRef.current?.requestFullscreen()}>{fullscreen ? 'Exit fullscreen' : 'Fullscreen scene'}</button>
           <button
             disabled={flying || reduced || unavailable}
             title={

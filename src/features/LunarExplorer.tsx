@@ -4,6 +4,8 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Line, OrbitControls, Stars } from '@react-three/drei'
 import { ArrowLeft, Compass, Crosshair, Layers3, MapPinned, Ruler, RotateCcw } from 'lucide-react'
 import * as THREE from 'three'
+import type { LunarImage } from '../components/LunarImagery'
+import { missions as historicalMissions } from '../data/catalog'
 import './lunar.css'
 
 type Coordinate = { lat: number; lon: number }
@@ -13,8 +15,6 @@ type Preset = 'Near side' | 'Far side' | 'North pole' | 'South pole' | 'Selected
 const MOON_MEAN_RADIUS_KM = 1737.4
 
 const DATA_LAYERS = [
-  { name: 'Procedural surface', state: 'ILLUSTRATIVE', available: true, note: 'Generated locally for navigation; no measured relief or imagery.' },
-  { name: 'Global LROC mosaic', state: 'SOURCE REQUIRED', available: false, note: 'No verified lunar image asset is bundled.' },
   { name: 'LOLA elevation', state: 'NOT IMPORTED', available: false, note: 'Elevation, slope, and roughness require a validated DEM.' },
   { name: 'Permanently shadowed regions', state: 'NOT IMPORTED', available: false, note: 'Boundaries must come from a sourced scientific product.' },
   { name: 'Solar illumination', state: 'NOT EVALUATED', available: false, note: 'Requires terrain and time-specific solar geometry.' },
@@ -46,62 +46,6 @@ function distanceKm(a: Coordinate, b: Coordinate): number {
   const lonDelta = THREE.MathUtils.degToRad(b.lon - a.lon)
   const haversine = Math.sin(latDelta / 2) ** 2 + Math.cos(aLat) * Math.cos(bLat) * Math.sin(lonDelta / 2) ** 2
   return 2 * MOON_MEAN_RADIUS_KM * Math.asin(Math.sqrt(Math.min(1, haversine)))
-}
-
-function seededRandom(seed: number) {
-  let current = seed >>> 0
-  return () => {
-    current = (1664525 * current + 1013904223) >>> 0
-    return current / 4294967296
-  }
-}
-
-function makeIllustrativeTexture(): THREE.CanvasTexture {
-  const width = 1024
-  const height = 512
-  const canvas = document.createElement('canvas')
-  canvas.width = width
-  canvas.height = height
-  const context = canvas.getContext('2d')
-  if (!context) throw new Error('Canvas texture generation is unavailable')
-
-  const image = context.createImageData(width, height)
-  const random = seededRandom(89089)
-  const craterFields = Array.from({ length: 52 }, () => ({
-    x: random() * width,
-    y: random() * height,
-    radius: 4 + random() ** 3 * 56,
-    shade: random() * 0.65 + 0.35,
-  }))
-
-  for (let y = 0; y < height; y++) {
-    const latitude = (y / height - 0.5) * Math.PI
-    for (let x = 0; x < width; x++) {
-      const coarse = Math.sin(x * 0.023 + Math.sin(y * 0.031) * 2) * Math.cos(y * 0.04 - x * 0.008)
-      const fine = Math.sin(x * 0.17 + y * 0.11) * Math.cos(y * 0.18 - x * 0.13)
-      const polar = Math.abs(Math.sin(latitude)) * 17
-      let value = 132 + coarse * 23 + fine * 8 + polar
-      for (const crater of craterFields) {
-        const wrappedX = Math.min(Math.abs(x - crater.x), width - Math.abs(x - crater.x))
-        const radius = Math.hypot(wrappedX, y - crater.y) / crater.radius
-        if (radius < 1.2) {
-          const bowl = Math.max(0, 1 - radius * radius) * 31
-          const rim = Math.exp(-(((radius - 0.91) / 0.095) ** 2)) * 24
-          value += (rim - bowl) * crater.shade
-        }
-      }
-      const index = (y * width + x) * 4
-      image.data[index] = Math.max(0, Math.min(255, value + 8))
-      image.data[index + 1] = Math.max(0, Math.min(255, value + 5))
-      image.data[index + 2] = Math.max(0, Math.min(255, value))
-      image.data[index + 3] = 255
-    }
-  }
-  context.putImageData(image, 0, 0)
-  const texture = new THREE.CanvasTexture(canvas)
-  texture.colorSpace = THREE.SRGBColorSpace
-  texture.anisotropy = 4
-  return texture
 }
 
 function GlobeGrid() {
@@ -154,11 +98,21 @@ function CameraRig({ preset, selected, revision }: { preset: Preset; selected: C
   return <OrbitControls enableDamping dampingFactor={0.08} minDistance={1.5} maxDistance={7} enablePan={false} onStart={() => { moving.current = false }} />
 }
 
-function LunarScene({ selected, first, second, grid, preset, revision, onPoint }: {
-  selected: Coordinate; first: Coordinate | null; second: Coordinate | null; grid: boolean; preset: Preset; revision: number; onPoint: (coordinate: Coordinate) => void
+function LunarScene({ selected, first, second, grid, preset, revision, onPoint, image }: {
+  selected: Coordinate; first: Coordinate | null; second: Coordinate | null; grid: boolean; preset: Preset; revision: number; onPoint: (coordinate: Coordinate) => void; image: LunarImage
 }) {
-  const texture = useMemo(() => makeIllustrativeTexture(), [])
-  useEffect(() => () => texture.dispose(), [texture])
+  const [texture, setTexture] = useState<THREE.Texture | null>(null)
+  useEffect(() => {
+    let active = true
+    let loaded: THREE.Texture | null = null
+    new THREE.TextureLoader().load(image.url, (map) => {
+      if (!active) { map.dispose(); return }
+      map.colorSpace = THREE.SRGBColorSpace
+      loaded = map
+      setTexture(map)
+    })
+    return () => { active = false; loaded?.dispose() }
+  }, [image.url])
   return <Canvas camera={{ position: [0, 0, 4.5], fov: 39 }} dpr={[1, 1.6]} gl={{ antialias: true, alpha: true }}>
     <color attach="background" args={['#060d1e']} />
     <ambientLight intensity={0.52} />
@@ -167,7 +121,7 @@ function LunarScene({ selected, first, second, grid, preset, revision, onPoint }
     <Stars radius={65} depth={40} count={900} factor={3} fade speed={0} />
     <mesh onClick={(event) => { event.stopPropagation(); onPoint(coordinateFromPoint(event.point)) }}>
       <sphereGeometry args={[1, 96, 64]} />
-      <meshStandardMaterial map={texture} roughness={1} metalness={0} />
+      <meshStandardMaterial map={texture} color={texture ? '#ffffff' : '#a7a9ae'} roughness={1} metalness={0} />
     </mesh>
     {grid && <GlobeGrid />}
     <Marker coordinate={selected} color="#71edff" />
@@ -193,7 +147,7 @@ function formatCoordinate(coordinate: Coordinate): string {
   return `${Math.abs(coordinate.lat).toFixed(3)}° ${latHemisphere} / ${Math.abs(coordinate.lon).toFixed(3)}° ${lonHemisphere}`
 }
 
-export default function LunarExplorer({ onBack, onCoordinateChange }: { onBack: () => void; onCoordinateChange?: (coordinates: string) => void }) {
+export default function LunarExplorer({ onBack, onCoordinateChange, image }: { onBack: () => void; onCoordinateChange?: (coordinates: string) => void; image: LunarImage }) {
   const [selected, setSelected] = useState<Coordinate>({ lat: -89, lon: 0 })
   useEffect(() => { onCoordinateChange?.(formatCoordinate(selected)) }, [selected, onCoordinateChange])
   const [latitude, setLatitude] = useState('-89')
@@ -206,6 +160,8 @@ export default function LunarExplorer({ onBack, onCoordinateChange }: { onBack: 
   const [first, setFirst] = useState<Coordinate | null>(null)
   const [second, setSecond] = useState<Coordinate | null>(null)
   const [expandedLayer, setExpandedLayer] = useState<string | null>(null)
+  const [missionId, setMissionId] = useState(historicalMissions[0]?.id ?? '')
+  const mission = historicalMissions.find((item) => item.id === missionId)
 
   function choosePoint(coordinate: Coordinate) {
     if (measureStep === 'first') {
@@ -245,7 +201,7 @@ export default function LunarExplorer({ onBack, onCoordinateChange }: { onBack: 
     <div className="lunar-topbar">
       <button className="lunar-back" type="button" onClick={onBack}><ArrowLeft size={17} /> Solar System</button>
       <div className="lunar-heading"><span className="lunar-eyebrow">LUNAR GEOSPATIAL WORKSTATION</span><h1>Explore the Moon</h1></div>
-      <div className="lunar-top-state"><span className="lunar-status-dot" /> PROCEDURAL VIEW <span className="lunar-state-separator">/</span> SCIENCE LAYERS UNAVAILABLE</div>
+      <div className="lunar-top-state"><span className="lunar-status-dot" /> {image.state === 'available' ? 'LROC WAC CONTEXT IMAGE' : 'QUALITATIVE IMAGE'} <span className="lunar-state-separator">/</span> ELEVATION UNAVAILABLE</div>
     </div>
 
     <div className="lunar-layout">
@@ -264,7 +220,7 @@ export default function LunarExplorer({ onBack, onCoordinateChange }: { onBack: 
 
         <div className="lunar-panel-title lunar-section-title"><Layers3 size={17} /><span>Data layers</span></div>
         <label className="lunar-grid-toggle"><input type="checkbox" checked={grid} onChange={(event) => setGrid(event.target.checked)} /> Coordinate grid</label>
-        <div className="lunar-layer-list">{DATA_LAYERS.map((layer) => <div className="lunar-layer" key={layer.name}>
+        <div className="lunar-layer-list">{[{ name: 'Global LROC WAC mosaic', state: image.state === 'available' ? 'LOADED' : 'NOT IMPORTED', available: image.state === 'available', note: image.state === 'available' ? 'Requested LROC WAC 008P context image; 8 px/degree. This is imagery, not measured elevation.' : image.reason }, { name: 'Legacy lunar image', state: image.state === 'available' ? 'INACTIVE' : 'QUALITATIVE', available: image.state !== 'available', note: 'Bundled qualitative image. Registration and instrument metadata are not verified; do not use for measurements.' }, ...DATA_LAYERS].map((layer) => <div className="lunar-layer" key={layer.name}>
           <button type="button" aria-expanded={expandedLayer === layer.name} onClick={() => setExpandedLayer(expandedLayer === layer.name ? null : layer.name)}><span>{layer.name}</span><small className={layer.available ? 'is-illustrative' : ''}>{layer.state}</small></button>
           {expandedLayer === layer.name && <p>{layer.note}</p>}
         </div>)}</div>
@@ -272,8 +228,8 @@ export default function LunarExplorer({ onBack, onCoordinateChange }: { onBack: 
 
       <div className="lunar-globe-panel">
         <div className="lunar-view-label"><span>VIEW / {preset.toUpperCase()}</span><span>SEL / {formatCoordinate(selected)}</span></div>
-        <div className="lunar-canvas-wrap"><SceneBoundary><LunarScene selected={selected} first={first} second={second} grid={grid} preset={preset} revision={revision} onPoint={choosePoint} /></SceneBoundary></div>
-        <div className="lunar-view-footer"><span>DRAG TO ORBIT · SCROLL TO ZOOM · CLICK TO SELECT</span><span>GLOBAL SURFACE: ILLUSTRATIVE</span></div>
+        <div className="lunar-canvas-wrap"><SceneBoundary><LunarScene key={image.url} selected={selected} first={first} second={second} grid={grid} preset={preset} revision={revision} onPoint={choosePoint} image={image} /></SceneBoundary></div>
+        <div className="lunar-view-footer"><span>DRAG TO ORBIT · SCROLL TO ZOOM · CLICK TO SELECT</span><span>GLOBAL SURFACE: {image.state === 'available' ? 'LROC WAC CONTEXT' : 'QUALITATIVE IMAGE'}</span></div>
       </div>
 
       <aside className="lunar-panel lunar-inspect-panel" aria-label="Selected location and measurement">
@@ -282,7 +238,7 @@ export default function LunarExplorer({ onBack, onCoordinateChange }: { onBack: 
         <div className="lunar-fact"><span>Reference</span><strong>Mean-radius sphere</strong></div>
         <div className="lunar-fact"><span>Elevation</span><strong>NOT AVAILABLE</strong></div>
         <div className="lunar-fact"><span>Terrain safety</span><strong>NOT EVALUATED</strong></div>
-        <p className="lunar-info-note">This marker identifies the selected coordinate. The surface is procedural artwork, not lunar imagery or elevation.</p>
+        <p className="lunar-info-note">This marker identifies the selected coordinate on a mean-radius sphere. The displayed image is {image.state === 'available' ? 'LROC WAC context imagery' : 'a legacy qualitative lunar image'}; it is not an elevation or hazard map.</p>
 
         <div className="lunar-panel-title lunar-section-title"><Ruler size={17} /><span>Surface distance</span></div>
         <p className="lunar-muted">Select two points to calculate approximate great-circle distance on a sphere.</p>
@@ -294,7 +250,12 @@ export default function LunarExplorer({ onBack, onCoordinateChange }: { onBack: 
         <p className="lunar-method">Method: spherical great circle, mean lunar radius 1,737.4 km. Terrain, elevation and route safety are excluded.</p>
 
         <div className="lunar-panel-title lunar-section-title"><Layers3 size={17} /><span>Source & convention</span></div>
-        <p className="lunar-method">Coordinates are planetocentric latitude and east-positive longitude, displayed in −180° to 180°. Near side is centred on 0° longitude. No NASA dataset is loaded in this view.</p>
+        <p className="lunar-method">Coordinates are planetocentric latitude and east-positive longitude, displayed in −180° to 180°. Near side is centred on 0° longitude. Image texture alignment is for exploration and is not survey registration.</p>
+        <div className="lunar-panel-title lunar-section-title"><MapPinned size={17} /><span>Mission intelligence</span></div>
+        <p className="lunar-muted">Historical catalog snapshot. Select a mission to inspect its timeline, instruments and source.</p>
+        <label className="lunar-input-label" htmlFor="lunar-mission">Mission</label>
+        <select id="lunar-mission" className="lunar-mission-select" value={missionId} onChange={(event) => setMissionId(event.target.value)}>{historicalMissions.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select>
+        {mission && <div className="lunar-mission-detail"><h2>{mission.name}</h2><p>{mission.description}</p><div className="lunar-fact"><span>Status</span><strong>{mission.status}</strong></div><div className="lunar-fact"><span>Destination</span><strong>{mission.destination}</strong></div><p className="lunar-method">{mission.coordinateNote}</p><h3>Timeline</h3><ol>{mission.events.map((event) => <li key={`${event.date}-${event.title}`}><time dateTime={event.date}>{event.date}</time><strong>{event.title}</strong><span>{event.description}</span></li>)}</ol><h3>Named instruments</h3><ul>{mission.payloads.map((payload) => <li key={payload}>{payload}</li>)}</ul><p className="lunar-method">{mission.resultsNote}</p><a href={mission.source.url} target="_blank" rel="noopener noreferrer">{mission.source.name} · source ↗</a></div>}
       </aside>
     </div>
   </section>

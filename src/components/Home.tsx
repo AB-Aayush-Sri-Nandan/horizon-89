@@ -16,6 +16,7 @@ export default function Home({
           e.currentTarget.hidden = true;
         }}
       />
+      <div className="home-earth" aria-hidden="true" />
       <div className="home-orbit" aria-hidden="true">
         <span />
         <i />
@@ -54,7 +55,7 @@ export default function Home({
       <div className="home-bottom">
         <span className="mono">CURIOSITY, GROUNDED IN EVIDENCE.</span>
         <p>
-          Background: NASA 3D Resources · Tycho Star Map
+          Earth: NASA 3D Resources Blue Marble texture · Background: NASA Tycho Star Map
           <br />
           <a
             href="/images/space-provenance.json"

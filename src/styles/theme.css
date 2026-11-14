@@ -2537,3 +2537,50 @@ td small {
     transform: none;
   }
 }
+
+/* Observatory composition: sourced Earth texture, atmospheric lighting and a quiet foreground. */
+.home-hero {
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding-top: clamp(145px, 17vh, 220px);
+  background: radial-gradient(ellipse at 50% 100%, #244da8 0, #161b4c 37%, #030713 75%);
+}
+.home-hero .space-image { opacity: .35; }
+.home-hero::before { background: linear-gradient(180deg, #030711bb 0%, #03071166 44%, #050b1700 75%, #02040a 100%); }
+.home-earth {
+  position: absolute;
+  z-index: -1;
+  width: min(122vw, 1550px);
+  aspect-ratio: 1;
+  left: 50%;
+  bottom: max(-108vw, -1130px);
+  transform: translateX(-50%) rotate(-12deg);
+  border-radius: 50%;
+  background: url('/textures/planets/earth.jpg') 50% 50% / 200% 100% no-repeat, #264777;
+  box-shadow: inset -12vw -12vw 13vw #01040b, inset 5vw 3vw 5vw #90d6ff62, 0 -12px 52px #31aaff99, 0 -35px 120px #4752c755;
+  pointer-events: none;
+}
+.home-content { position: relative; max-width: 940px; }
+.home-content h1 { font-size: clamp(54px, 7vw, 110px); line-height: .99; text-wrap: balance; }
+.home-content h1 em { color: #b5c9ef; }
+.home-kicker, .home-actions, .home-principles { justify-content: center; }
+.home-wordmark { letter-spacing: .42em; }
+.home-description { max-width: 590px; margin: 30px auto; }
+.home-actions .primary { background: linear-gradient(125deg, #3354c3, #1d83d2); border-color: #80c9ff; box-shadow: 0 9px 30px #257bd05c; }
+.home-orbit { opacity: .18; }
+.home-bottom { z-index: 1; text-align: left; }
+.cinematic-solar .solar-stage { background: radial-gradient(ellipse at 50% 50%, #12141c 0, #020308 75%), url('/images/tycho-starfield.jpg') center/cover; }
+.cinematic-solar .solar-info { background: #080b10d9; border-color: #8ca3c333; }
+.cinematic-solar .object-list button.active { background: #1a315a; border-color: #77b8ff; }
+.cinematic-solar .solar-stage:fullscreen { width: 100vw; height: 100vh; background-color: #020308; }
+.cinematic-solar .solar-stage:fullscreen .stage-heading { display: none; }
+.cinematic-solar .solar-stage:fullscreen .solar-entry-caption { display: none; }
+.solar-fullscreen-select { position: absolute; z-index: 5; top: 24px; left: 24px; display: grid; gap: 7px; color: #b0c6df; font: 10px var(--mono); letter-spacing: .12em; }
+.solar-fullscreen-select select { min-width: 170px; padding: 10px; border: 1px solid #748ba766; border-radius: 5px; color: white; background: #09111dcc; }
+@media (max-width: 700px) {
+  .home-hero { padding-top: 160px; }
+  .home-earth { width: 150vw; bottom: -93vw; }
+  .home-content h1 { font-size: clamp(43px, 11vw, 66px); }
+  .home-bottom { background: #02040a99; }
+}

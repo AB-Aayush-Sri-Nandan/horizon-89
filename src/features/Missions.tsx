@@ -66,8 +66,8 @@ export default function Missions({ onMoon, onCopilot }: Props) {
         {filtered.length === 0 ? <div className="hm-missions__empty">No leads match those filters. Try a different name or provider.</div> : <div className="hm-missions__grid">
           {filtered.map((mission, index) => <article key={mission.id} className="hm-missions__card" style={{ "--card-index": index } as React.CSSProperties}>
             <div className="hm-missions__card-top"><span className="hm-missions__serial">H89 / {String(index + 1).padStart(2, "0")}</span><span className="hm-missions__pending">Source check pending</span></div>
-            <div className="hm-missions__orb" aria-hidden="true" />
-            <p className="hm-missions__provider">{mission.provider}</p>
+            <div className="hm-missions__emblem" aria-hidden="true"><span>{mission.name.split(/\s+/).map((part) => part[0]).slice(0, 3).join("")}</span><i>{mission.lander ?? "LUNAR MISSION"}</i></div>
+            <p className="hm-missions__provider">{mission.provider} · Illustrative identity</p>
             <h2>{mission.name}</h2>
             <div className="hm-missions__card-facts"><span><MapPin size={15} /> {field(mission.destination)}</span><span><CalendarDays size={15} /> Date not verified</span></div>
             <div className="hm-missions__card-actions"><button type="button" onClick={() => setSelectedId(mission.id)}>Inspect record <ArrowUpRight size={16} /></button><button type="button" className={compareIds.includes(mission.id) ? "selected" : ""} aria-label={`${compareIds.includes(mission.id) ? "Remove" : "Add"} ${mission.name} ${compareIds.includes(mission.id) ? "from" : "to"} comparison`} aria-pressed={compareIds.includes(mission.id)} onClick={() => toggleCompare(mission.id)}><GitCompareArrows size={17} /></button></div>

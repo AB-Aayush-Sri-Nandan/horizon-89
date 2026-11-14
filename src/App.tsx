@@ -1072,7 +1072,7 @@ export default function App() {
           </div>
         ) : page === "moon" ? (
           <Suspense fallback={<div role="status">Loading Moon explorer…</div>}>
-            <LunarExplorer onBack={() => setPage("solar")} onCoordinateChange={setResearchCoordinates} />
+            <LunarExplorer onBack={() => setPage("solar")} onCoordinateChange={setResearchCoordinates} image={lunarImage} />
           </Suspense>
         ) : page === "lab" ? (
           <Suspense fallback={<div role="status">Loading Landing Lab…</div>}>

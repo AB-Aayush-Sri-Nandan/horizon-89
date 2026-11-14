@@ -88,6 +88,15 @@
 .lunar-fact strong { color: #dfe9f5; font-size: 10px; font-weight: 550; text-align: right; }
 .lunar-info-note, .lunar-method { margin: 18px 0 0; color: #9cb1cb; font-size: 11px; line-height: 1.55; }
 .lunar-info-note { border-left: 2px solid #e5b878; padding-left: 11px; }
+.lunar-mission-select { width: 100%; min-height: 40px; padding: 8px; border: 1px solid #9fc4e450; border-radius: 8px; color: #edf6ff; background: #0d1c31; }
+.lunar-mission-detail { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--lunar-line); }
+.lunar-mission-detail h2 { margin: 0 0 8px; font: 500 20px 'Space Grotesk Variable', sans-serif; }
+.lunar-mission-detail h3 { margin: 20px 0 9px; font-size: 12px; }
+.lunar-mission-detail p, .lunar-mission-detail li { color: #abc0d7; font-size: 11px; line-height: 1.6; }
+.lunar-mission-detail ol, .lunar-mission-detail ul { display: grid; gap: 8px; padding-left: 18px; }
+.lunar-mission-detail time, .lunar-mission-detail li strong, .lunar-mission-detail li span { display: block; }
+.lunar-mission-detail time, .lunar-mission-detail a { color: #92ddf7; }
+.lunar-mission-detail a { font-size: 11px; }
 .lunar-secondary { color: #b9edff; background: rgba(36, 101, 134, .28); font-weight: 550 !important; }
 .lunar-reset { display: inline-flex; align-items: center; gap: 5px; margin-top: 9px; border: none; background: none; color: #a9d9ef; font-size: 10px !important; }
 .lunar-measure-result { display: flex; flex-direction: column; gap: 7px; margin: 17px 0; padding: 13px; border-radius: 9px; background: rgba(109, 193, 216, .13); }
