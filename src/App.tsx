@@ -57,25 +57,31 @@ const KnowledgeGraph = lazy(() => import("./features/KnowledgeGraph"));
 const ResearchCopilot = lazy(() => import("./features/Copilot"));
 const ResearchMissions = lazy(() => import("./features/Missions"));
 const OriginalSolar = lazy(() => import("./features/SolarSystem"));
-type Page = "home" | "control" | "science" | "missions" | "solar" | "moon" | "lab" | "graph" | "copilot" | "research-missions" | "solar-overview";
+const ClassicHome = lazy(() => import("./components/ClassicViews").then((module) => ({ default: module.ClassicHome })));
+const OperationsOverview = lazy(() => import("./components/ClassicViews").then((module) => ({ default: module.OperationsOverview })));
+type Page = "platform-home" | "mission-control" | "lunar-science" | "clps-intelligence" | "solar-atlas" | "home" | "solar" | "moon" | "missions" | "lab" | "graph" | "control" | "copilot";
 const pages: { id: Page; label: string; icon: typeof Crosshair }[] = [
-  { id: "home", label: "Home", icon: Globe2 },
-  { id: "control", label: "Mission control", icon: Crosshair },
-  { id: "science", label: "Lunar science", icon: Layers },
-  { id: "missions", label: "CLPS intelligence", icon: Satellite },
-  { id: "solar", label: "Solar System", icon: Orbit },
+  { id: "platform-home", label: "Home", icon: Globe2 },
+  { id: "mission-control", label: "Mission control", icon: Crosshair },
+  { id: "lunar-science", label: "Lunar science", icon: Layers },
+  { id: "clps-intelligence", label: "CLPS intelligence", icon: Satellite },
+  { id: "solar-atlas", label: "Solar System", icon: Orbit },
+  { id: "home", label: "Explore", icon: Globe2 },
+  { id: "solar", label: "Solar system", icon: Orbit },
   { id: "moon", label: "Moon explorer", icon: Globe2 },
+  { id: "missions", label: "Missions", icon: Satellite },
   { id: "lab", label: "Landing Lab", icon: Layers },
   { id: "graph", label: "Knowledge Graph", icon: Network },
+  { id: "control", label: "Operations overview", icon: Crosshair },
   { id: "copilot", label: "Horizon Intelligence", icon: Bot },
-  { id: "research-missions", label: "Research leads", icon: Satellite },
-  { id: "solar-overview", label: "Solar overview", icon: Orbit },
 ];
 const primaryPages = pages.slice(0, 5);
 const researchPages = pages.slice(5);
 function pageFromHash(): Page {
   const value = window.location.hash.slice(1);
-  return pages.find((item) => item.id === value)?.id ?? "home";
+  if (value === "research-missions") return "missions";
+  if (value === "solar-overview") return "solar";
+  return pages.find((item) => item.id === value)?.id ?? "platform-home";
 }
 function MissionDetail({
   mission,
@@ -397,7 +403,7 @@ export default function App() {
   const [command, setCommand] = useState(false),
     [commandSearch, setCommandSearch] = useState("");
   const enterMoon = useCallback(() => {
-    setPage("control");
+    setPage("mission-control");
     setView((v) => ({ mode: "global", version: v.version + 1 }));
   }, [setPage]);
   const saveSolarSession = useCallback((session: SolarSession) => {
@@ -431,7 +437,7 @@ export default function App() {
     }
   }, [quality]);
   useEffect(() => {
-    if (!playing || !visible || page !== "control") return;
+    if (!playing || !visible || page !== "mission-control") return;
     const id = setInterval(
       () => setMinutes((v) => advanceMinutes(v, speed, 0.25)),
       250,
@@ -464,7 +470,7 @@ export default function App() {
     setLat("-89");
     setLon("0");
     setActiveId("manual");
-    setPage("control");
+    setPage("mission-control");
     setView((v) => ({ mode: "site", version: v.version + 1 }));
   }
   function selectMission(id: string) {
@@ -477,7 +483,7 @@ export default function App() {
     setDate(day);
     setMinutes(0);
     setPlaying(false);
-    setPage("control");
+    setPage("mission-control");
   }
   function pick(coordinates: Coordinates) {
     setSelectionNotice(
@@ -491,7 +497,7 @@ export default function App() {
   }
   return (
     <div
-      className={`app-shell ${page === "solar" || page === "home" ? "solar-entry" : ""} ${researchPages.some((item) => item.id === page) ? "legacy-workspace" : ""}`}
+      className={`app-shell ${page === "solar-atlas" || page === "platform-home" ? "solar-entry" : ""} ${researchPages.some((item) => item.id === page) ? "legacy-workspace" : ""} ${page === "home" || page === "control" ? "classic-workspace" : ""}`}
     >
       <a className="skip-link" href="#main-content" onClick={(event) => {
         event.preventDefault();
@@ -505,7 +511,7 @@ export default function App() {
           href="#"
           onClick={(e) => {
             e.preventDefault();
-            setPage("home");
+            setPage("platform-home");
           }}
           aria-label="HORIZON 89 home"
         >
@@ -557,15 +563,23 @@ export default function App() {
         <span>SCIENCE WITH PROVENANCE</span>
       </div>
       <main id="main-content" tabIndex={-1}>
-        {page !== "solar" && page !== "home" && !researchPages.some((item) => item.id === page) && (
+        {page !== "solar-atlas" && page !== "platform-home" && !researchPages.some((item) => item.id === page) && (
           <Readiness evidence={evidence} />
         )}
         {page === "home" ? (
-          <Home
-            onExplore={() => setPage("solar")}
-            onLunar={() => setPage("control")}
-          />
+          <Suspense fallback={<div role="status">Loading Explore…</div>}>
+            <ClassicHome navigate={setPage} />
+          </Suspense>
         ) : page === "control" ? (
+          <Suspense fallback={<div role="status">Loading Operations overview…</div>}>
+            <OperationsOverview navigate={setPage} />
+          </Suspense>
+        ) : page === "platform-home" ? (
+          <Home
+            onExplore={() => setPage("solar-atlas")}
+            onLunar={() => setPage("mission-control")}
+          />
+        ) : page === "mission-control" ? (
           <>
             <div className="control-heading">
               <div>
@@ -577,7 +591,7 @@ export default function App() {
               <div className="heading-meta">
                 <button
                   className="back-to-solar"
-                  onClick={() => setPage("solar")}
+                  onClick={() => setPage("solar-atlas")}
                 >
                   ← Back to Solar System
                 </button>
@@ -943,7 +957,7 @@ export default function App() {
                       coordinates are never plotted.
                     </p>
                     <div className="row">
-                      <button onClick={() => setPage("science")}>
+                      <button onClick={() => setPage("lunar-science")}>
                         Explore lunar science <ArrowUpRight size={15} />
                       </button>
                       <a
@@ -967,13 +981,13 @@ export default function App() {
                   working radio link. Permanent shadow needs terrain and
                   long-term illumination analysis.
                 </p>
-                <button onClick={() => setPage("science")}>
+                <button onClick={() => setPage("lunar-science")}>
                   Inspect data availability <ArrowUpRight size={15} />
                 </button>
               </section>
             </div>
           </>
-        ) : page === "science" ? (
+        ) : page === "lunar-science" ? (
           <div className="content-page">
             <Science
               grid={grid}
@@ -985,7 +999,7 @@ export default function App() {
               site={site}
             />
           </div>
-        ) : page === "missions" ? (
+        ) : page === "clps-intelligence" ? (
           <div className="content-page">
             <div className="page-intro">
               <span className="eyebrow">CLPS / MISSION INTELLIGENCE</span>
@@ -1026,7 +1040,7 @@ export default function App() {
                           aria-label={`Select ${m.name}`}
                           onClick={() => {
                             selectMission(m.id);
-                            setPage("control");
+                            setPage("mission-control");
                           }}
                         >
                           Select <ArrowUpRight size={14} />
@@ -1072,11 +1086,11 @@ export default function App() {
           <Suspense fallback={<div role="status">Loading Horizon Intelligence…</div>}>
             <ResearchCopilot context={{ section: page, selectedMission: researchMission, selectedRegion: researchRegion, selectedCoordinates: researchCoordinates }} />
           </Suspense>
-        ) : page === "research-missions" ? (
+        ) : page === "missions" ? (
           <Suspense fallback={<div role="status">Loading research leads…</div>}>
             <ResearchMissions onMoon={() => setPage("moon")} onCopilot={(name) => { setResearchMission(name); setPage("copilot"); }} />
           </Suspense>
-        ) : page === "solar-overview" ? (
+        ) : page === "solar" ? (
           <Suspense fallback={<div role="status">Loading solar overview…</div>}>
             <OriginalSolar onMoon={() => setPage("moon")} />
           </Suspense>
@@ -1116,14 +1130,14 @@ export default function App() {
             <option value="high">High</option>
           </select>
         </label>
-        <button onClick={() => setPage("science")}>
+        <button onClick={() => setPage("lunar-science")}>
           Sources & limitations <ArrowUpRight size={13} />
         </button>
       </footer>
-      {page !== "home" && page !== "copilot" && (
+      {!researchPages.some((item) => item.id === page) && page !== "platform-home" && (
         <Copilot
           key={`${activeId}-${page}`}
-          solarBody={page === "solar" ? solarBody : null}
+          solarBody={page === "solar-atlas" ? solarBody : null}
           missionId={activeId}
           site={site}
           timeUTC={timeUTC}

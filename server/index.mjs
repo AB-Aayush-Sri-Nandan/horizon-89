@@ -98,11 +98,14 @@ function readBody(req) {
 function safeMutationOrigin(req) {
   const origin = req.headers.origin;
   if (!origin) return false;
+  const forwardedProto = req.headers['x-forwarded-proto'];
+  if (forwardedProto && !['http', 'https'].includes(forwardedProto)) return false;
   let sameHost = false;
   try {
     const parsed = new URL(origin);
-    sameHost = ['http:', 'https:'].includes(parsed.protocol) && parsed.host === req.headers.host &&
-      (req.headers['x-forwarded-proto'] !== 'https' || parsed.protocol === 'https:');
+    if (!['http:', 'https:'].includes(parsed.protocol) ||
+        (forwardedProto && parsed.protocol !== `${forwardedProto}:`)) return false;
+    sameHost = parsed.host === req.headers.host;
   } catch { /* Invalid origins are rejected. */ }
   if (!sameHost && !allowedOrigins.has(origin)) return false;
   const site = req.headers['sec-fetch-site'];
@@ -110,7 +113,7 @@ function safeMutationOrigin(req) {
 }
 
 function cookieHeader(req, id, maxAge) {
-  const secure = req.headers['x-forwarded-proto'] === 'https' ? '; Secure' : '';
+  const secure = process.env.NODE_ENV === 'production' || req.headers['x-forwarded-proto'] === 'https' ? '; Secure' : '';
   return `${COOKIE_NAME}=${id}; HttpOnly; SameSite=Strict; Path=/api; Max-Age=${maxAge}${secure}`;
 }
 

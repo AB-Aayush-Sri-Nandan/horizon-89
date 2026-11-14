@@ -26,10 +26,13 @@ The routes are:
 by the test endpoint; no model is silently chosen. All mutating requests need
 an allowed `Origin` header. Local Vite origins are allowed. For other hosts,
 set `HORIZON_ALLOWED_ORIGINS` to a comma-separated list of exact trusted
-origins. If deployed behind an HTTPS proxy, forward `X-Forwarded-Proto: https`
-so the opaque session cookie receives the `Secure` flag. Use HTTPS in
-production. `HORIZON_HOST` and `HORIZON_PORT` can change the bind address and
-port.
+origins. Production mode always marks the opaque session cookie `Secure`,
+including when the forwarded-protocol header is absent. A present
+`X-Forwarded-Proto` must exactly match the request Origin scheme; malformed or
+mismatched values are rejected. Use HTTPS at the public edge. The combined
+server also requires the Origin host to match its request Host.
+`HORIZON_HOST` and `HORIZON_PORT` change the standalone server bind address
+and port.
 
 The evidence registry is `server/evidence.json`. Only entries with
 `verification: "verified"`, `verifiedAt`, `fact`, `title`, and an HTTPS `url`

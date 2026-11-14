@@ -4,7 +4,9 @@ import { once } from "node:events";
 import { createApp } from "../dist-server/server/index.js";
 
 test("research sessions are isolated, configurable, and never return credentials", async () => {
-  const server = createApp();
+  const previousNodeEnv = process.env.NODE_ENV;
+  process.env.NODE_ENV = "production";
+  const server = createApp({ aiKey: "" });
   server.listen(0, "127.0.0.1");
   await once(server, "listening");
   const address = server.address();
@@ -41,6 +43,7 @@ test("research sessions are isolated, configurable, and never return credentials
     assert.equal(response.status, 200);
     const cookie = response.headers.get("set-cookie")?.split(";")[0];
     assert.match(cookie ?? "", /^h89_session=[a-f0-9]{64}$/);
+    assert.match(response.headers.get("set-cookie") ?? "", /; Secure$/);
     const created = await response.text();
     assert(!created.includes("test-key-12345"));
     assert.deepEqual(JSON.parse(created).provider, "openai");
@@ -101,7 +104,33 @@ test("research sessions are isolated, configurable, and never return credentials
       body: JSON.stringify({ provider: "openai", key: "test-key-12345" }),
     });
     assert.equal(response.status, 403);
+    response = await originalFetch(`${base}/api/session/config`, {
+      method: "POST", headers: { ...headers, Origin: base.replace("http:", "https:"), "X-Forwarded-Proto": "https" },
+      body: JSON.stringify({ provider: "openai", key: "test-key-12345" }),
+    });
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get("set-cookie") ?? "", /; Secure$/);
+    response = await originalFetch(`${base}/api/session/config`, {
+      method: "POST", headers: { ...headers, "X-Forwarded-Proto": "https,http" },
+      body: JSON.stringify({ provider: "openai", key: "test-key-12345" }),
+    });
+    assert.equal(response.status, 403);
+    for (const [origin, forwardedProto, expected] of [
+      [base, undefined, 503],
+      [base.replace("http:", "https:"), "https", 503],
+      [base, "https", 403],
+      [base, "https,http", 403],
+    ] as const) {
+      const apiHeaders: Record<string, string> = { ...headers, Origin: origin };
+      if (forwardedProto) apiHeaders["X-Forwarded-Proto"] = forwardedProto;
+      response = await originalFetch(`${base}/api/copilot`, {
+        method: "POST", headers: apiHeaders, body: JSON.stringify({ question: "Hello" }),
+      });
+      assert.equal(response.status, expected);
+    }
   } finally {
+    if (previousNodeEnv === undefined) delete process.env.NODE_ENV;
+    else process.env.NODE_ENV = previousNodeEnv;
     globalThis.fetch = originalFetch;
     server.close();
     await once(server, "close");

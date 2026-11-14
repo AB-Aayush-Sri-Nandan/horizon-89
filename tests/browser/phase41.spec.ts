@@ -222,7 +222,7 @@ test("Mercury GLB pipeline renders a synthetic contract fixture and handles pars
     r.fulfill({ body: "broken glb", contentType: "model/gltf-binary" }),
   );
   await page.reload();
-  await expect(page).toHaveURL(/#solar$/);
+  await expect(page).toHaveURL(/#solar-atlas$/);
   await page.getByRole("button", { name: "Mercury", exact: true }).click();
   await expect(
     page.getByText("Local GLB unavailable · untextured fallback"),

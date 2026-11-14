@@ -69,10 +69,12 @@ export function createApp(
           let sameOrigin = false;
           try {
             const parsed = new URL(origin);
+            const forwardedProto = req.headers["x-forwarded-proto"];
             sameOrigin =
               ["http:", "https:"].includes(parsed.protocol) &&
               parsed.host === req.headers.host &&
-              (req.headers["x-forwarded-proto"] !== "https" || parsed.protocol === "https:");
+              (!forwardedProto ||
+                (typeof forwardedProto === "string" && ["http", "https"].includes(forwardedProto) && parsed.protocol === `${forwardedProto}:`));
           } catch {
             /* Reject opaque/malformed origins. */
           }

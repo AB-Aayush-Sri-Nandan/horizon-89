@@ -207,7 +207,7 @@ test("mobile navigation, no horizontal overflow, manual fields, command search a
   await page.getByLabel("Navigate workspace").fill("Solar");
   await page
     .getByRole("dialog")
-    .getByRole("button", { name: "Solar System" })
+    .getByRole("button", { name: "Solar System", exact: true })
     .click();
   await expect(
     page.getByRole("heading", { name: "The Solar System." }),
