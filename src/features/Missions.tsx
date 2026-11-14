@@ -1,0 +1,90 @@
+import { useMemo, useState } from "react";
+import { ArrowUpRight, CalendarDays, Database, GitCompareArrows, MapPin, Search, ShieldAlert, X } from "lucide-react";
+import { missions, sources, sourceById, type Mission } from "../data/missions";
+import "./missions.css";
+
+type Props = { onMoon?: () => void; onCopilot?: (missionName: string) => void };
+type Tab = "catalogue" | "comparison" | "timeline" | "sources";
+
+const field = (value: string | number | null | undefined) => value ?? "Not verified";
+
+export default function Missions({ onMoon, onCopilot }: Props) {
+  const [query, setQuery] = useState("");
+  const [provider, setProvider] = useState("all");
+  const [tab, setTab] = useState<Tab>("catalogue");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [compareIds, setCompareIds] = useState<string[]>([]);
+  const [sort, setSort] = useState("name");
+
+  const providers = useMemo(() => [...new Set(missions.map((mission) => mission.provider))].sort(), []);
+  const filtered = useMemo(() => {
+    const needle = query.toLocaleLowerCase().trim();
+    return missions
+      .filter((mission) => provider === "all" || mission.provider === provider)
+      .filter((mission) => !needle || [mission.name, mission.provider, mission.lander ?? ""].some((value) => value.toLocaleLowerCase().includes(needle)))
+      .sort((a, b) => sort === "provider" ? a.provider.localeCompare(b.provider) || a.name.localeCompare(b.name) : a.name.localeCompare(b.name));
+  }, [query, provider, sort]);
+  const selected = missions.find((mission) => mission.id === selectedId) ?? null;
+  const comparison = compareIds.map((id) => missions.find((mission) => mission.id === id)).filter((mission): mission is Mission => Boolean(mission));
+  const events = missions.flatMap((mission) => mission.events.map((event) => ({ mission, event }))).sort((a, b) => a.event.date.localeCompare(b.event.date));
+
+  function toggleCompare(id: string) {
+    setCompareIds((current) => current.includes(id) ? current.filter((item) => item !== id) : current.length < 3 ? [...current, id] : current);
+  }
+
+  return (
+    <main className="hm-missions">
+      <div className="hm-missions__aura" aria-hidden="true" />
+      <header className="hm-missions__intro">
+        <p className="hm-missions__eyebrow">HORIZON 89 / MISSION INTELLIGENCE</p>
+        <h1>Every mission begins with a question.</h1>
+        <p>Investigate CLPS mission leads, examine what is known, and follow the evidence back to its source.</p>
+        <div className="hm-missions__notice" role="status">
+          <ShieldAlert size={18} />
+          <span>Source verification is pending. NASA pages were blocked by this environment’s network policy. Names here are research leads, not a complete or current official catalogue.</span>
+        </div>
+      </header>
+
+      <div className="hm-missions__stats" aria-label="Catalogue status">
+        <div><b>{missions.length.toString().padStart(2, "0")}</b><span>Research leads</span></div>
+        <div><b>{providers.length.toString().padStart(2, "0")}</b><span>Named providers</span></div>
+        <div><b>00</b><span>Verified records</span></div>
+        <div><b>—</b><span>Official completeness</span></div>
+      </div>
+
+      <nav className="hm-missions__tabs" aria-label="Mission intelligence views">
+        {(["catalogue", "comparison", "timeline", "sources"] as const).map((item) => <button key={item} type="button" className={tab === item ? "active" : ""} onClick={() => setTab(item)} aria-current={tab === item ? "page" : undefined}>{item === "comparison" ? `Comparison ${compareIds.length ? `(${compareIds.length})` : ""}` : item}</button>)}
+      </nav>
+
+      {tab === "catalogue" && <>
+        <div className="hm-missions__tools">
+          <label className="hm-missions__search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search missions, providers, landers" aria-label="Search missions" /></label>
+          <label><span>Provider</span><select value={provider} onChange={(event) => setProvider(event.target.value)}><option value="all">All providers</option>{providers.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
+          <label><span>Sort</span><select value={sort} onChange={(event) => setSort(event.target.value)}><option value="name">Mission name</option><option value="provider">Provider</option></select></label>
+        </div>
+        <p className="hm-missions__count">Showing {filtered.length} of {missions.length} research leads</p>
+        {filtered.length === 0 ? <div className="hm-missions__empty">No leads match those filters. Try a different name or provider.</div> : <div className="hm-missions__grid">
+          {filtered.map((mission, index) => <article key={mission.id} className="hm-missions__card" style={{ "--card-index": index } as React.CSSProperties}>
+            <div className="hm-missions__card-top"><span className="hm-missions__serial">H89 / {String(index + 1).padStart(2, "0")}</span><span className="hm-missions__pending">Source check pending</span></div>
+            <div className="hm-missions__orb" aria-hidden="true" />
+            <p className="hm-missions__provider">{mission.provider}</p>
+            <h2>{mission.name}</h2>
+            <div className="hm-missions__card-facts"><span><MapPin size={15} /> {field(mission.destination)}</span><span><CalendarDays size={15} /> Date not verified</span></div>
+            <div className="hm-missions__card-actions"><button type="button" onClick={() => setSelectedId(mission.id)}>Inspect record <ArrowUpRight size={16} /></button><button type="button" className={compareIds.includes(mission.id) ? "selected" : ""} aria-label={`${compareIds.includes(mission.id) ? "Remove" : "Add"} ${mission.name} ${compareIds.includes(mission.id) ? "from" : "to"} comparison`} aria-pressed={compareIds.includes(mission.id)} onClick={() => toggleCompare(mission.id)}><GitCompareArrows size={17} /></button></div>
+          </article>)}
+        </div>}
+      </>}
+
+      {tab === "comparison" && <section className="hm-missions__workspace" aria-label="Mission comparison">
+        <div className="hm-missions__section-head"><div><p className="hm-missions__eyebrow">SIDE BY SIDE</p><h2>Compare what the evidence supports.</h2></div><p>Select up to three missions from the catalogue. Unknown values remain unknown.</p></div>
+        {comparison.length === 0 ? <div className="hm-missions__empty"><GitCompareArrows /> Select missions using the compare icon on their cards.</div> : <div className="hm-missions__compare-scroll"><table><thead><tr><th scope="col">Field</th>{comparison.map((mission) => <th scope="col" key={mission.id}>{mission.name}<button type="button" onClick={() => toggleCompare(mission.id)} aria-label={`Remove ${mission.name} from comparison`}><X size={14} /></button></th>)}</tr></thead><tbody>{([ ["Provider", (m: Mission) => m.provider], ["Lander", (m: Mission) => field(m.lander)], ["Task order", (m: Mission) => field(m.taskOrder)], ["Mission status", (m: Mission) => field(m.status)], ["Outcome", (m: Mission) => field(m.outcome)], ["Destination", (m: Mission) => field(m.destination)], ["Payload count", () => "Not verified"], ["Evidence", () => "Source check pending"] ] as [string, (mission: Mission) => string][]).map(([label, render]) => <tr key={label}><th scope="row">{label}</th>{comparison.map((mission) => <td key={mission.id}>{render(mission)}</td>)}</tr>)}</tbody></table></div>}
+      </section>}
+
+      {tab === "timeline" && <section className="hm-missions__workspace" aria-label="Mission timeline"><div className="hm-missions__section-head"><div><p className="hm-missions__eyebrow">CHRONOLOGY</p><h2>A timeline built from dated evidence.</h2></div><p>Actual and planned dates are kept separate. Events appear only after an official source confirms them.</p></div>{events.length ? <ol className="hm-missions__timeline">{events.map(({ mission, event }) => <li key={event.id}><time dateTime={event.date}>{event.date}</time><b>{event.title}</b><span>{mission.name} · {event.dateKind}</span></li>)}</ol> : <div className="hm-missions__empty"><CalendarDays /> No dated events have been verified yet. The catalogue does not invent launch or landing dates.</div>}</section>}
+
+      {tab === "sources" && <section className="hm-missions__workspace" aria-label="Sources"><div className="hm-missions__section-head"><div><p className="hm-missions__eyebrow">SOURCE REGISTRY</p><h2>Follow the evidence.</h2></div><p>These are official research destinations, listed for review. They were not accessible during this build.</p></div><div className="hm-missions__sources">{sources.map((source) => <article key={source.id}><Database size={21} /><div><h3>{source.title}</h3><p>{source.publisher} · {source.accessNote}</p><a href={source.url} target="_blank" rel="noopener noreferrer">Open official source <ArrowUpRight size={15} /></a></div></article>)}</div></section>}
+
+      {selected && <div className="hm-missions__overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedId(null); }}><section className="hm-missions__detail" role="dialog" aria-modal="true" aria-label={`${selected.name} research record`}><button className="hm-missions__close" type="button" onClick={() => setSelectedId(null)} aria-label="Close record"><X /></button><p className="hm-missions__eyebrow">MISSION DOSSIER / RESEARCH LEAD</p><h2>{selected.name}</h2><p className="hm-missions__detail-intro">Official verification has not yet been completed. Fields without a checked source are shown as unknown.</p><dl><div><dt>Provider named in brief</dt><dd>{selected.provider}</dd></div><div><dt>Lander named in brief</dt><dd>{field(selected.lander)}</dd></div><div><dt>Task order</dt><dd>{field(selected.taskOrder)}</dd></div><div><dt>Status / outcome</dt><dd>{field(selected.status)} / {field(selected.outcome)}</dd></div><div><dt>Landing region / coordinates</dt><dd>{field(selected.destination)} / Not verified</dd></div><div><dt>Payloads and timeline</dt><dd>Awaiting official source review</dd></div></dl><h3>Source trail</h3><div className="hm-missions__detail-sources">{selected.sourceIds.map((id) => { const source = sourceById(id); return source && <a key={id} href={source.url} target="_blank" rel="noopener noreferrer">{source.publisher}: {source.title} <ArrowUpRight size={14} /></a>; })}</div><div className="hm-missions__detail-actions">{onMoon && <button type="button" onClick={onMoon}>Explore the Moon</button>}{onCopilot && <button type="button" onClick={() => onCopilot(selected.name)}>Ask Horizon Intelligence</button>}</div></section></div>}
+    </main>
+  );
+}

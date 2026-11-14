@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "description": "CLPS research leads from the product brief. No official mission fact has yet been verified in this environment.",
+  "accessAttempt": {
+    "date": "2026-11-12",
+    "result": "NASA CLPS deliveries and NASA Science CLPS returned proxy CONNECT 403."
+  },
+  "sources": [
+    {
+      "id": "nasa-deliveries",
+      "title": "Commercial Lunar Payload Services deliveries",
+      "url": "https://www.nasa.gov/mission/clps-deliveries/",
+      "verification": "pending"
+    },
+    {
+      "id": "nasa-science",
+      "title": "Commercial Lunar Payload Services science program",
+      "url": "https://science.nasa.gov/lunar-science/programs/clps/",
+      "verification": "pending"
+    }
+  ],
+  "records": [
+    { "id": "peregrine-1", "title": "Peregrine Mission One", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Astrobotic"] },
+    { "id": "griffin-1", "title": "Griffin Mission One", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Astrobotic"] },
+    { "id": "im-1", "title": "IM-1 / Odysseus", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Intuitive Machines"] },
+    { "id": "im-2", "title": "IM-2 / Athena", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Intuitive Machines"] },
+    { "id": "im-3", "title": "IM-3", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Intuitive Machines"] },
+    { "id": "im-4", "title": "IM-4", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Intuitive Machines"] },
+    { "id": "blue-ghost-1", "title": "Blue Ghost Mission 1", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Firefly Aerospace"] },
+    { "id": "blue-ghost-2", "title": "Blue Ghost Mission 2", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Firefly Aerospace"] },
+    { "id": "apex-1", "title": "APEX 1.0", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Draper"] },
+    { "id": "blue-moon-mk1", "title": "Blue Moon Mark 1", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Blue Origin"] }
+  ]
+}

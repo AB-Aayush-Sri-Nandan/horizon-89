@@ -1,0 +1,10 @@
+{
+  "productId": "REPLACE_WITH_EXACT_REVIEWED_LABEL_PRODUCT_ID",
+  "url": "https://pds-geosciences.wustl.edu/REPLACE_WITH_VERIFIED_IMAGE_PATH.img",
+  "labelUrl": "https://pds-geosciences.wustl.edu/REPLACE_WITH_VERIFIED_LABEL_PATH.lbl",
+  "datumDescription": "REPLACE_WITH_PUBLISHER_VERTICAL_DATUM_AND_HEIGHT_REFERENCE",
+  "license": "REPLACE_WITH_VERIFIED_PRODUCT_USAGE_TERMS",
+  "attribution": "REPLACE_WITH_PRODUCT_REQUIRED_ATTRIBUTION",
+  "expectedSha256": null,
+  "retrievedAt": "REPLACE_WITH_ACTUAL_RETRIEVAL_ISO_UTC_ENDING_IN_Z"
+}
