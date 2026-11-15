@@ -24,13 +24,15 @@ The routes are:
 
 `provider` is `openai` or `gemini`. The model selector should use IDs returned
 by the test endpoint; no model is silently chosen. All mutating requests need
-an allowed `Origin` header. Local Vite origins are allowed. For other hosts,
-set `HORIZON_ALLOWED_ORIGINS` to a comma-separated list of exact trusted
-origins. Production mode always marks the opaque session cookie `Secure`,
-including when the forwarded-protocol header is absent. A present
-`X-Forwarded-Proto` must exactly match the request Origin scheme; malformed or
-mismatched values are rejected. Use HTTPS at the public edge. The combined
-server also requires the Origin host to match its request Host.
+an `Origin` header whose host matches the request `Host`, or whose exact value
+matches `HORIZON_PUBLIC_ORIGIN`. Vite preserves the public browser host while
+proxying `/api`, including in Codespaces. Cross-site credentialed requests are
+intentionally unsupported; use the same public origin for UI and API.
+The standalone development server also accepts the fixed local Vite origins
+`http://127.0.0.1:5173` and `http://localhost:5173` for mutation tests.
+Production always marks the session cookie `Secure`. Untrusted
+`X-Forwarded-Proto` is ignored for origin validation. Use HTTPS at the public
+edge and preserve the browser host.
 `HORIZON_HOST` and `HORIZON_PORT` change the standalone server bind address
 and port.
 

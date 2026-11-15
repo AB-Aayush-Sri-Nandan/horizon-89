@@ -98,6 +98,9 @@ test("HTTP routes validate requests, protect origin, handle missing key and serv
   r = await fetch(base + "/api/health");
   assert.equal(r.status, 200);
   assert.equal((await r.json()).status, "ok");
+  r = await fetch(base + "/api/ready");
+  assert.equal(r.status, 200);
+  assert.equal((await r.json()).status, "ready");
   r = await fetch(base + "/api/horizons?lat=999&lon=0&time=bad");
   assert.equal(r.status, 400);
   assert.ok((await r.json()).error);

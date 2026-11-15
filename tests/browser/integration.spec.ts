@@ -27,7 +27,8 @@ test("all mission-platform and research navigation entries open real pages", asy
     await expect(page.getByRole("heading", { name: heading, exact: false }).first()).toBeVisible();
   }
   for (const [hash, label, heading] of classic) {
-    await page.getByRole("navigation", { name: "Research workspaces" }).getByRole("button", { name: label, exact: true }).click();
+    if (hash === "home" || hash === "solar") continue; // legacy URLs remain direct-load routes
+    await page.getByRole("navigation", { name: "Primary navigation" }).getByRole("button", { name: label, exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`#${hash}$`));
     await expect(page.getByRole("heading", { name: heading, exact: false }).first()).toBeVisible();
   }
@@ -70,7 +71,7 @@ test("prior research aliases and cross-workspace browser history still resolve",
   await page.goto("/#solar-overview");
   await expect(page.getByRole("heading", { name: "Eight worlds.", exact: false })).toBeVisible();
   await page.goto("/#solar-atlas");
-  await page.getByRole("navigation", { name: "Research workspaces" }).getByRole("button", { name: "Solar system", exact: true }).click();
+  await page.goto('/#solar');
   await expect(page).toHaveURL(/#solar$/);
   await page.goBack();
   await expect(page).toHaveURL(/#solar-atlas$/);
@@ -97,8 +98,7 @@ for (const width of [1440, 800, 390]) {
     for (const [hash, label, heading] of [...classic, ...platform]) {
       await page.goto(`/#${hash}`);
       await expect(page.getByRole("heading", { name: heading, exact: false }).first()).toBeVisible();
-      const navigation = platform.some(([id]) => id === hash) ? "Primary navigation" : "Research workspaces";
-      await expect(page.getByRole("navigation", { name: navigation }).getByRole("button", { name: label, exact: true })).toBeVisible();
+      if (hash !== "home" && hash !== "solar") await expect(page.getByRole("navigation", { name: "Primary navigation" }).getByRole("button", { name: label, exact: true })).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width + 1);
     }
   });

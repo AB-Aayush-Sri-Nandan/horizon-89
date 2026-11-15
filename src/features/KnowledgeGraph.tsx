@@ -127,7 +127,7 @@ export default function KnowledgeGraph() {
         </div>
 
         <aside className="kg-inspector" aria-label="Selected graph node details">
-          <p className="kg-kicker">NODE INSPECTOR</p><div className="kg-inspector-orbit" aria-hidden="true"><span /></div>
+          <p className="kg-kicker">NODE INSPECTOR</p>
           <span className="kg-kind" style={{ color: palette[selected.kind] }}>{selected.kind.toUpperCase()} / RESEARCH LEAD</span>
           <h2>{selected.label}</h2><p>{selected.detail}</p>
           <div className="kg-inspector-meta"><span>EVIDENCE STATE</span><b>PENDING</b></div>

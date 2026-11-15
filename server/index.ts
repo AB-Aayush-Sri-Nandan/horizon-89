@@ -59,22 +59,29 @@ export function createApp(
       if (url.pathname === "/api/health" && req.method === "GET")
         return json(res, 200, {
           status: "ok",
-          copilotConfigured: Boolean(aiKey),
+          copilotKeyPresent: Boolean(aiKey),
           ephemeris: "remote",
           version: "0.4.0-rc.1",
         });
+      if (url.pathname === "/api/ready" && req.method === "GET") {
+        try {
+          await readFile(resolve(root, "index.html"));
+          return json(res, 200, { status: "ready", version: "0.4.0-rc.1" });
+        } catch {
+          return json(res, 503, { status: "not_ready", reason: "Frontend build unavailable" });
+        }
+      }
       if (url.pathname.startsWith("/api/")) {
         const origin = req.headers.origin;
         if (origin) {
           let sameOrigin = false;
           try {
             const parsed = new URL(origin);
-            const forwardedProto = req.headers["x-forwarded-proto"];
+            const publicOrigin = process.env.HORIZON_PUBLIC_ORIGIN;
             sameOrigin =
               ["http:", "https:"].includes(parsed.protocol) &&
-              parsed.host === req.headers.host &&
-              (!forwardedProto ||
-                (typeof forwardedProto === "string" && ["http", "https"].includes(forwardedProto) && parsed.protocol === `${forwardedProto}:`));
+              (parsed.host === req.headers.host ||
+                (publicOrigin !== undefined && origin === publicOrigin));
           } catch {
             /* Reject opaque/malformed origins. */
           }
@@ -84,15 +91,19 @@ export function createApp(
               403,
             );
         }
-        const ip = req.socket.remoteAddress ?? "local";
-        const now = clock();
-        if (requests.size > 10000) requests.clear();
-        const limit = requests.get(ip);
-        if (!limit || limit.until < now)
-          requests.set(ip, { until: now + 60000, count: 1 });
-        else if (++limit.count > 60) {
-          res.setHeader("Retry-After", "60");
-          throw new ServiceError("Too many requests. Wait one minute.", 429);
+        // Static reads and status polling must not exhaust the shared socket
+        // budget before a user submits a research request behind a proxy.
+        if (req.method !== "GET" || url.pathname === "/api/horizons") {
+          const ip = req.socket.remoteAddress ?? "local";
+          const now = clock();
+          if (requests.size > 10000) requests.clear();
+          const limit = requests.get(ip);
+          if (!limit || limit.until < now)
+            requests.set(ip, { until: now + 60000, count: 1 });
+          else if (++limit.count > 60) {
+            res.setHeader("Retry-After", "60");
+            throw new ServiceError("Too many requests. Wait one minute.", 429);
+          }
         }
       }
       if (url.pathname.startsWith("/api/session/") || url.pathname === "/api/research/copilot")

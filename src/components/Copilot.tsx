@@ -39,13 +39,13 @@ export default function Copilot({
     if (!open) return;
     let active = true;
     const health = new AbortController();
-    requestJSON<{ copilotConfigured: boolean }>("/api/health", {
+    requestJSON<{ copilotKeyPresent: boolean }>("/api/health", {
       signal: AbortSignal.any([health.signal, AbortSignal.timeout(5000)]),
     })
       .then((data) => {
         if (active)
           setConfiguration(
-            data.copilotConfigured ? "configured" : "unconfigured",
+            data.copilotKeyPresent ? "configured" : "unconfigured",
           );
       })
       .catch(() => {
@@ -167,7 +167,7 @@ export default function Copilot({
             {configuration === "unconfigured"
               ? "Copilot is not configured. Mission history, imagery and source panels work without AI. No generated answer is available."
               : configuration === "configured"
-                ? "Server configured. Provider access is verified only when a real answer succeeds."
+                ? "Server key present; provider access is unverified until a real answer succeeds."
                 : configuration === "unreachable"
                   ? "Could not check Copilot configuration. The API may be unavailable; the local explorer remains usable."
                   : "Checking server configuration…"}

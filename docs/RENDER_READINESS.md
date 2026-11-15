@@ -27,8 +27,8 @@ for `/api/copilot`, `/api/session/*`, and `/api/research/copilot`, plus an
 authenticated or otherwise enforceable per-user quota for paid generation.
 Limit request body sizes and concurrent provider requests at the edge. Keep
 HTTPS redirect enabled. The production cookie is always `Secure`, `HttpOnly`,
-`SameSite=Strict`, and scoped to `/api`; a present forwarded protocol must
-match the Origin scheme. Verify these headers on the actual hosted service.
+`SameSite=Strict`, and scoped to `/api`; forwarded-protocol headers are ignored
+for origin validation. Verify these headers on the actual hosted service.
 No shared store, paid service, credential, or production setting is provisioned
 by this repository.
 

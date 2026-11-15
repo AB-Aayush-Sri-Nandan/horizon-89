@@ -75,7 +75,9 @@ const pages: { id: Page; label: string; icon: typeof Crosshair }[] = [
   { id: "control", label: "Operations overview", icon: Crosshair },
   { id: "copilot", label: "Horizon Intelligence", icon: Bot },
 ];
-const primaryPages = pages.slice(0, 5);
+// One visible navigation system. Earlier Home and Solar overview URLs remain
+// addressable for bookmarks and through the command search.
+const primaryPages = pages.filter((item) => item.id !== "home" && item.id !== "solar");
 const researchPages = pages.slice(5);
 function pageFromHash(): Page {
   const value = window.location.hash.slice(1);
@@ -548,13 +550,6 @@ export default function App() {
           <kbd>⌘ K</kbd>
         </button>
       </header>
-      <nav className="research-nav" aria-label="Research workspaces">
-        {researchPages.map(({ id, label, icon: Icon }) => (
-          <button key={id} type="button" aria-current={page === id ? "page" : undefined} className={page === id ? "active" : ""} onClick={() => setPage(id)}>
-            <Icon size={15} /> {label}
-          </button>
-        ))}
-      </nav>
       <div className="workspace-strip">
         <span>
           <i className="red-dot" /> INDEPENDENT MISSION EXPLORER
@@ -578,6 +573,7 @@ export default function App() {
           <Home
             onExplore={() => setPage("solar-atlas")}
             onLunar={() => setPage("mission-control")}
+            onMissions={() => setPage("missions")}
           />
         ) : page === "mission-control" ? (
           <>

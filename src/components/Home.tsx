@@ -2,9 +2,11 @@ import { ArrowUpRight, Orbit, Crosshair } from "lucide-react";
 export default function Home({
   onExplore,
   onLunar,
+  onMissions,
 }: {
   onExplore: () => void;
   onLunar: () => void;
+  onMissions: () => void;
 }) {
   return (
     <section className="home-hero" aria-labelledby="home-title">
@@ -45,6 +47,7 @@ export default function Home({
             <Crosshair size={18} /> Discover Lunar Missions{" "}
             <ArrowUpRight size={18} />
           </button>
+          <button onClick={onMissions}>Mission Intelligence <ArrowUpRight size={18} /></button>
         </div>
         <div className="home-principles">
           <span>01 / EXPLORE THE PLANETS</span>

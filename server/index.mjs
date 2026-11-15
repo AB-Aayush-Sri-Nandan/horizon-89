@@ -12,12 +12,8 @@ const COOKIE_NAME = 'h89_session';
 const EVIDENCE_PATH = fileURLToPath(new URL('./evidence.json', import.meta.url));
 const sessions = new Map();
 const requestsByAddress = new Map();
-
 const developmentOrigins = process.env.NODE_ENV === 'production' ? [] : ['http://127.0.0.1:5173', 'http://localhost:5173'];
-const allowedOrigins = new Set([
-  ...developmentOrigins,
-  ...(process.env.HORIZON_ALLOWED_ORIGINS || '').split(',').map((value) => value.trim()).filter(Boolean),
-]);
+
 
 const adapters = {
   openai: {
@@ -98,22 +94,21 @@ function readBody(req) {
 function safeMutationOrigin(req) {
   const origin = req.headers.origin;
   if (!origin) return false;
-  const forwardedProto = req.headers['x-forwarded-proto'];
-  if (forwardedProto && !['http', 'https'].includes(forwardedProto)) return false;
   let sameHost = false;
   try {
     const parsed = new URL(origin);
-    if (!['http:', 'https:'].includes(parsed.protocol) ||
-        (forwardedProto && parsed.protocol !== `${forwardedProto}:`)) return false;
-    sameHost = parsed.host === req.headers.host;
+    if (!['http:', 'https:'].includes(parsed.protocol)) return false;
+    sameHost = parsed.host === req.headers.host || origin === process.env.HORIZON_PUBLIC_ORIGIN;
   } catch { /* Invalid origins are rejected. */ }
-  if (!sameHost && !allowedOrigins.has(origin)) return false;
+  if (!sameHost && !developmentOrigins.includes(origin)) return false;
   const site = req.headers['sec-fetch-site'];
   return !site || site === 'same-origin' || site === 'same-site';
 }
 
 function cookieHeader(req, id, maxAge) {
-  const secure = process.env.NODE_ENV === 'production' || req.headers['x-forwarded-proto'] === 'https' ? '; Secure' : '';
+  // Proxy headers can be supplied by clients unless the ingress explicitly
+  // strips them. Production security must not depend on their contents.
+  const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
   return `${COOKIE_NAME}=${id}; HttpOnly; SameSite=Strict; Path=/api; Max-Age=${maxAge}${secure}`;
 }
 

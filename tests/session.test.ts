@@ -103,7 +103,7 @@ test("research sessions are isolated, configurable, and never return credentials
       method: "POST", headers: { ...headers, "X-Forwarded-Proto": "https" },
       body: JSON.stringify({ provider: "openai", key: "test-key-12345" }),
     });
-    assert.equal(response.status, 403);
+    assert.equal(response.status, 200); // Untrusted proxy headers cannot change origin policy.
     response = await originalFetch(`${base}/api/session/config`, {
       method: "POST", headers: { ...headers, Origin: base.replace("http:", "https:"), "X-Forwarded-Proto": "https" },
       body: JSON.stringify({ provider: "openai", key: "test-key-12345" }),
@@ -114,12 +114,12 @@ test("research sessions are isolated, configurable, and never return credentials
       method: "POST", headers: { ...headers, "X-Forwarded-Proto": "https,http" },
       body: JSON.stringify({ provider: "openai", key: "test-key-12345" }),
     });
-    assert.equal(response.status, 403);
+    assert.equal(response.status, 200);
     for (const [origin, forwardedProto, expected] of [
       [base, undefined, 503],
       [base.replace("http:", "https:"), "https", 503],
-      [base, "https", 403],
-      [base, "https,http", 403],
+      [base, "https", 503],
+      [base, "https,http", 503],
     ] as const) {
       const apiHeaders: Record<string, string> = { ...headers, Origin: origin };
       if (forwardedProto) apiHeaders["X-Forwarded-Proto"] = forwardedProto;

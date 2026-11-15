@@ -15,10 +15,10 @@ type Preset = 'Near side' | 'Far side' | 'North pole' | 'South pole' | 'Selected
 const MOON_MEAN_RADIUS_KM = 1737.4
 
 const DATA_LAYERS = [
-  { name: 'LOLA elevation', state: 'NOT IMPORTED', available: false, note: 'Elevation, slope, and roughness require a validated DEM.' },
-  { name: 'Permanently shadowed regions', state: 'NOT IMPORTED', available: false, note: 'Boundaries must come from a sourced scientific product.' },
-  { name: 'Solar illumination', state: 'NOT EVALUATED', available: false, note: 'Requires terrain and time-specific solar geometry.' },
-  { name: 'Earth visibility', state: 'NOT EVALUATED', available: false, note: 'Requires time-specific geometry and terrain.' },
+  { name: 'LROC WAC global mosaic', state: 'NOT IMPORTED', available: false, note: 'Requested WAC_GLOBAL_E000N0000_008P product; verify the projection and metadata before import. The current image is a qualitative fallback.' },
+  { name: 'Permanently shadowed regions', state: 'NOT IMPORTED', available: false, note: 'An authoritative PSR product has not been selected or imported; dark pixels are not PSR evidence.' },
+  { name: 'Global lunar albedo', state: 'IDENTITY UNRESOLVED', available: false, note: 'The brief calls this “Global ALGRC”; no matching authoritative product has been confirmed. No substitute is shown.' },
+  { name: 'LOLA elevation', state: 'NOT IMPORTED', available: false, note: 'Elevation, slope and roughness require a validated LOLA-derived DEM.' },
 ]
 
 function pointOnGlobe({ lat, lon }: Coordinate, radius = 1.018): THREE.Vector3 {
@@ -220,9 +220,9 @@ export default function LunarExplorer({ onBack, onCoordinateChange, image }: { o
 
         <div className="lunar-panel-title lunar-section-title"><Layers3 size={17} /><span>Data layers</span></div>
         <label className="lunar-grid-toggle"><input type="checkbox" checked={grid} onChange={(event) => setGrid(event.target.checked)} /> Coordinate grid</label>
-        <div className="lunar-layer-list">{[{ name: 'Global LROC WAC mosaic', state: image.state === 'available' ? 'LOADED' : 'NOT IMPORTED', available: image.state === 'available', note: image.state === 'available' ? 'Requested LROC WAC 008P context image; 8 px/degree. This is imagery, not measured elevation.' : image.reason }, { name: 'Legacy lunar image', state: image.state === 'available' ? 'INACTIVE' : 'QUALITATIVE', available: image.state !== 'available', note: 'Bundled qualitative image. Registration and instrument metadata are not verified; do not use for measurements.' }, ...DATA_LAYERS].map((layer) => <div className="lunar-layer" key={layer.name}>
-          <button type="button" aria-expanded={expandedLayer === layer.name} onClick={() => setExpandedLayer(expandedLayer === layer.name ? null : layer.name)}><span>{layer.name}</span><small className={layer.available ? 'is-illustrative' : ''}>{layer.state}</small></button>
-          {expandedLayer === layer.name && <p>{layer.note}</p>}
+        <div className="lunar-layer-list">{DATA_LAYERS.map((layer) => <div className="lunar-layer" key={layer.name}>
+          <button type="button" aria-expanded={expandedLayer === layer.name} onClick={() => setExpandedLayer(expandedLayer === layer.name ? null : layer.name)}><span>{layer.name}</span><small className={layer.name === 'LROC WAC global mosaic' && image.state === 'available' ? 'is-illustrative' : ''}>{layer.name === 'LROC WAC global mosaic' && image.state === 'available' ? 'LOADED' : layer.state}</small></button>
+          {expandedLayer === layer.name && <p>{layer.name === 'LROC WAC global mosaic' && image.state === 'available' ? 'Requested LROC WAC 008P context image loaded at 8 px/degree. This is imagery, not elevation.' : layer.note}</p>}
         </div>)}</div>
       </aside>
 

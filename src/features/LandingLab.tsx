@@ -69,6 +69,7 @@ export default function LandingLab({ onRegionChange }: { onRegionChange?: (regio
           <div className="lab-divider" />
           <div className="lab-panel-head"><SlidersHorizontal size={17} /><span>ASSESSMENT PRIORITIES</span></div>
           <p className="lab-muted">Set priorities for a future assessment. Weights do not create a score without measured inputs.</p>
+          <details className="lab-guide"><summary>How to use these controls</summary><p>First choose two research locations. Then set each priority from 0 (exclude) to 5 (highest importance). For example, increasing slope from 3 to 5 would give a future measured slope more influence than a criterion weighted 1. Today the result remains “Not evaluated” because no validated regional products are loaded.</p><p>Degrees describe surface slope; metres describe roughness. Illumination and Earth visibility require a stated time window. Coverage describes whether observations exist, not whether a site is safe.</p></details>
           {criteria.map((criterion) => (
             <label className="lab-weight" key={criterion.id}>
               <span>{criterion.label} <b>{weights[criterion.id]}</b></span>
@@ -104,6 +105,7 @@ export default function LandingLab({ onRegionChange }: { onRegionChange?: (regio
               <div className="lab-coverage"><b>0 / {criteria.length}</b><span>validated criterion products</span></div>
             </div>
             <p>No critical terrain or environment datasets have been validated for these locations. Missing data does not count as low risk or improve a location's ranking.</p>
+            <p className="lab-muted">Read the evidence matrix row by row: each row names the measurement needed, its units, and whether both selected locations have comparable data. Open “Method &amp; limits” for the proposed calculation and its constraints.</p>
             <div className="lab-tabs" role="tablist" aria-label="Assessment views">
               <button type="button" role="tab" aria-selected={view === "matrix"} onClick={() => setView("matrix")}>Evidence matrix</button>
               <button type="button" role="tab" aria-selected={view === "method"} onClick={() => setView("method")}>Method & limits</button>

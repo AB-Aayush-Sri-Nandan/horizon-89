@@ -64,6 +64,7 @@
 .lunar-primary, .lunar-secondary { display: inline-flex; justify-content: center; align-items: center; gap: 8px; width: 100%; margin-top: 17px; border: 1px solid rgba(140, 235, 255, .45); border-radius: 9px; padding: 11px; color: #092030; background: linear-gradient(120deg, #a4ecfb, #69bddf); font-size: 12px; font-weight: 650 !important; }
 .lunar-primary:hover, .lunar-secondary:hover { filter: brightness(1.12); }
 .lunar-grid-toggle { display: flex; align-items: center; gap: 9px; margin: 17px 0; color: #d5e3f3; font-size: 12px; }
+.lunar-grid-toggle input { width:16px; height:16px; flex:none; margin:0; }
 .lunar-grid-toggle input { accent-color: #7bdcf4; }
 .lunar-layer-list { display: flex; flex-direction: column; gap: 5px; }
 .lunar-layer { border: 1px solid rgba(172, 209, 246, .10); border-radius: 8px; background: rgba(3, 13, 29, .29); }

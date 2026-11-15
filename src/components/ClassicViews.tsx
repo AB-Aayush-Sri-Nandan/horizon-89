@@ -231,15 +231,6 @@ export function OperationsOverview({ navigate }: { navigate: (page: ClassicPage)
               {time.toISOString().replace("T", " ").slice(0, 19)} UTC
             </span>
           </div>
-          <div className="control-orbit">
-            <div className="control-orbit-ring">
-              <div className="control-orbit-dot" />
-            </div>
-            <div className="control-orbit-core">
-              H<br />
-              <span>89</span>
-            </div>
-          </div>
           <div className="control-metrics">
             <div>
               <small>FRONTEND</small>

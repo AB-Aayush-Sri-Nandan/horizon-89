@@ -606,7 +606,7 @@
   gap: 15px;
 }
 .classic-workspace .control-hero {
-  min-height: 510px;
+  min-height: 250px;
   position: relative;
   overflow: hidden;
   padding: 25px;
@@ -628,69 +628,10 @@
 .classic-workspace .live-clock {
   color: #8ce5ff;
 }
-.classic-workspace .control-orbit {
-  position: absolute;
-  left: 50%;
-  top: 49%;
-  transform: translate(-50%, -50%);
-  width: 290px;
-  height: 290px;
-  display: grid;
-  place-items: center;
-}
-.classic-workspace .control-orbit-ring {
-  position: absolute;
-  inset: 0;
-  border: 1px solid #80a5f943;
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 30px #344d7d0b,
-    0 0 0 80px #344d7d09;
-}
-.classic-workspace .control-orbit-ring:after {
-  content: "";
-  position: absolute;
-  inset: 30px;
-  border: 1px dashed #77a5e04a;
-  border-radius: 50%;
-}
-.classic-workspace .control-orbit-dot {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  top: 22px;
-  left: 30px;
-  border-radius: 50%;
-  background: #a4ecff;
-  box-shadow: 0 0 25px #7ce7ff;
-}
-.classic-workspace .control-orbit-core {
-  width: 170px;
-  height: 170px;
-  border: 1px solid #95d7ff8c;
-  border-radius: 50%;
-  display: grid;
-  place-content: center;
-  text-align: center;
-  background: radial-gradient(circle at 40% 35%, #294e8c, #0a1739 65%, #050b1e);
-  box-shadow:
-    0 0 65px #5d9eff42,
-    inset -20px -20px 50px #0009;
-  font: 700 45px/0.8 var(--head);
-  letter-spacing: -0.09em;
-}
-.classic-workspace .control-orbit-core span {
-  font-size: 25px;
-  color: #8fdfff;
-  letter-spacing: 0;
-}
 .classic-workspace .control-metrics {
-  position: absolute;
-  bottom: 25px;
-  left: 25px;
-  right: 25px;
   display: flex;
   gap: 30px;
+  margin-top: 50px;
   padding-top: 20px;
   border-top: 1px solid var(--line);
 }
@@ -933,10 +874,7 @@
     grid-template-columns: 1fr;
   }
   .classic-workspace .control-hero {
-    min-height: 430px;
-  }
-  .classic-workspace .control-orbit {
-    transform: translate(-50%, -50%) scale(0.78);
+    min-height: 250px;
   }
   .classic-workspace .control-metrics {
     gap: 12px;

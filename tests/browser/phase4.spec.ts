@@ -118,7 +118,7 @@ test("real Copilot response only when a server key is configured", async ({
 }) => {
   const health = await (await request.get("/api/health")).json();
   test.skip(
-    !health.copilotConfigured,
+    !health.copilotKeyPresent,
     "No H89_AI_API_KEY configured; real response workflow not executed.",
   );
   await page.goto("/");

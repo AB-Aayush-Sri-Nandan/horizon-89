@@ -21,7 +21,7 @@ test('sourced Earth hero and Solar fullscreen preserve scene controls', async ({
 test('lunar image state is honest and mission cards have distinct illustrative identities', async ({ page }) => {
   await page.goto('/#moon');
   await expect(page.getByRole('heading', { name: 'Explore the Moon' })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Global LROC WAC mosaic/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /LROC WAC global mosaic/ })).toBeVisible();
   await expect(page.getByText(/not an elevation or hazard map/)).toBeVisible();
   await page.screenshot({ path: 'docs/refinement-moon-desktop.png', fullPage: true, animations: 'disabled' });
   await page.getByLabel('Mission', { exact: true }).selectOption('blue-ghost');
@@ -30,9 +30,9 @@ test('lunar image state is honest and mission cards have distinct illustrative i
   await page.goto('/#missions');
   await expect(page.getByRole('heading', { name: 'Every mission begins with a question.' })).toBeVisible();
   await page.screenshot({ path: 'docs/refinement-missions-desktop.png', fullPage: true, animations: 'disabled' });
-  const marks = await page.locator('.hm-missions__emblem span').allTextContents();
-  expect(new Set(marks).size).toBeGreaterThan(1);
-  await expect(page.getByText('Illustrative identity').first()).toBeVisible();
+  const names = await page.locator('.hm-missions__identity strong').allTextContents();
+  expect(new Set(names).size).toBeGreaterThan(1);
+  await expect(page.locator('.hm-missions__emblem')).toHaveCount(0);
 });
 
 test('dedicated Copilot opens without WebGL', async ({ page }) => {

@@ -46,7 +46,7 @@ test("release API rejects malformed contexts/origins/paths and preserves same-or
   assert.equal((await fetch(base + "/%ZZ")).status, 400);
   const health = await (await fetch(base + "/api/health")).json();
   assert.equal(health.version, "0.4.0-rc.1");
-  assert.equal(health.copilotConfigured, false);
+  assert.equal(health.copilotKeyPresent, false);
   const html = await fetch(base + "/");
   assert.equal(html.headers.get("cache-control"), "no-cache");
   assert.equal(html.headers.get("x-content-type-options"), "nosniff");

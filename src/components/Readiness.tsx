@@ -13,7 +13,7 @@ export default function Readiness({ evidence }: { evidence: TerrainEvidence }) {
         return r.json();
       })
       .then((data) => {
-        if (active) setAPI({ copilot: data.copilotConfigured === true });
+        if (active) setAPI({ copilot: data.copilotKeyPresent === true });
       })
       .catch(() => {
         if (active) setFailed(true);
@@ -64,7 +64,7 @@ export default function Readiness({ evidence }: { evidence: TerrainEvidence }) {
               ? "API unreachable"
               : api
                 ? api.copilot
-                  ? "Configured · unverified"
+                  ? "Key present · unverified"
                   : "Server key missing"
                 : "Checking configuration"}
           </strong>

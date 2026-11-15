@@ -46,10 +46,6 @@
 .kg-svg-node:hover rect,.kg-svg-node:focus-visible rect,.kg-svg-node--selected rect { fill:#1b3049; }
 .kg-graph-foot { min-height:39px; border-top:1px solid #bad0f121; }
 .kg-inspector { padding:24px; }
-.kg-inspector-orbit { position:relative; display:grid; place-items:center; width:100%; height:110px; margin:17px 0 24px; overflow:hidden; background:radial-gradient(circle at 50% 50%,#7e8ec02a,transparent 60%); }
-.kg-inspector-orbit:before,.kg-inspector-orbit:after { content:""; position:absolute; width:105px; height:50px; border:1px solid #abc9ff56; border-radius:50%; transform:rotate(-24deg); }
-.kg-inspector-orbit:after { width:72px; height:72px; transform:rotate(55deg); opacity:.6; }
-.kg-inspector-orbit span { width:25px; height:25px; border-radius:50%; background:radial-gradient(circle at 30% 30%,#b1e7f0,#567fba 65%,#202c57); box-shadow:0 0 30px #91cad883; }
 .kg-kind { font:600 9px "JetBrains Mono",monospace; letter-spacing:.12em; }
 .kg-inspector h2 { margin:10px 0 12px; overflow-wrap:anywhere; font:500 25px/1.1 "Space Grotesk",sans-serif; letter-spacing:-.04em; }
 .kg-inspector>p:not(.kg-kicker) { color:#a1b3c6; line-height:1.6; font-size:12px; }
@@ -58,6 +54,5 @@
 .kg-inspector>a { display:flex; justify-content:space-between; align-items:center; margin:22px 0; padding:12px; border:1px solid #8fccdf62; border-radius:7px; color:#b6edf2; text-decoration:none; font:600 10px "JetBrains Mono",monospace; letter-spacing:.05em; }
 .kg-inspector>a:hover { background:#9fe4ed17; }
 .kg-inspector-note { margin-top:20px; padding:13px; border-left:2px solid #caa46f7c; background:#d7a7750b; color:#8fa3bb; line-height:1.55; font-size:11px; }
-@media(max-width:1200px) { .kg-layout { grid-template-columns:220px minmax(0,1fr); }.kg-inspector { grid-column:1/-1; }.kg-inspector-orbit { display:none; } }
 @media(max-width:760px) { .kg-shell { padding:25px 15px 100px; }.kg-intro { display:block; }.kg-status { width:max-content; margin-top:18px; }.kg-layout { display:flex; flex-direction:column; }.kg-tools,.kg-graph-panel,.kg-inspector { width:100%; }.kg-stage { min-height:390px; }.kg-transform svg { min-width:690px; }.kg-graph-foot { display:block; line-height:1.5; }.kg-graph-foot span { display:block; } }
 @media(prefers-reduced-motion:reduce) { .kg-svg-node rect { transition:none; } }
