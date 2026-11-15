@@ -122,14 +122,14 @@ test("HTTP routes validate requests, protect origin, handle missing key and serv
     body: JSON.stringify({ question: "a".repeat(1501) }),
   });
   assert.equal(r.status, 400);
-  if (!process.env.H89_AI_API_KEY) {
+  if (!process.env.GROQ_API_KEY) {
     r = await fetch(base + "/api/copilot", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question: "Explain IM-1", missionId: "im1" }),
     });
     assert.equal(r.status, 503);
-    assert.match((await r.json()).error, /H89_AI_API_KEY/);
+    assert.match((await r.json()).error, /GROQ_API_KEY/);
   }
   r = await fetch(base + "/api/copilot", {
     method: "POST",
@@ -196,7 +196,7 @@ test("AI provider contract receives verified project context and bounded history
   const app = createApp({
     aiKey: "unit-test-only-not-a-credential",
     fetcher: async (url, init) => {
-      assert.equal(String(url), "https://api.openai.com/v1/chat/completions");
+      assert.equal(String(url), "https://api.groq.com/openai/v1/chat/completions");
       const body = JSON.parse(String(init?.body));
       assert.ok(body.messages[0].content.includes("IM-1"));
       assert.ok(body.messages[0].content.includes("Saturn"));

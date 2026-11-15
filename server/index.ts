@@ -45,7 +45,7 @@ export function createApp(
 ) {
   const fetcher = options.fetcher ?? fetch;
   const clock = options.now ?? Date.now;
-  const aiKey = options.aiKey ?? process.env.H89_AI_API_KEY;
+  const aiKey = options.aiKey ?? process.env.GROQ_API_KEY;
   const cache = new Map<
     string,
     { expires: number; data: Record<string, unknown> }
@@ -275,7 +275,7 @@ export function createApp(
           );
         if (!aiKey)
           throw new ServiceError(
-            "AI Copilot is unavailable: configure H89_AI_API_KEY on the server. The catalog and science panels remain available offline.",
+            "Mission Copilot is unavailable: configure GROQ_API_KEY on the server. The catalog and science panels remain available offline.",
             503,
           );
         const terrain = await terrainEvidence(
@@ -327,7 +327,7 @@ export function createApp(
         let response: Response;
         try {
           response = await fetcher(
-            "https://api.openai.com/v1/chat/completions",
+            "https://api.groq.com/openai/v1/chat/completions",
             {
               method: "POST",
               headers: {
@@ -336,7 +336,7 @@ export function createApp(
               },
               signal: AbortSignal.timeout(20000),
               body: JSON.stringify({
-                model: process.env.H89_AI_MODEL ?? "gpt-4.1-mini",
+                model: process.env.GROQ_MODEL ?? "llama-3.3-70b-versatile",
                 max_tokens: 700,
                 messages: [
                   {

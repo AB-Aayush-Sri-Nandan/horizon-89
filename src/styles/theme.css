@@ -7,7 +7,7 @@
   --panel: #101014;
   --line: #28282f;
   --muted: #9b9ba9;
-  --red: #fa3b55;
+  --red: #8b5cf6;
   --cyan: #6ddce8;
   --mono: "JetBrains Mono Variable", monospace;
   --head: "Space Grotesk Variable", sans-serif;
@@ -45,8 +45,8 @@ button {
   line-height: 1.4;
 }
 button:hover {
-  background: #28232a;
-  border-color: #a64152;
+  background: #24233a;
+  border-color: #7667ca;
 }
 button:disabled {
   cursor: not-allowed;
@@ -55,7 +55,7 @@ button:disabled {
 button.active,
 button[aria-pressed="true"] {
   border-color: var(--red);
-  background: #3b1520;
+  background: #261d4a;
 }
 a {
   color: var(--cyan);
@@ -2520,7 +2520,7 @@ td small {
   padding-top: clamp(145px, 17vh, 220px);
   background: radial-gradient(ellipse at 50% 100%, #244da8 0, #161b4c 37%, #030713 75%);
 }
-.home-hero .space-image { opacity: .35; }
+.home-hero .space-image { opacity: 1; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .home-hero::before { background: linear-gradient(180deg, #030711bb 0%, #03071166 44%, #050b1700 75%, #02040a 100%); }
 .home-earth {
   position: absolute;

@@ -7,7 +7,7 @@ import {
   advanceMinutes,
   formatCoordinates,
 } from "../src/lib/science.ts";
-import { missions, datasets } from "../src/data/catalog.ts";
+import { missions, datasets, missionCoordinates } from "../src/data/catalog.ts";
 
 test("lunar vector axes and east-positive longitude match texture UV convention", () => {
   assert.deepEqual(surfaceVector({ latitude: 0, longitude: 0 }), [1, 0, -0]);
@@ -47,12 +47,12 @@ test("timeline uses UTC and playback speed is simulation seconds per real second
   assert.throws(() => utcDay("invalid", 0));
   assert.throws(() => utcDay("2025-02-30", 0));
 });
-test("unverified mission coordinates never become markers and records cite historical sources", () => {
+test("mission markers require reviewed provenance and records cite source material", () => {
   for (const mission of missions) {
-    assert.equal(mission.coordinates, null);
-    assert.ok(mission.source.url.startsWith("https://www.nasa.gov/"));
+    assert.deepEqual(missionCoordinates(mission), mission.coordinateEvidence ? mission.coordinates : null);
+    assert.ok(mission.source.url.startsWith("https://"));
     assert.ok(mission.source.asOf);
-    assert.ok(mission.events.length);
+    if (mission.landingOutcome !== "planned") assert.ok(mission.events.length);
   }
   assert.equal(formatCoordinates(null), "Coordinates unverified");
   assert.ok(datasets.find((d) => d.id === "lola")?.available === false);

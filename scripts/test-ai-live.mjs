@@ -1,7 +1,7 @@
 // Optional real-service smoke. No placeholder key or scripted response is supplied.
-if (!process.env.H89_AI_API_KEY) {
+if (!process.env.GROQ_API_KEY) {
   console.log(
-    "SKIPPED: H89_AI_API_KEY is not configured; no real AI request was made.",
+    "SKIPPED: GROQ_API_KEY is not configured; no real AI request was made.",
   );
   process.exit(0);
 }

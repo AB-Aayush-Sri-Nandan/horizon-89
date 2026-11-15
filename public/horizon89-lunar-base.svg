@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative HORIZON 89 lunar research outpost</title>
+  <desc id="desc">A cinematic lunar landscape with craters, a research habitat, astronaut, rover, mountains and deep space.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#01030b"/><stop offset=".62" stop-color="#071426"/><stop offset="1" stop-color="#163b50"/></linearGradient>
+    <linearGradient id="ground" x1=".2" y1="0" x2=".8" y2="1"><stop stop-color="#9aa7ae"/><stop offset=".38" stop-color="#59666f"/><stop offset="1" stop-color="#18232b"/></linearGradient>
+    <linearGradient id="ridge" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a9b6bc"/><stop offset="1" stop-color="#303c44"/></linearGradient>
+    <linearGradient id="habitat" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dbe3e5"/><stop offset=".55" stop-color="#8c9ca3"/><stop offset="1" stop-color="#35434c"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#9aeaff" stop-opacity=".72"/><stop offset="1" stop-color="#36bde7" stop-opacity="0"/></radialGradient>
+    <radialGradient id="crater"><stop offset=".5" stop-color="#1a252c"/><stop offset=".72" stop-color="#46545c"/><stop offset="1" stop-color="#a6b2b7"/></radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="shadow"><feDropShadow dx="0" dy="16" stdDeviation="12" flood-color="#02070c" flood-opacity=".8"/></filter>
+    <pattern id="stars" width="170" height="130" patternUnits="userSpaceOnUse"><circle cx="18" cy="29" r="1.2" fill="#d9f3ff"/><circle cx="89" cy="71" r=".8" fill="#8ec8e3"/><circle cx="153" cy="18" r=".6" fill="#fff"/><circle cx="130" cy="113" r="1" fill="#b8d9e9"/></pattern>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect width="1920" height="670" fill="url(#stars)" opacity=".72"/>
+  <ellipse cx="1450" cy="270" rx="400" ry="270" fill="url(#glow)" filter="url(#soft)" opacity=".38"/>
+  <path d="M0 707 155 650 270 684 405 603 530 675 687 586 813 666 1016 547 1170 644 1325 525 1477 627 1630 548 1772 620 1920 570 1920 832 0 832Z" fill="url(#ridge)"/>
+  <path d="M0 742 175 684 326 719 510 655 680 704 870 633 1020 694 1214 622 1392 684 1570 620 1740 676 1920 642 1920 840 0 840Z" fill="#26333c" opacity=".86"/>
+  <path d="M0 716 C340 665 620 744 918 697 S1500 651 1920 690V1080H0Z" fill="url(#ground)"/>
+  <path d="M0 799 C390 720 710 842 1060 765 S1600 758 1920 716V1080H0Z" fill="#56636b" opacity=".84"/>
+  <ellipse cx="1508" cy="873" rx="250" ry="83" fill="url(#crater)" transform="rotate(-8 1508 873)"/>
+  <ellipse cx="1508" cy="864" rx="174" ry="43" fill="#111a20" opacity=".86" transform="rotate(-8 1508 864)"/>
+  <ellipse cx="384" cy="928" rx="190" ry="65" fill="url(#crater)" transform="rotate(8 384 928)"/>
+  <ellipse cx="384" cy="921" rx="126" ry="33" fill="#1d282f" opacity=".78" transform="rotate(8 384 921)"/>
+  <g filter="url(#shadow)" transform="translate(1270 590)">
+    <ellipse cx="0" cy="195" rx="260" ry="33" fill="#02070b" opacity=".62"/>
+    <path d="M-185 176V72a185 185 0 0 1 370 0v104Z" fill="url(#habitat)" stroke="#cfe8ef" stroke-width="5"/>
+    <path d="M-158 82a158 158 0 0 1 316 0" fill="none" stroke="#ffffff" stroke-opacity=".48" stroke-width="4"/>
+    <path d="M-184 126H184M-104 -7V176M104 -7V176" stroke="#293a43" stroke-width="8" opacity=".76"/>
+    <rect x="-54" y="98" width="108" height="78" rx="8" fill="#101b23" stroke="#77ddf5" stroke-width="4"/>
+    <rect x="-40" y="112" width="80" height="48" rx="3" fill="#4dc6e4" opacity=".56"/>
+    <g fill="#7feaff"><rect x="-150" y="104" width="28" height="18" rx="3"/><rect x="122" y="104" width="28" height="18" rx="3"/></g>
+    <path d="M-214 174h428" stroke="#dcebed" stroke-width="13"/>
+    <path d="M-165 178l-35 67M165 178l35 67M-84 178l-8 70M84 178l8 70" stroke="#81939b" stroke-width="10"/>
+    <path d="M-238 54v-134M-238-79l-48-46M-238-79l54-55" stroke="#9eb1b8" stroke-width="7"/>
+    <circle cx="-238" cy="-83" r="13" fill="#7be5ff"/>
+  </g>
+  <g transform="translate(900 765)" filter="url(#shadow)">
+    <ellipse cx="0" cy="126" rx="150" ry="24" fill="#02080c" opacity=".7"/>
+    <circle cx="-98" cy="101" r="43" fill="#121b21" stroke="#8b989e" stroke-width="9"/><circle cx="102" cy="101" r="43" fill="#121b21" stroke="#8b989e" stroke-width="9"/>
+    <path d="M-115 65H114L78-14H-72Z" fill="#77868c" stroke="#c3d1d5" stroke-width="6"/>
+    <path d="M-68-14 6-58 80-14" fill="#25333a" stroke="#aebdc2" stroke-width="6"/>
+    <rect x="-29" y="-60" width="66" height="42" rx="5" fill="#64cde8" opacity=".72"/>
+    <path d="M86-8V-78M86-72l36-24" stroke="#b4c2c6" stroke-width="6"/><circle cx="123" cy="-98" r="9" fill="#78e5ff"/>
+  </g>
+  <g transform="translate(1040 720)" filter="url(#shadow)">
+    <ellipse cx="0" cy="168" rx="65" ry="17" fill="#03080b" opacity=".72"/>
+    <circle cx="0" cy="5" r="34" fill="#d7e0e2" stroke="#f8ffff" stroke-width="5"/><rect x="-19" y="-7" width="38" height="26" rx="12" fill="#162633" stroke="#72d9f1" stroke-width="3"/>
+    <path d="M-34 45Q0 24 34 45L47 112 22 132H-23L-48 112Z" fill="url(#habitat)" stroke="#d8e2e4" stroke-width="5"/>
+    <rect x="-22" y="65" width="44" height="34" fill="#1e303b" stroke="#7cdff4" stroke-width="3"/>
+    <path d="M-38 65-80 103M38 65l64 24M-21 127l-28 78M23 127l27 78" stroke="#b7c4c8" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <g fill="#b8c2c6" opacity=".76"><circle cx="94" cy="832" r="24"/><circle cx="182" cy="780" r="12"/><circle cx="875" cy="934" r="26"/><circle cx="1040" cy="887" r="17"/><circle cx="1760" cy="990" r="34"/><circle cx="1320" cy="1000" r="18"/></g>
+  <path d="M0 1077C460 930 730 1065 1030 994s583-38 890-115v201H0Z" fill="#1c272e" opacity=".55"/>
+</svg>

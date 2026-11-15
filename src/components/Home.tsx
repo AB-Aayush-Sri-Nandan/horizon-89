@@ -12,17 +12,9 @@ export default function Home({
     <section className="home-hero" aria-labelledby="home-title">
       <img
         className="space-image"
-        src="/images/tycho-starfield.jpg"
+        src="/horizon89-lunar-base.svg"
         alt=""
-        onError={(e) => {
-          e.currentTarget.hidden = true;
-        }}
       />
-      <div className="home-earth" aria-hidden="true" />
-      <div className="home-orbit" aria-hidden="true">
-        <span />
-        <i />
-      </div>
       <div className="home-content">
         <span className="eyebrow home-kicker">
           <i /> AN INDEPENDENT EXPLORATION PLATFORM
@@ -58,7 +50,7 @@ export default function Home({
       <div className="home-bottom">
         <span className="mono">CURIOSITY, GROUNDED IN EVIDENCE.</span>
         <p>
-          Earth: NASA 3D Resources Blue Marble texture · Background: NASA Tycho Star Map
+          Illustrative lunar exploration visualization · Not a NASA photograph or scientific terrain dataset
           <br />
           <a
             href="/images/space-provenance.json"

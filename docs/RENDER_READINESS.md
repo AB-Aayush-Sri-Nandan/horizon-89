@@ -22,7 +22,7 @@ updates, and delete records on logout. Store the encryption key only in Render
 secret settings. Do not trust an arbitrary `X-Forwarded-For` header as a client
 identity; accept it only through a trusted edge/proxy configuration.
 
-Before enabling `H89_AI_API_KEY` publicly, require edge request throttling
+Before enabling `GROQ_API_KEY` publicly, require edge request throttling
 for `/api/copilot`, `/api/session/*`, and `/api/research/copilot`, plus an
 authenticated or otherwise enforceable per-user quota for paid generation.
 Limit request body sizes and concurrent provider requests at the edge. Keep
@@ -47,19 +47,16 @@ The first command requests eight fixed lunar observer cases from
 `ssd.jpl.nasa.gov` and writes a report under `/tmp/h89-horizons-check`. A
 successful fetch is transport verification, not independent ephemeris
 validation. Confirm outbound HTTPS, DNS, proxy and CA trust if it fails. The
-second command requires `H89_AI_API_KEY` in staging secret settings, contacts
+second command requires `GROQ_API_KEY` in staging secret settings, contacts
 the running same-origin API, and reports only response metadata. It skips
 explicitly without a key. Inspect answer quality and citations separately;
-do not paste credentials or generated answers into build logs. The dedicated
-research assistant can test OpenAI or Gemini model discovery through its
-HTTPS UI with a temporary credential. Its evidence-backed answer path cannot
-generate until reviewed records are imported.
+do not paste credentials or generated answers into build logs. Mission Copilot
+sends provider requests only from the server; no credential-entry UI is exposed.
 
 ## Evidence and terrain gates
 
-`server/evidence.json` currently has ten pending leads and zero verified
-records. The research Copilot deliberately reports unavailable rather than
-inventing an answer. A record must have reviewed provenance and a verification
+`server/evidence.json` contains five reviewed mission records; pending catalogue
+entries remain excluded. A record must have reviewed provenance and a verification
 date before it can ground generation. No reviewed LOLA terrain product has
 been imported, so elevation, slope, hazard and terrain-shadow conclusions
 remain unavailable. Follow [the DEM import guide](science/INGESTION.md) and

@@ -1,12 +1,12 @@
 # Real Copilot setup and verification
 
-`H89_AI_API_KEY` remains server-only. The default `H89_AI_MODEL=gpt-4.1-mini` is unchanged. No key is configured in the development environment used for this phase, so real-answer workflows were **skipped**, not described as passing.
+`GROQ_API_KEY` remains server-only. The default is `GROQ_MODEL=llama-3.3-70b-versatile`. No key is configured in this development environment, so real-answer workflows are **skipped**, not described as passing.
 
 ## Codespaces secrets
 
-In GitHub account/repository settings, open **Codespaces → Secrets → New secret**, name it `H89_AI_API_KEY`, and grant access only to the intended repository. Enter its value securely there, never chat or source. Restart the Codespace so the secret is injected, then start the backend/dev command. For local development, an ignored `.env` based on `.env.example` is supported; never use a `VITE_` variable for credentials. `H89_AI_MODEL` may be supplied separately for a model available to the account.
+In GitHub account/repository settings, open **Codespaces → Secrets → New secret**, name it `GROQ_API_KEY`, and grant access only to the intended repository. Enter its value securely there, never chat or source. Restart the Codespace so the secret is injected, then start the backend/dev command. For local development, an ignored `.env` based on `.env.example` is supported; never use a `VITE_` variable for credentials. `GROQ_MODEL` may select another model enabled for the account.
 
-The server needs HTTPS access to `api.openai.com`, preserving platform proxy and CA trust. A configured key or `/api/health` does not establish valid authentication, model access or successful generation. No key is sent in browser request bodies, manifests, screenshots or application logs.
+The server needs HTTPS access to `api.groq.com`, preserving platform proxy and CA trust. A configured key or `/api/health` does not establish valid authentication, model access or successful generation. No key is sent in browser request bodies, manifests, screenshots or application logs.
 
 ## Run an actual response smoke test
 

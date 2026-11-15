@@ -31,8 +31,11 @@ test("timeout is an unavailable error, not a fallback measurement", async () => 
     /could not be reached/,
   );
 });
-test("no marker without as-landed provenance; non-landing mission never receives marker", () => {
-  for (const m of missions) assert.equal(missionCoordinates(m), null);
+test("only reviewed as-landed provenance creates markers; non-landing mission never receives marker", () => {
+  const verified = missions.filter((mission) => mission.coordinateEvidence);
+  assert.ok(verified.length >= 2);
+  for (const mission of verified) assert.deepEqual(missionCoordinates(mission), mission.coordinates);
+  for (const mission of missions.filter((item) => !item.coordinateEvidence)) assert.equal(missionCoordinates(mission), null);
   const record = {
     ...missions[0],
     coordinates: { latitude: -89, longitude: 0 },

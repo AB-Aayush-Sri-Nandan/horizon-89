@@ -40,7 +40,7 @@ test("release API rejects malformed contexts/origins/paths and preserves same-or
     body: '{"question":"Test"}',
   });
   assert.equal(same.status, 503);
-  assert.match((await same.json()).error, /H89_AI_API_KEY/);
+  assert.match((await same.json()).error, /GROQ_API_KEY/);
   for (const path of ["/.env", "/assets/.secret", "/%2eenv", "/%5Coutside"])
     assert.equal((await fetch(base + path)).status, 404);
   assert.equal((await fetch(base + "/%ZZ")).status, 400);

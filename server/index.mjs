@@ -209,7 +209,8 @@ async function loadEvidence() {
 }
 
 function retrieveEvidence(records, question, context) {
-  const terms = new Set(`${question} ${JSON.stringify(context)}`.toLowerCase().match(/[a-z0-9]{4,}/g) || []);
+  const stopWords = new Set(['what', 'when', 'where', 'which', 'that', 'this', 'with', 'from', 'about', 'explain', 'lunar', 'moon', 'mission', 'science', 'landing', 'landed', 'evidence', 'supports', 'unknown', 'telemetry', 'south', 'pole']);
+  const terms = new Set((`${question} ${JSON.stringify(context)}`.toLowerCase().match(/[a-z0-9]{4,}/g) || []).filter((term) => !stopWords.has(term)));
   return records.map((record) => {
     const searchable = `${record.fact} ${record.title} ${record.tags?.join(' ') || ''}`.toLowerCase();
     const score = [...terms].reduce((total, term) => total + (searchable.includes(term) ? 1 : 0), 0);

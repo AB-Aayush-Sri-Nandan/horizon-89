@@ -156,7 +156,7 @@ test("actual landing globe, mission workflow, time controls, science, atlas and 
   await page.getByRole("button", { name: /Mission Copilot/ }).click();
   await page.getByLabel("Ask Copilot").fill("What datasets are missing?");
   await page.getByRole("button", { name: "Send question" }).click();
-  await expect(page.getByRole("alert")).toContainText("H89_AI_API_KEY");
+  await expect(page.getByRole("alert")).toContainText("GROQ_API_KEY");
   await page.getByRole("button", { name: "Close Copilot" }).click();
   await page.getByRole("button", { name: "Solar System", exact: true }).click();
   await expect(

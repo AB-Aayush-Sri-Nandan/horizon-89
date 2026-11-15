@@ -21,7 +21,6 @@ import {
   BookOpen,
   Orbit,
   Network,
-  Bot,
 } from "lucide-react";
 import {
   missions,
@@ -54,7 +53,6 @@ const SolarExplorer = lazy(() => import("./components/SolarExplorer"));
 const LunarExplorer = lazy(() => import("./features/LunarExplorer"));
 const LandingLab = lazy(() => import("./features/LandingLab"));
 const KnowledgeGraph = lazy(() => import("./features/KnowledgeGraph"));
-const ResearchCopilot = lazy(() => import("./features/Copilot"));
 const ResearchMissions = lazy(() => import("./features/Missions"));
 const OriginalSolar = lazy(() => import("./features/SolarSystem"));
 const ClassicHome = lazy(() => import("./components/ClassicViews").then((module) => ({ default: module.ClassicHome })));
@@ -73,14 +71,14 @@ const pages: { id: Page; label: string; icon: typeof Crosshair }[] = [
   { id: "lab", label: "Landing Lab", icon: Layers },
   { id: "graph", label: "Knowledge Graph", icon: Network },
   { id: "control", label: "Operations overview", icon: Crosshair },
-  { id: "copilot", label: "Horizon Intelligence", icon: Bot },
 ];
 // One visible navigation system. Earlier Home and Solar overview URLs remain
 // addressable for bookmarks and through the command search.
-const primaryPages = pages.filter((item) => item.id !== "home" && item.id !== "solar");
+const primaryPages = pages.filter((item) => !["home", "solar", "moon"].includes(item.id));
 const researchPages = pages.slice(5);
 function pageFromHash(): Page {
   const value = window.location.hash.slice(1);
+  if (value === "copilot") return "mission-control";
   if (value === "research-missions") return "missions";
   if (value === "solar-overview") return "solar";
   return pages.find((item) => item.id === value)?.id ?? "platform-home";
@@ -374,9 +372,6 @@ export default function App() {
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
-  const [researchMission, setResearchMission] = useState<string>();
-  const [researchRegion, setResearchRegion] = useState<string>();
-  const [researchCoordinates, setResearchCoordinates] = useState<string>();
   const [manual, setManual] = useState<Coordinates>({
       latitude: -89,
       longitude: 0,
@@ -478,7 +473,6 @@ export default function App() {
   function selectMission(id: string) {
     setSelectionNotice("");
     setActiveId(id);
-    setResearchMission(missions.find((mission) => mission.id === id)?.name);
     setView((v) => ({ mode: "global", version: v.version + 1 }));
   }
   function eventTime(day: string) {
@@ -1068,23 +1062,23 @@ export default function App() {
           </div>
         ) : page === "moon" ? (
           <Suspense fallback={<div role="status">Loading Moon explorer…</div>}>
-            <LunarExplorer onBack={() => setPage("solar")} onCoordinateChange={setResearchCoordinates} image={lunarImage} />
+            <LunarExplorer onBack={() => setPage("solar")} image={lunarImage} />
           </Suspense>
         ) : page === "lab" ? (
           <Suspense fallback={<div role="status">Loading Landing Lab…</div>}>
-            <LandingLab onRegionChange={setResearchRegion} />
+            <LandingLab />
           </Suspense>
         ) : page === "graph" ? (
           <Suspense fallback={<div role="status">Loading Knowledge Graph…</div>}>
             <KnowledgeGraph />
           </Suspense>
-        ) : page === "copilot" ? (
-          <Suspense fallback={<div role="status">Loading Horizon Intelligence…</div>}>
-            <ResearchCopilot context={{ section: page, selectedMission: researchMission, selectedRegion: researchRegion, selectedCoordinates: researchCoordinates }} />
-          </Suspense>
         ) : page === "missions" ? (
           <Suspense fallback={<div role="status">Loading research leads…</div>}>
-            <ResearchMissions onMoon={() => setPage("moon")} onCopilot={(name) => { setResearchMission(name); setPage("copilot"); }} />
+            <ResearchMissions onMissionControl={(selected) => {
+              const coreId = ({ "im-1": "im1", "blue-ghost-1": "blue-ghost", "peregrine-1": "peregrine" } as Record<string, string>)[selected.id] ?? selected.id;
+              if (missions.some((item) => item.id === coreId)) selectMission(coreId);
+              setPage("mission-control");
+            }} />
           </Suspense>
         ) : page === "solar" ? (
           <Suspense fallback={<div role="status">Loading solar overview…</div>}>

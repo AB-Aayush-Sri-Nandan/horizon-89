@@ -4,7 +4,7 @@
 
 HORIZON 89 opens on a dedicated cinematic homepage with a locally bundled NASA Tycho star visualization. Explore Universe opens the interactive Solar System with sourced NASA visualization maps; Discover Lunar Missions opens Lunar Mission Control. Select the Moon for a smooth camera approach into the existing lunar mission-control workspace, with CLPS histories, observer-geometry queries and explicit data availability. No NASA or government affiliation is implied.
 
-The original research views keep their original hashes: interactive Explore home (`#home`), schematic Solar System (`#solar`), Moon explorer (`#moon`), mission research (`#missions`), Landing Lab (`#lab`), Knowledge Graph (`#graph`), Operations overview (`#control`), and Horizon Intelligence (`#copilot`). The newer mission-platform Home, Mission control, Lunar science, CLPS intelligence, and Solar atlas use `#platform-home`, `#mission-control`, `#lunar-science`, `#clps-intelligence`, and `#solar-atlas`. The former `#research-missions` and `#solar-overview` links remain aliases. All routes support direct load, refresh, and browser history. The dedicated research assistant uses temporary provider sessions; the mission-platform Copilot uses the optional server key.
+The original research views keep their original hashes: interactive Explore home (`#home`), schematic Solar System (`#solar`), Moon explorer (`#moon`), mission research (`#missions`), Landing Lab (`#lab`), Knowledge Graph (`#graph`), and Operations overview (`#control`). The newer mission-platform Home, Mission control, Lunar science, CLPS intelligence, and Solar atlas use `#platform-home`, `#mission-control`, `#lunar-science`, `#clps-intelligence`, and `#solar-atlas`. The former `#research-missions` and `#solar-overview` links remain aliases. `#copilot` now opens Mission Control, where the single Mission Copilot lives. All routes support direct load, refresh, and browser history.
 
 ![Phase 4.1 homepage](docs/phase41-home.png)
 
@@ -96,14 +96,14 @@ Optional: copy `.env.example` to `.env` and supply values locally or through you
 
 | Variable             | Purpose                                              | Default                                                  |
 | -------------------- | ---------------------------------------------------- | -------------------------------------------------------- |
-| `H89_AI_API_KEY`     | Server-only OpenAI API key; no generation without it | Unset                                                    |
-| `H89_AI_MODEL`       | Model available to your account                      | `gpt-4.1-mini`                                           |
+| `GROQ_API_KEY`       | Server-only Groq API key; no generation without it   | Unset                                                    |
+| `GROQ_MODEL`         | Model available to your Groq account                 | `llama-3.3-70b-versatile`                                |
 | `PORT`               | Backend / production HTTP port                       | `3001`                                                   |
 | `HOST`               | Backend bind address                                 | `127.0.0.1` in development; `0.0.0.0` with `npm start`   |
 | `NODE_USE_ENV_PROXY` | Honor inherited HTTP(S) proxy settings in Node 24    | Enabled by provided scripts                              |
 | `CHROMIUM_PATH`      | Optional executable override for browser tests       | System Chromium if present; otherwise Playwright browser |
 
-Network destinations: `registry.npmjs.org` for installation, `ssd.jpl.nasa.gov` for observer geometry and `api.openai.com` for AI. Public source links open official NASA pages in the user’s browser. No runtime image download is needed. Preserve platform CA trust and TLS verification. This task did not change or publish environment settings.
+Network destinations: `registry.npmjs.org` for installation, `ssd.jpl.nasa.gov` for observer geometry and `api.groq.com` for AI. Public source links open official NASA pages in the user’s browser. No runtime image download is needed. Preserve platform CA trust and TLS verification. This task did not change or publish environment settings.
 
 ## APIs & scientific interpretation
 
@@ -171,9 +171,9 @@ The Node server serves `dist/` and `/api` from one origin. Deploy `dist/`, `dist
 
 ### Render web service settings
 
-Create a **Node** web service from this repository after reviewing the audit branch. Use Node **24** (the repository's `.nvmrc`), npm with `package-lock.json`, build command `npm ci && npm run build`, start command `npm start`, and health check path `/api/health`. Render supplies `PORT`; `npm start` binds to `0.0.0.0` in production when `HOST` is unset. Do not set `HOST=127.0.0.1` on Render. Set `H89_AI_API_KEY` as a secret only if Copilot should be enabled; `H89_AI_MODEL` optionally selects the model (default `gpt-4.1-mini`). Neither is needed for the catalog, imagery or local science views. `NODE_ENV=production` is set by the start script. Keep secrets out of `VITE_*` variables and source files.
+Create a **Node** web service from this repository after reviewing the audit branch. Use Node **24** (the repository's `.nvmrc`), npm with `package-lock.json`, build command `npm ci && npm run build`, start command `npm start`, and health check path `/api/health`. Render supplies `PORT`; `npm start` binds to `0.0.0.0` in production when `HOST` is unset. Do not set `HOST=127.0.0.1` on Render. Set `GROQ_API_KEY` as a secret only if Copilot should be enabled; `GROQ_MODEL` optionally selects the model (default `llama-3.3-70b-versatile`). Neither is needed for the catalog, imagery or local science views. `NODE_ENV=production` is set by the start script. Keep secrets out of `VITE_*` variables and source files.
 
-The health endpoint confirms the process is serving requests; it does not probe JPL or an AI provider. Horizons needs outbound HTTPS to `ssd.jpl.nasa.gov`. The mission-platform Copilot needs `api.openai.com` and `H89_AI_API_KEY`; the dedicated research assistant accepts a temporary OpenAI or Gemini key through `/api/session/config` and needs outbound HTTPS to the selected provider. Its evidence registry currently contains pending leads only, so it explicitly declines evidence-backed synthesis until verified records are imported. The current in-memory rate limiters see the proxy address unless a trusted proxy strategy is added; configure edge protection before public use if abuse resistance is required. No verified terrain import or live provider result is included in the build.
+The health endpoint confirms the process is serving requests; it does not probe JPL or an AI provider. Horizons needs outbound HTTPS to `ssd.jpl.nasa.gov`. Mission Copilot needs `api.groq.com` and `GROQ_API_KEY`. The browser never receives the key. The current process-local rate limiter is not sufficient for multi-instance abuse resistance; configure shared rate limiting and edge protection before enabling a public paid key. No verified terrain import or live provider result is included in the build.
 
 See [Render readiness and hosted smoke tests](docs/RENDER_READINESS.md) for session-store, rate-limit, proxy, live-provider, and evidence requirements before enabling a public AI key.
 

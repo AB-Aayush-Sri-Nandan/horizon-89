@@ -1,34 +1,17 @@
 {
   "schemaVersion": 1,
-  "description": "CLPS research leads from the product brief. No official mission fact has yet been verified in this environment.",
-  "accessAttempt": {
-    "date": "2026-11-12",
-    "result": "NASA CLPS deliveries and NASA Science CLPS returned proxy CONNECT 403."
-  },
+  "description": "Reviewed NASA mission evidence used by Mission Copilot. Pending catalogue entries are intentionally excluded from answers.",
+  "accessAttempt": { "date": "2026-11-15", "result": "NASA mission pages were reachable and reviewed; JPL Horizons remained unavailable from this environment." },
   "sources": [
-    {
-      "id": "nasa-deliveries",
-      "title": "Commercial Lunar Payload Services deliveries",
-      "url": "https://www.nasa.gov/mission/clps-deliveries/",
-      "verification": "pending"
-    },
-    {
-      "id": "nasa-science",
-      "title": "Commercial Lunar Payload Services science program",
-      "url": "https://science.nasa.gov/lunar-science/programs/clps/",
-      "verification": "pending"
-    }
+    { "id": "nasa-im1-lro", "title": "NASA's LRO Images Intuitive Machines' Odysseus Lander", "url": "https://www.nasa.gov/missions/lro/nasas-lro-images-intuitive-machines-odysseus-lander/", "verification": "verified" },
+    { "id": "nasa-blueghost", "title": "NASA Science Touches Down on Moon Aboard Firefly Aerospace Lander", "url": "https://www.nasa.gov/blogs/missions/2025/03/02/nasa-science-touches-down-on-moon-aboard-firefly-aerospace-lander/", "verification": "verified" },
+    { "id": "nasa-peregrine", "title": "NASA Science, Astrobotic Peregrine Mission One Concludes", "url": "https://www.nasa.gov/news-release/nasa-science-astrobotic-peregrine-mission-one-concludes/", "verification": "verified" }
   ],
   "records": [
-    { "id": "peregrine-1", "title": "Peregrine Mission One", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Astrobotic"] },
-    { "id": "griffin-1", "title": "Griffin Mission One", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Astrobotic"] },
-    { "id": "im-1", "title": "IM-1 / Odysseus", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Intuitive Machines"] },
-    { "id": "im-2", "title": "IM-2 / Athena", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Intuitive Machines"] },
-    { "id": "im-3", "title": "IM-3", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Intuitive Machines"] },
-    { "id": "im-4", "title": "IM-4", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Intuitive Machines"] },
-    { "id": "blue-ghost-1", "title": "Blue Ghost Mission 1", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Firefly Aerospace"] },
-    { "id": "blue-ghost-2", "title": "Blue Ghost Mission 2", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Firefly Aerospace"] },
-    { "id": "apex-1", "title": "APEX 1.0", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Draper"] },
-    { "id": "blue-moon-mk1", "title": "Blue Moon Mark 1", "fact": "Research lead supplied in product brief; mission details pending official verification.", "url": "https://www.nasa.gov/mission/clps-deliveries/", "verification": "pending", "verifiedAt": null, "tags": ["CLPS", "Blue Origin"] }
+    { "id": "im-1-location", "title": "Odysseus landing location", "fact": "NASA LRO analysis places the IM-1 Odysseus lander at 80.13 degrees south, 1.44 degrees east near Malapert A. NASA reports an elevation of minus 2,579 metres relative to the lunar mean radius and a local slope of 12 degrees.", "url": "https://www.nasa.gov/missions/lro/nasas-lro-images-intuitive-machines-odysseus-lander/", "verification": "verified", "verifiedAt": "2026-11-15", "tags": ["IM-1", "Odysseus", "Intuitive Machines", "coordinates", "Malapert"] },
+    { "id": "im-1-science", "title": "IM-1 surface science", "fact": "NASA reports that Odysseus landed on 22 February 2024, operated for seven days, returned more than 500 megabytes of data, and all six NASA payloads met some level of their objectives.", "url": "https://www.nasa.gov/missions/artemis/clps/nasa-collects-first-surface-science-in-decades-via-commercial-moon-mission/", "verification": "verified", "verifiedAt": "2026-11-15", "tags": ["IM-1", "Odysseus", "payloads", "science"] },
+    { "id": "blue-ghost-landing", "title": "Blue Ghost Mission 1 landing", "fact": "NASA reports that Firefly Aerospace's Blue Ghost landed near Mons Latreille in Mare Crisium on 2 March 2025 at 3:34 a.m. EST carrying ten NASA science and technology instruments.", "url": "https://www.nasa.gov/blogs/missions/2025/03/02/nasa-science-touches-down-on-moon-aboard-firefly-aerospace-lander/", "verification": "verified", "verifiedAt": "2026-11-15", "tags": ["Blue Ghost", "Firefly", "Mare Crisium", "Mons Latreille"] },
+    { "id": "im-2-landing", "title": "IM-2 Athena landing", "fact": "NASA reports that Intuitive Machines' Athena lander touched down near the lunar south pole on 6 March 2025. The reviewed NASA source does not establish a precise coordinate, so this application does not place an exact marker.", "url": "https://www.nasa.gov/blogs/missions/2025/03/06/intuitive-machines-mission-lands-near-south-pole-carrying-nasa-science/", "verification": "verified", "verifiedAt": "2026-11-15", "tags": ["IM-2", "Athena", "Intuitive Machines", "south pole"] },
+    { "id": "peregrine-outcome", "title": "Peregrine Mission One conclusion", "fact": "Peregrine Mission One did not land on the Moon. NASA reports that the spacecraft safely re-entered Earth's atmosphere over the South Pacific on 18 January 2024, so no lunar landing marker is shown.", "url": "https://www.nasa.gov/news-release/nasa-science-astrobotic-peregrine-mission-one-concludes/", "verification": "verified", "verifiedAt": "2026-11-15", "tags": ["Peregrine", "Astrobotic", "outcome", "re-entry"] }
   ]
 }

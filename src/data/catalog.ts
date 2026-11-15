@@ -37,13 +37,29 @@ export interface Mission {
   status: string;
   coordinates: Coordinates | null;
   coordinateEvidence: LandingCoordinateEvidence | null;
-  landingOutcome: "landed" | "no-landing";
+  landingOutcome: "landed" | "no-landing" | "planned";
   resultsNote: string;
   coordinateNote: string;
   payloads: string[];
   events: MissionEvent[];
   source: Source;
 }
+const plannedMission = (id: string, name: string, provider: string, destination: string): Mission => ({
+  id,
+  name,
+  provider,
+  destination,
+  description: "Planned commercial lunar delivery. Schedule, payload manifest and landing site require official revalidation before operational use.",
+  status: "Planned · revalidation required",
+  coordinates: null,
+  coordinateEvidence: null,
+  landingOutcome: "planned",
+  resultsNote: "No flight outcome exists in this historical catalogue.",
+  coordinateNote: "A planned destination is not an as-landed coordinate; no marker is displayed.",
+  payloads: [],
+  events: [],
+  source: { name: "NASA · Commercial Lunar Payload Services", url: "https://www.nasa.gov/commercial-lunar-payload-services/", asOf: "2026-11-15" },
+});
 // Historical snapshot: never inferred to be a current operational status.
 export const missions: Mission[] = [
   {
@@ -54,13 +70,24 @@ export const missions: Mission[] = [
     description:
       "First CLPS delivery to reach the lunar surface. NASA payloads investigated plume–surface interactions, navigation and radio astronomy.",
     status: "Landed · historical",
-    coordinates: null,
-    coordinateEvidence: null,
+    coordinates: { latitude: -80.13, longitude: 1.44 },
+    coordinateEvidence: {
+      referenceFrame: "Mean Earth / polar axis",
+      datum: "Lunar mean radius",
+      radiusM: 1737400,
+      accessedOn: "2026-11-15",
+      kind: "as-landed",
+      convention: "planetocentric / east-positive",
+      sourceUrl: "https://www.nasa.gov/missions/lro/nasas-lro-images-intuitive-machines-odysseus-lander/",
+      publishedOn: "2024-02-27",
+      reviewedOn: "2026-11-15",
+      precisionDegrees: 0.01,
+      uncertaintyM: null,
+    },
     landingOutcome: "landed",
     resultsNote:
       "No independently reviewed scientific-results product is linked in this catalog.",
-    coordinateNote:
-      "Malapert A region. Precise as-landed coordinates have not been independently verified in this catalog.",
+    coordinateNote: "80.13° S, 1.44° E from NASA LRO image analysis.",
     payloads: [
       "Navigation Doppler Lidar",
       "Lunar Node-1 navigation demonstrator",
@@ -80,7 +107,7 @@ export const missions: Mission[] = [
     ],
     source: {
       name: "NASA · Intuitive Machines IM-1",
-      url: "https://www.nasa.gov/missions/artemis/clps/nasa-science-lands-on-moon-aboard-intuitive-machines-first-flight/",
+      url: "https://www.nasa.gov/missions/lro/nasas-lro-images-intuitive-machines-odysseus-lander/",
       asOf: "2024-02-23",
     },
   },
@@ -92,13 +119,24 @@ export const missions: Mission[] = [
     description:
       "A CLPS delivery carrying ten NASA science and technology instruments to Mare Crisium, including subsurface and dust investigations.",
     status: "Landed · historical",
-    coordinates: null,
-    coordinateEvidence: null,
+    coordinates: { latitude: 18.56, longitude: 61.81 },
+    coordinateEvidence: {
+      referenceFrame: "Lunar body-fixed",
+      datum: "Provider-published landing coordinate",
+      radiusM: null,
+      accessedOn: "2026-11-15",
+      kind: "as-landed",
+      convention: "planetocentric / east-positive",
+      sourceUrl: "https://fireflyspace.com/missions/blue-ghost-mission-1/",
+      publishedOn: "2025-03-02",
+      reviewedOn: "2026-11-15",
+      precisionDegrees: 0.01,
+      uncertaintyM: null,
+    },
     landingOutcome: "landed",
     resultsNote:
       "No independently reviewed scientific-results product is linked in this catalog.",
-    coordinateNote:
-      "Mare Crisium. Exact touchdown coordinates are withheld until a verified coordinate source is imported.",
+    coordinateNote: "18.56° N, 61.81° E · provider-published coordinate; not independently surveyed here.",
     payloads: [
       "Lunar Instrumentation for Subsurface Thermal Exploration with Rapidity (LISTER)",
       "Electrodynamic Dust Shield",
@@ -159,6 +197,28 @@ export const missions: Mission[] = [
       asOf: "2024-01-19",
     },
   },
+  plannedMission("griffin-1", "Griffin Mission One", "Astrobotic", "Lunar south polar region"),
+  {
+    id: "im-2",
+    name: "IM-2 · Athena",
+    provider: "Intuitive Machines",
+    destination: "Mons Mouton region · lunar south pole",
+    description: "Athena carried NASA technology demonstrations including the PRIME-1 drill toward the lunar south polar region.",
+    status: "Landed · historical",
+    coordinates: null,
+    coordinateEvidence: null,
+    landingOutcome: "landed",
+    resultsNote: "NASA reported limited surface operations; the reviewed source does not establish a precise coordinate.",
+    coordinateNote: "South-pole landing reported by NASA; no exact marker is shown without a reviewed coordinate source.",
+    payloads: ["PRIME-1 drill", "Mass Spectrometer observing lunar operations", "Laser Retroreflector Array"],
+    events: [{ date: "2025-02-26", title: "Launch", description: "Athena launched toward the Moon." }, { date: "2025-03-06", title: "Lunar landing", description: "NASA reported landing near the lunar south pole." }],
+    source: { name: "NASA · IM-2 Athena", url: "https://www.nasa.gov/blogs/missions/2025/03/06/intuitive-machines-mission-lands-near-south-pole-carrying-nasa-science/", asOf: "2025-03-06", accessedOn: "2026-11-15" },
+  },
+  plannedMission("im-3", "IM-3", "Intuitive Machines", "Reiner Gamma region"),
+  plannedMission("im-4", "IM-4", "Intuitive Machines", "Lunar south polar region"),
+  plannedMission("blue-ghost-2", "Blue Ghost Mission 2", "Firefly Aerospace", "Far side of the Moon"),
+  plannedMission("apex-1", "APEX 1.0", "Draper / ispace-U.S.", "Schrödinger Basin"),
+  plannedMission("blue-moon-mk1", "Blue Moon Mark 1", "Blue Origin", "Lunar south polar region"),
 ];
 export interface Dataset {
   id: string;

@@ -100,7 +100,7 @@ for (const viewport of [
       .getByLabel("Ask Copilot")
       .fill("Which source observations are missing?");
     await page.getByRole("button", { name: "Send question" }).click();
-    await expect(page.getByRole("alert")).toContainText("H89_AI_API_KEY");
+    await expect(page.getByRole("alert")).toContainText("GROQ_API_KEY");
     await page.keyboard.press("Escape");
     await expect(
       page.getByRole("button", { name: "Mission Copilot", exact: true }),

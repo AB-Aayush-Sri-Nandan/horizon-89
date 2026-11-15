@@ -109,7 +109,7 @@ test("planet texture failure and mobile/reduced-motion entry remain navigable", 
     .getByLabel("Ask Copilot")
     .fill("Explain the available source evidence");
   await page.getByRole("button", { name: "Send question" }).click();
-  await expect(page.getByRole("alert")).toContainText("H89_AI_API_KEY");
+  await expect(page.getByRole("alert")).toContainText("GROQ_API_KEY");
 });
 
 test("real Copilot response only when a server key is configured", async ({
@@ -119,7 +119,7 @@ test("real Copilot response only when a server key is configured", async ({
   const health = await (await request.get("/api/health")).json();
   test.skip(
     !health.copilotKeyPresent,
-    "No H89_AI_API_KEY configured; real response workflow not executed.",
+    "No GROQ_API_KEY configured; real response workflow not executed.",
   );
   await page.goto("/");
   await page

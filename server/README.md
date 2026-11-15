@@ -1,13 +1,12 @@
 # HORIZON 89 local API
 
-The production Node server in `server/index.ts` mounts this research API's session routes and `/api/research/copilot` alongside its mission-platform routes. `npm run build:server` copies this module and `evidence.json` into `dist-server/server/`. The standalone command below remains available for research API development.
+The production Node server in `server/index.ts` exposes the single Mission Copilot at `/api/copilot`. Legacy session routes remain server-compatible for existing clients but are not exposed as a second browser assistant. `npm run build:server` copies this module and `evidence.json` into `dist-server/server/`.
 
 From the repository root, start with `node --use-env-proxy server/index.mjs`. The
 API binds to `127.0.0.1:3001` by default, where Vite already proxies `/api`.
 Node's `--use-env-proxy` flag makes provider calls use the cloud environment's
-configured HTTPS proxy and trust settings. Provider egress requires
-`api.openai.com` and/or `generativelanguage.googleapis.com` to be permitted by
-the environment network policy.
+configured HTTPS proxy and trust settings. Mission Copilot provider egress requires
+`api.groq.com` to be permitted by the environment network policy.
 
 The routes are:
 
